@@ -1,600 +1,600 @@
 [
-    {
-      "category": "History",
-      "type": "multiple",
-      "difficulty": "easy",
-      "question": "Which one of these was not a beach landing site in the Invasion of Normandy?",
-      "correct_answer": "Silver",
-      "incorrect_answers": [
-        "Gold",
-        "Juno",
-        "Sword"
-      ]
-    },
-    {
-      "category": "Entertainment: Video Games",
-      "type": "multiple",
-      "difficulty": "medium",
-      "question": "How many Chaos Emeralds can you collect in the first Sonic The Hedgehog?",
-      "correct_answer": "Six",
-      "incorrect_answers": [
-        "Seven",
-        "Five",
-        "Eight"
-      ]
-    },
-    {
-      "category": "Animals",
-      "type": "multiple",
-      "difficulty": "easy",
-      "question": "What is the fastest  land animal?",
-      "correct_answer": "Cheetah",
-      "incorrect_answers": [
-        "Lion",
-        "Thomson&rsquo;s Gazelle",
-        "Pronghorn Antelope"
-      ]
-    },
-    {
-      "category": "Entertainment: Television",
-      "type": "multiple",
-      "difficulty": "easy",
-      "question": "In the TV show &#039;M*A*S*H&#039;, what was the nickname of Corporal Walter O&#039;Reilly?",
-      "correct_answer": "Radar",
-      "incorrect_answers": [
-        "Hawkeye",
-        "Hot Lips",
-        "Trapper"
-      ]
-    },
-    {
-      "category": "Science: Mathematics",
-      "type": "multiple",
-      "difficulty": "medium",
-      "question": "What are the first 6 digits of the number &quot;Pi&quot;?",
-      "correct_answer": "3.14159",
-      "incorrect_answers": [
-        "3.14169",
-        "3.12423",
-        "3.25812"
-      ]
-    },
-    {
-      "category": "Entertainment: Music",
-      "type": "multiple",
-      "difficulty": "easy",
-      "question": "How many studio albums have the duo Daft Punk released?",
-      "correct_answer": "4",
-      "incorrect_answers": [
-        "1",
-        "5",
-        "2"
-      ]
-    },
-    {
-      "category": "Mythology",
-      "type": "multiple",
-      "difficulty": "medium",
-      "question": "Hera is god of...",
-      "correct_answer": "Marriage",
-      "incorrect_answers": [
-        "Agriculture",
-        "Sea",
-        "War"
-      ]
-    },
-    {
-      "category": "Vehicles",
-      "type": "multiple",
-      "difficulty": "medium",
-      "question": "Which of the following is NOT a Russian car manufacturer?",
-      "correct_answer": "BYD",
-      "incorrect_answers": [
-        "Silant",
-        "Dragon",
-        "GAZ"
-      ]
-    },
-    {
-      "category": "Geography",
-      "type": "multiple",
-      "difficulty": "easy",
-      "question": "What is the 15th letter of the Greek alphabet?",
-      "correct_answer": "Omicron (&Omicron;)",
-      "incorrect_answers": [
-        "Sigma (&Sigma;)",
-        "Pi (&Pi;)",
-        "Nu (&Nu;)"
-      ]
-    },
-    {
-      "category": "Entertainment: Video Games",
-      "type": "multiple",
-      "difficulty": "hard",
-      "question": "How many copies of the notorious E.T. game for the Atari 2600 did Atari end up selling?",
-      "correct_answer": "1.5 Million",
-      "incorrect_answers": [
-        "1 Million",
-        "250 Thousand",
-        "Less than 250 Thousand"
-      ]
-    },
-    {
-      "category": "General Knowledge",
-      "type": "multiple",
-      "difficulty": "medium",
-      "question": "In 2013 how much money was lost by Nigerian scams?",
-      "correct_answer": "$12.7 Billion",
-      "incorrect_answers": [
-        "$95 Million",
-        "$956 Million",
-        "$2.7 Billion"
-      ]
-    },
-    {
-      "category": "Sports",
-      "type": "multiple",
-      "difficulty": "medium",
-      "question": "Which country is hosting the 2022 FIFA World Cup?",
-      "correct_answer": "Qatar",
-      "incorrect_answers": [
-        "Uganda",
-        "Vietnam",
-        "Bolivia"
-      ]
-    },
-    {
-      "category": "Science & Nature",
-      "type": "multiple",
-      "difficulty": "hard",
-      "question": "Which of these chemical compounds is NOT found in gastric acid?",
-      "correct_answer": "Sulfuric acid",
-      "incorrect_answers": [
-        "Hydrochloric acid",
-        "Potassium chloride",
-        "Sodium chloride"
-      ]
-    },
-    {
-      "category": "Entertainment: Music",
-      "type": "multiple",
-      "difficulty": "hard",
-      "question": "What is the British term for a 64th note?",
-      "correct_answer": "Hemidemisemiquaver",
-      "incorrect_answers": [
-        "Semihemidemisemiquaver",
-        "Semiquaver",
-        "Demisemiquaver"
-      ]
-    },
-    {
-      "category": "General Knowledge",
-      "type": "multiple",
-      "difficulty": "medium",
-      "question": "Which Italian automobile manufacturer gained majority control of U.S. automobile manufacturer Chrysler in 2011?",
-      "correct_answer": "Fiat",
-      "incorrect_answers": [
-        "Maserati",
-        "Alfa Romeo",
-        "Ferrari"
-      ]
-    },
-    {
-      "category": "Art",
-      "type": "multiple",
-      "difficulty": "easy",
-      "question": "Who painted &quot;Swans Reflecting Elephants&quot;, &quot;Sleep&quot;, and &quot;The Persistence of Memory&quot;?",
-      "correct_answer": "Salvador Dali",
-      "incorrect_answers": [
-        "Jackson Pollock",
-        "Vincent van Gogh",
-        "Edgar Degas"
-      ]
-    },
-    {
-      "category": "Entertainment: Video Games",
-      "type": "multiple",
-      "difficulty": "easy",
-      "question": "Who created the 2011 Video Game &quot;Minecraft&quot;?",
-      "correct_answer": "Markus Persson",
-      "incorrect_answers": [
-        "Jens Bergensten",
-        "Daniel Rosenfeld",
-        "Carl Manneh"
-      ]
-    },
-    {
-      "category": "Entertainment: Television",
-      "type": "multiple",
-      "difficulty": "easy",
-      "question": "Guy&#039;s Grocery Games is hosted by which presenter?",
-      "correct_answer": "Guy Fieri",
-      "incorrect_answers": [
-        "Guy Martin",
-        "Guy Ritchie",
-        "Ainsley Harriott"
-      ]
-    },
-    {
-      "category": "Entertainment: Comics",
-      "type": "boolean",
-      "difficulty": "medium",
-      "question": "In the webcomic Homestuck, the first character introduced is Dave Strider.",
-      "correct_answer": "False",
-      "incorrect_answers": [
-        "True"
-      ]
-    },
-    {
-      "category": "Entertainment: Video Games",
-      "type": "multiple",
-      "difficulty": "medium",
-      "question": "Which company did Bethesda purchase the Fallout Series from?",
-      "correct_answer": "Interplay Entertainment ",
-      "incorrect_answers": [
-        "Capcom",
-        "Blizzard Entertainment",
-        "Nintendo"
-      ]
-    },
-    {
-      "category": "History",
-      "type": "multiple",
-      "difficulty": "medium",
-      "question": "What was the transfer of disease, crops, and people across the Atlantic shortly after the discovery of the Americas called?",
-      "correct_answer": "The Columbian Exchange",
-      "incorrect_answers": [
-        "Triangle Trade",
-        "Transatlantic Slave Trade",
-        "The Silk Road"
-      ]
-    },
-    {
-      "category": "Sports",
-      "type": "multiple",
-      "difficulty": "easy",
-      "question": "How many points did LeBron James score in his first NBA game?",
-      "correct_answer": "25",
-      "incorrect_answers": [
-        "19",
-        "69",
-        "41"
-      ]
-    },
-    {
-      "category": "Entertainment: Video Games",
-      "type": "multiple",
-      "difficulty": "easy",
-      "question": "Which Elite Four member from the first generation of Pok&eacute;mon became the champion in the next generation?",
-      "correct_answer": "Lance",
-      "incorrect_answers": [
-        "Agatha",
-        "Bruno",
-        "Lorelei"
-      ]
-    },
-    {
-      "category": "Entertainment: Video Games",
-      "type": "multiple",
-      "difficulty": "hard",
-      "question": "In Animal Crossing: New Leaf, which of these paintings from Redd&#039;s Art Gallery is always genuine?",
-      "correct_answer": "Warm Painting",
-      "incorrect_answers": [
-        "Jolly Painting",
-        "Neutral Painting",
-        "Wistful Painting"
-      ]
-    },
-    {
-      "category": "Entertainment: Books",
-      "type": "multiple",
-      "difficulty": "medium",
-      "question": "According to The Hitchhiker&#039;s Guide to the Galaxy book, the answer to life, the universe and everything else is...",
-      "correct_answer": "42",
-      "incorrect_answers": [
-        "Loving everyone around you",
-        "Chocolate",
-        "Death"
-      ]
-    },
-    {
-      "category": "Entertainment: Film",
-      "type": "multiple",
-      "difficulty": "medium",
-      "question": "In Back to the Future Part II, Marty and Dr. Emmett Brown go to which future date?",
-      "correct_answer": "October 21, 2015",
-      "incorrect_answers": [
-        "August 28, 2015",
-        "July 20, 2015",
-        "January 25, 2015"
-      ]
-    },
-    {
-      "category": "Geography",
-      "type": "multiple",
-      "difficulty": "easy",
-      "question": "What is Canada&#039;s smallest province?",
-      "correct_answer": "Prince Edward Island",
-      "incorrect_answers": [
-        "New Brunswick",
-        "Nova Scotia",
-        "Yukon"
-      ]
-    },
-    {
-      "category": "Entertainment: Video Games",
-      "type": "multiple",
-      "difficulty": "medium",
-      "question": "What is not a default game mode in Counter-Strike (2000)?",
-      "correct_answer": "Arms Race",
-      "incorrect_answers": [
-        "Hostage Rescue",
-        "Bomb Defusal",
-        "Assassination"
-      ]
-    },
-    {
-      "category": "History",
-      "type": "multiple",
-      "difficulty": "easy",
-      "question": "Who was the first prime minister of Canada?",
-      "correct_answer": "John Macdonald",
-      "incorrect_answers": [
-        "John Abbott",
-        "Alexander Mackenzie",
-        "Robert Borden"
-      ]
-    },
-    {
-      "category": "Entertainment: Video Games",
-      "type": "multiple",
-      "difficulty": "medium",
-      "question": "What element does the Zinogre use in Monster Hunter?",
-      "correct_answer": "Thunder",
-      "incorrect_answers": [
-        "Ice",
-        "Fire",
-        "Water"
-      ]
-    },
-    {
-      "category": "Celebrities",
-      "type": "multiple",
-      "difficulty": "hard",
-      "question": "The eccentric natural philosopher Tycho Brahe kept what as a pet?",
-      "correct_answer": "Moose",
-      "incorrect_answers": [
-        "Dog",
-        "Bear",
-        "Goat"
-      ]
-    },
-    {
-      "category": "General Knowledge",
-      "type": "multiple",
-      "difficulty": "hard",
-      "question": "Nephelococcygia is the practice of doing what?",
-      "correct_answer": "Finding shapes in clouds",
-      "incorrect_answers": [
-        "Sleeping with your eyes open",
-        "Breaking glass with your voice",
-        "Swimming in freezing water"
-      ]
-    },
-    {
-      "category": "Science & Nature",
-      "type": "multiple",
-      "difficulty": "hard",
-      "question": "Coulrophobia is the irrational fear of what?",
-      "correct_answer": "Clowns",
-      "incorrect_answers": [
-        "Cemeteries",
-        "Needles",
-        "Tunnels"
-      ]
-    },
-    {
-      "category": "Entertainment: Television",
-      "type": "multiple",
-      "difficulty": "medium",
-      "question": "On the NBC show Community what was Star Burns&#039; real name?",
-      "correct_answer": "Alex",
-      "incorrect_answers": [
-        "Todd",
-        "Neal",
-        "Grimus"
-      ]
-    },
-    {
-      "category": "General Knowledge",
-      "type": "multiple",
-      "difficulty": "easy",
-      "question": "Which of the following is the IATA code for Manchester Airport?",
-      "correct_answer": "MAN",
-      "incorrect_answers": [
-        "EGLL",
-        "LHR",
-        "EGCC"
-      ]
-    },
-    {
-      "category": "General Knowledge",
-      "type": "multiple",
-      "difficulty": "easy",
-      "question": "What nuts are used in the production of marzipan?",
-      "correct_answer": "Almonds",
-      "incorrect_answers": [
-        "Peanuts",
-        "Walnuts",
-        "Pistachios"
-      ]
-    },
-    {
-      "category": "History",
-      "type": "multiple",
-      "difficulty": "hard",
-      "question": "Which English king was married to Eleanor of Aquitaine?",
-      "correct_answer": "Henry II",
-      "incorrect_answers": [
-        "Richard I",
-        "Henry I",
-        "Henry V"
-      ]
-    },
-    {
-      "category": "Entertainment: Video Games",
-      "type": "multiple",
-      "difficulty": "medium",
-      "question": "In &quot;Kingdom Hearts&quot;, who abducts Jasmine in the Lamp Chamber?",
-      "correct_answer": "Riku",
-      "incorrect_answers": [
-        "Riku Replica",
-        "Xaldin",
-        "Captain Hook"
-      ]
-    },
-    {
-      "category": "Entertainment: Video Games",
-      "type": "multiple",
-      "difficulty": "medium",
-      "question": "Which one of the first four titles of the &quot;Grand Theft Auto&quot; franchise started the series of iconic image grid cover arts?",
-      "correct_answer": "Grand Theft Auto III",
-      "incorrect_answers": [
-        "Grand Theft Auto",
-        "Grand Theft Auto II",
-        "Grand Theft Auto Vice City"
-      ]
-    },
-    {
-      "category": "Entertainment: Video Games",
-      "type": "multiple",
-      "difficulty": "easy",
-      "question": "Rincewind from the 1995 Discworld game was voiced by which member of Monty Python?",
-      "correct_answer": "Eric Idle",
-      "incorrect_answers": [
-        "John Cleese",
-        "Terry Gilliam",
-        "Michael Palin"
-      ]
-    },
-    {
-      "category": "Entertainment: Video Games",
-      "type": "multiple",
-      "difficulty": "hard",
-      "question": "In 2004, which person(s) created &quot;Roblox&quot;?",
-      "correct_answer": "David Baszucki and Erik Cassel",
-      "incorrect_answers": [
-        "Erik Cassel",
-        "Jonas Alto and Sarah Smith",
-        "James Kolein"
-      ]
-    },
-    {
-      "category": "Entertainment: Japanese Anime & Manga",
-      "type": "multiple",
-      "difficulty": "hard",
-      "question": "Who was the Author of the manga Uzumaki?",
-      "correct_answer": "Junji Ito",
-      "incorrect_answers": [
-        "\tNoboru Takahashi",
-        "Akira Toriyama",
-        "Masashi Kishimoto"
-      ]
-    },
-    {
-      "category": "Mythology",
-      "type": "multiple",
-      "difficulty": "medium",
-      "question": "What is the name of the first human being in Norse mythology?",
-      "correct_answer": "Ask",
-      "incorrect_answers": [
-        "Asmund",
-        "Ake",
-        "Asger"
-      ]
-    },
-    {
-      "category": "Entertainment: Video Games",
-      "type": "multiple",
-      "difficulty": "medium",
-      "question": "In Night in the Woods, which instrument did Casey play?",
-      "correct_answer": "Drums",
-      "incorrect_answers": [
-        "Bass",
-        "Piano",
-        "Sax"
-      ]
-    },
-    {
-      "category": "Entertainment: Video Games",
-      "type": "multiple",
-      "difficulty": "easy",
-      "question": "Which of the following Zelda games did not feature Ganon as a final boss?",
-      "correct_answer": "Majora&#039;s Mask",
-      "incorrect_answers": [
-        "Ocarina of Time",
-        "Skyward Sword",
-        "Breath of the Wild"
-      ]
-    },
-    {
-      "category": "Entertainment: Comics",
-      "type": "multiple",
-      "difficulty": "easy",
-      "question": "In &quot;Homestuck&quot; what is Dave Strider&#039;s guardian?",
-      "correct_answer": "Bro",
-      "incorrect_answers": [
-        "Becquerel",
-        "Doc Scratch",
-        "Halley"
-      ]
-    },
-    {
-      "category": "Mythology",
-      "type": "multiple",
-      "difficulty": "medium",
-      "question": "Hel was the daughter of which Norse Mythological figure?",
-      "correct_answer": "Loki",
-      "incorrect_answers": [
-        "Thor",
-        "Odin",
-        "Balder"
-      ]
-    },
-    {
-      "category": "Entertainment: Film",
-      "type": "multiple",
-      "difficulty": "easy",
-      "question": "Who plays Jack Burton in the movie &quot;Big Trouble in Little China?&quot;",
-      "correct_answer": "Kurt Russell",
-      "incorrect_answers": [
-        "Patrick Swayze",
-        "John Cusack",
-        "Harrison Ford"
-      ]
-    },
-    {
-      "category": "Entertainment: Film",
-      "type": "multiple",
-      "difficulty": "medium",
-      "question": "In the movie &quot;Back to the Future,&quot; what speed does Doc Brown&#039;s DeLorean need to reach in order to travel through time?",
-      "correct_answer": "88 mph",
-      "incorrect_answers": [
-        "77 mph",
-        "100 mph",
-        "70 mph"
-      ]
-    },
-    {
-      "category": "Entertainment: Japanese Anime & Manga",
-      "type": "multiple",
-      "difficulty": "easy",
-      "question": "In the Naruto manga, what is the last name of Tsunade?",
-      "correct_answer": "Senju",
-      "incorrect_answers": [
-        "Haruno",
-        "Uzumaki",
-        "Yamanaka"
-      ]
-    }
-  ]
+  {
+    "category": "History",
+    "type": "multiple",
+    "difficulty": "easy",
+    "question": "Which one of these was not a beach landing site in the Invasion of Normandy?",
+    "correct_answer": "Silver",
+    "incorrect_answers": [
+      "Gold",
+      "Juno",
+      "Sword"
+    ]
+  },
+  {
+    "category": "Entertainment: Video Games",
+    "type": "multiple",
+    "difficulty": "medium",
+    "question": "How many Chaos Emeralds can you collect in the first Sonic The Hedgehog?",
+    "correct_answer": "Six",
+    "incorrect_answers": [
+      "Seven",
+      "Five",
+      "Eight"
+    ]
+  },
+  {
+    "category": "Animals",
+    "type": "multiple",
+    "difficulty": "easy",
+    "question": "What is the fastest  land animal?",
+    "correct_answer": "Cheetah",
+    "incorrect_answers": [
+      "Lion",
+      "Thomson&rsquo;s Gazelle",
+      "Pronghorn Antelope"
+    ]
+  },
+  {
+    "category": "Entertainment: Television",
+    "type": "multiple",
+    "difficulty": "easy",
+    "question": "In the TV show &#039;M*A*S*H&#039;, what was the nickname of Corporal Walter O&#039;Reilly?",
+    "correct_answer": "Radar",
+    "incorrect_answers": [
+      "Hawkeye",
+      "Hot Lips",
+      "Trapper"
+    ]
+  },
+  {
+    "category": "Science: Mathematics",
+    "type": "multiple",
+    "difficulty": "medium",
+    "question": "What are the first 6 digits of the number &quot;Pi&quot;?",
+    "correct_answer": "3.14159",
+    "incorrect_answers": [
+      "3.14169",
+      "3.12423",
+      "3.25812"
+    ]
+  },
+  {
+    "category": "Entertainment: Music",
+    "type": "multiple",
+    "difficulty": "easy",
+    "question": "How many studio albums have the duo Daft Punk released?",
+    "correct_answer": "4",
+    "incorrect_answers": [
+      "1",
+      "5",
+      "2"
+    ]
+  },
+  {
+    "category": "Mythology",
+    "type": "multiple",
+    "difficulty": "medium",
+    "question": "Hera is god of...",
+    "correct_answer": "Marriage",
+    "incorrect_answers": [
+      "Agriculture",
+      "Sea",
+      "War"
+    ]
+  },
+  {
+    "category": "Vehicles",
+    "type": "multiple",
+    "difficulty": "medium",
+    "question": "Which of the following is NOT a Russian car manufacturer?",
+    "correct_answer": "BYD",
+    "incorrect_answers": [
+      "Silant",
+      "Dragon",
+      "GAZ"
+    ]
+  },
+  {
+    "category": "Geography",
+    "type": "multiple",
+    "difficulty": "easy",
+    "question": "What is the 15th letter of the Greek alphabet?",
+    "correct_answer": "Omicron (&Omicron;)",
+    "incorrect_answers": [
+      "Sigma (&Sigma;)",
+      "Pi (&Pi;)",
+      "Nu (&Nu;)"
+    ]
+  },
+  {
+    "category": "Entertainment: Video Games",
+    "type": "multiple",
+    "difficulty": "hard",
+    "question": "How many copies of the notorious E.T. game for the Atari 2600 did Atari end up selling?",
+    "correct_answer": "1.5 Million",
+    "incorrect_answers": [
+      "1 Million",
+      "250 Thousand",
+      "Less than 250 Thousand"
+    ]
+  },
+  {
+    "category": "General Knowledge",
+    "type": "multiple",
+    "difficulty": "medium",
+    "question": "In 2013 how much money was lost by Nigerian scams?",
+    "correct_answer": "$12.7 Billion",
+    "incorrect_answers": [
+      "$95 Million",
+      "$956 Million",
+      "$2.7 Billion"
+    ]
+  },
+  {
+    "category": "Sports",
+    "type": "multiple",
+    "difficulty": "medium",
+    "question": "Which country is hosting the 2022 FIFA World Cup?",
+    "correct_answer": "Qatar",
+    "incorrect_answers": [
+      "Uganda",
+      "Vietnam",
+      "Bolivia"
+    ]
+  },
+  {
+    "category": "Science & Nature",
+    "type": "multiple",
+    "difficulty": "hard",
+    "question": "Which of these chemical compounds is NOT found in gastric acid?",
+    "correct_answer": "Sulfuric acid",
+    "incorrect_answers": [
+      "Hydrochloric acid",
+      "Potassium chloride",
+      "Sodium chloride"
+    ]
+  },
+  {
+    "category": "Entertainment: Music",
+    "type": "multiple",
+    "difficulty": "hard",
+    "question": "What is the British term for a 64th note?",
+    "correct_answer": "Hemidemisemiquaver",
+    "incorrect_answers": [
+      "Semihemidemisemiquaver",
+      "Semiquaver",
+      "Demisemiquaver"
+    ]
+  },
+  {
+    "category": "General Knowledge",
+    "type": "multiple",
+    "difficulty": "medium",
+    "question": "Which Italian automobile manufacturer gained majority control of U.S. automobile manufacturer Chrysler in 2011?",
+    "correct_answer": "Fiat",
+    "incorrect_answers": [
+      "Maserati",
+      "Alfa Romeo",
+      "Ferrari"
+    ]
+  },
+  {
+    "category": "Art",
+    "type": "multiple",
+    "difficulty": "easy",
+    "question": "Who painted &quot;Swans Reflecting Elephants&quot;, &quot;Sleep&quot;, and &quot;The Persistence of Memory&quot;?",
+    "correct_answer": "Salvador Dali",
+    "incorrect_answers": [
+      "Jackson Pollock",
+      "Vincent van Gogh",
+      "Edgar Degas"
+    ]
+  },
+  {
+    "category": "Entertainment: Video Games",
+    "type": "multiple",
+    "difficulty": "easy",
+    "question": "Who created the 2011 Video Game &quot;Minecraft&quot;?",
+    "correct_answer": "Markus Persson",
+    "incorrect_answers": [
+      "Jens Bergensten",
+      "Daniel Rosenfeld",
+      "Carl Manneh"
+    ]
+  },
+  {
+    "category": "Entertainment: Television",
+    "type": "multiple",
+    "difficulty": "easy",
+    "question": "Guy&#039;s Grocery Games is hosted by which presenter?",
+    "correct_answer": "Guy Fieri",
+    "incorrect_answers": [
+      "Guy Martin",
+      "Guy Ritchie",
+      "Ainsley Harriott"
+    ]
+  },
+  {
+    "category": "Entertainment: Comics",
+    "type": "boolean",
+    "difficulty": "medium",
+    "question": "In the webcomic Homestuck, the first character introduced is Dave Strider.",
+    "correct_answer": "False",
+    "incorrect_answers": [
+      "True"
+    ]
+  },
+  {
+    "category": "Entertainment: Video Games",
+    "type": "multiple",
+    "difficulty": "medium",
+    "question": "Which company did Bethesda purchase the Fallout Series from?",
+    "correct_answer": "Interplay Entertainment ",
+    "incorrect_answers": [
+      "Capcom",
+      "Blizzard Entertainment",
+      "Nintendo"
+    ]
+  },
+  {
+    "category": "History",
+    "type": "multiple",
+    "difficulty": "medium",
+    "question": "What was the transfer of disease, crops, and people across the Atlantic shortly after the discovery of the Americas called?",
+    "correct_answer": "The Columbian Exchange",
+    "incorrect_answers": [
+      "Triangle Trade",
+      "Transatlantic Slave Trade",
+      "The Silk Road"
+    ]
+  },
+  {
+    "category": "Sports",
+    "type": "multiple",
+    "difficulty": "easy",
+    "question": "How many points did LeBron James score in his first NBA game?",
+    "correct_answer": "25",
+    "incorrect_answers": [
+      "19",
+      "69",
+      "41"
+    ]
+  },
+  {
+    "category": "Entertainment: Video Games",
+    "type": "multiple",
+    "difficulty": "easy",
+    "question": "Which Elite Four member from the first generation of Pok&eacute;mon became the champion in the next generation?",
+    "correct_answer": "Lance",
+    "incorrect_answers": [
+      "Agatha",
+      "Bruno",
+      "Lorelei"
+    ]
+  },
+  {
+    "category": "Entertainment: Video Games",
+    "type": "multiple",
+    "difficulty": "hard",
+    "question": "In Animal Crossing: New Leaf, which of these paintings from Redd&#039;s Art Gallery is always genuine?",
+    "correct_answer": "Warm Painting",
+    "incorrect_answers": [
+      "Jolly Painting",
+      "Neutral Painting",
+      "Wistful Painting"
+    ]
+  },
+  {
+    "category": "Entertainment: Books",
+    "type": "multiple",
+    "difficulty": "medium",
+    "question": "According to The Hitchhiker&#039;s Guide to the Galaxy book, the answer to life, the universe and everything else is...",
+    "correct_answer": "42",
+    "incorrect_answers": [
+      "Loving everyone around you",
+      "Chocolate",
+      "Death"
+    ]
+  },
+  {
+    "category": "Entertainment: Film",
+    "type": "multiple",
+    "difficulty": "medium",
+    "question": "In Back to the Future Part II, Marty and Dr. Emmett Brown go to which future date?",
+    "correct_answer": "October 21, 2015",
+    "incorrect_answers": [
+      "August 28, 2015",
+      "July 20, 2015",
+      "January 25, 2015"
+    ]
+  },
+  {
+    "category": "Geography",
+    "type": "multiple",
+    "difficulty": "easy",
+    "question": "What is Canada&#039;s smallest province?",
+    "correct_answer": "Prince Edward Island",
+    "incorrect_answers": [
+      "New Brunswick",
+      "Nova Scotia",
+      "Yukon"
+    ]
+  },
+  {
+    "category": "Entertainment: Video Games",
+    "type": "multiple",
+    "difficulty": "medium",
+    "question": "What is not a default game mode in Counter-Strike (2000)?",
+    "correct_answer": "Arms Race",
+    "incorrect_answers": [
+      "Hostage Rescue",
+      "Bomb Defusal",
+      "Assassination"
+    ]
+  },
+  {
+    "category": "History",
+    "type": "multiple",
+    "difficulty": "easy",
+    "question": "Who was the first prime minister of Canada?",
+    "correct_answer": "John Macdonald",
+    "incorrect_answers": [
+      "John Abbott",
+      "Alexander Mackenzie",
+      "Robert Borden"
+    ]
+  },
+  {
+    "category": "Entertainment: Video Games",
+    "type": "multiple",
+    "difficulty": "medium",
+    "question": "What element does the Zinogre use in Monster Hunter?",
+    "correct_answer": "Thunder",
+    "incorrect_answers": [
+      "Ice",
+      "Fire",
+      "Water"
+    ]
+  },
+  {
+    "category": "Celebrities",
+    "type": "multiple",
+    "difficulty": "hard",
+    "question": "The eccentric natural philosopher Tycho Brahe kept what as a pet?",
+    "correct_answer": "Moose",
+    "incorrect_answers": [
+      "Dog",
+      "Bear",
+      "Goat"
+    ]
+  },
+  {
+    "category": "General Knowledge",
+    "type": "multiple",
+    "difficulty": "hard",
+    "question": "Nephelococcygia is the practice of doing what?",
+    "correct_answer": "Finding shapes in clouds",
+    "incorrect_answers": [
+      "Sleeping with your eyes open",
+      "Breaking glass with your voice",
+      "Swimming in freezing water"
+    ]
+  },
+  {
+    "category": "Science & Nature",
+    "type": "multiple",
+    "difficulty": "hard",
+    "question": "Coulrophobia is the irrational fear of what?",
+    "correct_answer": "Clowns",
+    "incorrect_answers": [
+      "Cemeteries",
+      "Needles",
+      "Tunnels"
+    ]
+  },
+  {
+    "category": "Entertainment: Television",
+    "type": "multiple",
+    "difficulty": "medium",
+    "question": "On the NBC show Community what was Star Burns&#039; real name?",
+    "correct_answer": "Alex",
+    "incorrect_answers": [
+      "Todd",
+      "Neal",
+      "Grimus"
+    ]
+  },
+  {
+    "category": "General Knowledge",
+    "type": "multiple",
+    "difficulty": "easy",
+    "question": "Which of the following is the IATA code for Manchester Airport?",
+    "correct_answer": "MAN",
+    "incorrect_answers": [
+      "EGLL",
+      "LHR",
+      "EGCC"
+    ]
+  },
+  {
+    "category": "General Knowledge",
+    "type": "multiple",
+    "difficulty": "easy",
+    "question": "What nuts are used in the production of marzipan?",
+    "correct_answer": "Almonds",
+    "incorrect_answers": [
+      "Peanuts",
+      "Walnuts",
+      "Pistachios"
+    ]
+  },
+  {
+    "category": "History",
+    "type": "multiple",
+    "difficulty": "hard",
+    "question": "Which English king was married to Eleanor of Aquitaine?",
+    "correct_answer": "Henry II",
+    "incorrect_answers": [
+      "Richard I",
+      "Henry I",
+      "Henry V"
+    ]
+  },
+  {
+    "category": "Entertainment: Video Games",
+    "type": "multiple",
+    "difficulty": "medium",
+    "question": "In &quot;Kingdom Hearts&quot;, who abducts Jasmine in the Lamp Chamber?",
+    "correct_answer": "Riku",
+    "incorrect_answers": [
+      "Riku Replica",
+      "Xaldin",
+      "Captain Hook"
+    ]
+  },
+  {
+    "category": "Entertainment: Video Games",
+    "type": "multiple",
+    "difficulty": "medium",
+    "question": "Which one of the first four titles of the &quot;Grand Theft Auto&quot; franchise started the series of iconic image grid cover arts?",
+    "correct_answer": "Grand Theft Auto III",
+    "incorrect_answers": [
+      "Grand Theft Auto",
+      "Grand Theft Auto II",
+      "Grand Theft Auto Vice City"
+    ]
+  },
+  {
+    "category": "Entertainment: Video Games",
+    "type": "multiple",
+    "difficulty": "easy",
+    "question": "Rincewind from the 1995 Discworld game was voiced by which member of Monty Python?",
+    "correct_answer": "Eric Idle",
+    "incorrect_answers": [
+      "John Cleese",
+      "Terry Gilliam",
+      "Michael Palin"
+    ]
+  },
+  {
+    "category": "Entertainment: Video Games",
+    "type": "multiple",
+    "difficulty": "hard",
+    "question": "In 2004, which person(s) created &quot;Roblox&quot;?",
+    "correct_answer": "David Baszucki and Erik Cassel",
+    "incorrect_answers": [
+      "Erik Cassel",
+      "Jonas Alto and Sarah Smith",
+      "James Kolein"
+    ]
+  },
+  {
+    "category": "Entertainment: Japanese Anime & Manga",
+    "type": "multiple",
+    "difficulty": "hard",
+    "question": "Who was the Author of the manga Uzumaki?",
+    "correct_answer": "Junji Ito",
+    "incorrect_answers": [
+      "\tNoboru Takahashi",
+      "Akira Toriyama",
+      "Masashi Kishimoto"
+    ]
+  },
+  {
+    "category": "Mythology",
+    "type": "multiple",
+    "difficulty": "medium",
+    "question": "What is the name of the first human being in Norse mythology?",
+    "correct_answer": "Ask",
+    "incorrect_answers": [
+      "Asmund",
+      "Ake",
+      "Asger"
+    ]
+  },
+  {
+    "category": "Entertainment: Video Games",
+    "type": "multiple",
+    "difficulty": "medium",
+    "question": "In Night in the Woods, which instrument did Casey play?",
+    "correct_answer": "Drums",
+    "incorrect_answers": [
+      "Bass",
+      "Piano",
+      "Sax"
+    ]
+  },
+  {
+    "category": "Entertainment: Video Games",
+    "type": "multiple",
+    "difficulty": "easy",
+    "question": "Which of the following Zelda games did not feature Ganon as a final boss?",
+    "correct_answer": "Majora&#039;s Mask",
+    "incorrect_answers": [
+      "Ocarina of Time",
+      "Skyward Sword",
+      "Breath of the Wild"
+    ]
+  },
+  {
+    "category": "Entertainment: Comics",
+    "type": "multiple",
+    "difficulty": "easy",
+    "question": "In &quot;Homestuck&quot; what is Dave Strider&#039;s guardian?",
+    "correct_answer": "Bro",
+    "incorrect_answers": [
+      "Becquerel",
+      "Doc Scratch",
+      "Halley"
+    ]
+  },
+  {
+    "category": "Mythology",
+    "type": "multiple",
+    "difficulty": "medium",
+    "question": "Hel was the daughter of which Norse Mythological figure?",
+    "correct_answer": "Loki",
+    "incorrect_answers": [
+      "Thor",
+      "Odin",
+      "Balder"
+    ]
+  },
+  {
+    "category": "Entertainment: Film",
+    "type": "multiple",
+    "difficulty": "easy",
+    "question": "Who plays Jack Burton in the movie &quot;Big Trouble in Little China?&quot;",
+    "correct_answer": "Kurt Russell",
+    "incorrect_answers": [
+      "Patrick Swayze",
+      "John Cusack",
+      "Harrison Ford"
+    ]
+  },
+  {
+    "category": "Entertainment: Film",
+    "type": "multiple",
+    "difficulty": "medium",
+    "question": "In the movie &quot;Back to the Future,&quot; what speed does Doc Brown&#039;s DeLorean need to reach in order to travel through time?",
+    "correct_answer": "88 mph",
+    "incorrect_answers": [
+      "77 mph",
+      "100 mph",
+      "70 mph"
+    ]
+  },
+  {
+    "category": "Entertainment: Japanese Anime & Manga",
+    "type": "multiple",
+    "difficulty": "easy",
+    "question": "In the Naruto manga, what is the last name of Tsunade?",
+    "correct_answer": "Senju",
+    "incorrect_answers": [
+      "Haruno",
+      "Uzumaki",
+      "Yamanaka"
+    ]
+  }
+]
