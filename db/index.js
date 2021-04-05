@@ -1,15 +1,11 @@
 /* eslint-disable no-console */
 const Pool = require('pg').Pool
 const pool = new Pool({
-  user: 'me',
-  host: 'localhost',
-  database: 'api',
+  user: 'postgres',
   password: 'password',
+  host: 'localhost',
+  database: 'blueocean',
   port: 5432,
 })
 
-pool.connect();
-
-module.exports = {
-  pool
-}
+module.exports = pool;

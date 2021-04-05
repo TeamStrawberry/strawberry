@@ -23,11 +23,15 @@ app.post('/createquiz', async (req, res) => {
             difficulty,
             id_users
         } = req.body;
+        const {description} = req.body;
 
+        const test = await pool.query(
+            "INSERT INTO testing (description) VALUES ($1) RETURNING *", [description]
+        )
         const createQuiz = await pool.query(
             "INSERT INTO quizzes (name, category, difficulty, id_users VALUES ($1, $2, $3, $4) RETURNING *", [name, category, difficulty, id_users]
         )
-        res.status(201).json(createQuiz);
+        res.status(201).json(test);
 
     } catch(err) {
         res.status(500).send(err);
