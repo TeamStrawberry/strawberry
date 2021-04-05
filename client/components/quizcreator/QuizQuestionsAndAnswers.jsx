@@ -1,9 +1,11 @@
 import React from 'react';
+import QuestionGenerator from './QuestionGenerator.jsx';
 
 const QuizQuestionsAndAnswers = () => {
   return (
     <div>
-      Questions and Answers Forms
+      <h3>Questions and Answers Forms</h3>
+      <QuestionGenerator />
     </div>
   )
 }
