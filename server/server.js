@@ -15,8 +15,21 @@ app.use(
     })
 )
 
-app.get('/create', (req, res) => {
+app.post('/createquiz', (req, res) => {
+    queries.createQuiz((err, data) => {
+        if (err) {
+            res.status(500).send(err)
+        } else res.status(200).send(data);
+    })
+})
 
+
+app.post('/createquestion', (req, res) => {
+    queries.createQuestion((err, data) => {
+        if (err) {
+            res.status(500).send(err)
+        } else res.status(200).send(data);
+    })
 })
 
 
