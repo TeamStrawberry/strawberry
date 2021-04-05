@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const express = require('express');
 const path = require('path');
 const bodyparser = require('body-parser');
@@ -31,7 +32,6 @@ app.post('/createquestion', (req, res) => {
         } else res.status(200).send(data);
     })
 })
-
 
 
 app.listen(port, () => {
