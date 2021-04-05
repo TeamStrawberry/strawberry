@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
-const Pool = require('pg').Pool
+const Pool = require('pg').Pool;
+
 const pool = new Pool({
-  user: 'postgres',
+  user: 'acerslee',
   password: 'password',
   host: 'localhost',
   database: 'blueocean',

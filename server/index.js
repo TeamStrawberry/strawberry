@@ -15,26 +15,43 @@ app.use(
     })
 )
 
+// app.get('/createquiz', async (req, res) => {
+//     console.log('testing query')
+//     try {
+//     const test = await pool.query(
+//         "SELECT * from quizzes"
+//         )
+
+//         // const createQuiz = await pool.query(
+//         //     "INSERT INTO quizzes (name, category, difficulty, id_users VALUES ($1, $2, $3, $4) RETURNING *", [name, category, difficulty, id_users]
+//         // )
+//         res.json(test);
+
+//     } catch(err) {
+//         res.status(500).send(err);
+//     }
+// });
+
 app.post('/createquiz', async (req, res) => {
     try {
-        const {
-            name,
-            category,
-            difficulty,
-            id_users
-        } = req.body;
-        const {description} = req.body;
+        // const {
+        //     name,
+        //     category,
+        //     difficulty,
+        //     id_users
+        // } = req.body;
 
-        const test = await pool.query(
-            "INSERT INTO testing (description) VALUES ($1) RETURNING *", [description]
-        )
-        const createQuiz = await pool.query(
-            "INSERT INTO quizzes (name, category, difficulty, id_users VALUES ($1, $2, $3, $4) RETURNING *", [name, category, difficulty, id_users]
-        )
-        res.status(201).json(test);
+        const {description} = req.body;
+        const newTest = await pool.query("INSERT INTO quizzes (description) VALUES ($1) RETURNING *", [description]);
+
+        // const createQuiz = await pool.query(
+        //     "INSERT INTO quizzes (name, category, difficulty, id_users VALUES ($1, $2, $3, $4) RETURNING *", [name, category, difficulty, id_users]
+        // )
+        // console.log(newTest);
+        res.status(201).send(newTest);
 
     } catch(err) {
-        res.status(500).send(err);
+        console.log(err);
     }
 });
 

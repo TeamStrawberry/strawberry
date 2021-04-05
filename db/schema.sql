@@ -4,7 +4,13 @@ CREATE DATABASE blueocean;
 
 \c blueocean
 
-CREATE TABLE IF NOT EXISTS quizzes(id SERIAL PRIMARY KEY,name VARCHAR(100) DEFAULT NULL,category VARCHAR(50) NOT NULL,difficulty VARCHAR(10) NOT NULL,data_created DATE DEFAULT current_date)
+CREATE TABLE IF NOT EXISTS quizzes(
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) DEFAULT NULL,
+  category VARCHAR(50) NOT NULL,
+  difficulty VARCHAR(10) NOT NULL,
+  data_created DATE DEFAULT current_date,
+)
 
   -- id_user INT REFERENCES user(id),
 
