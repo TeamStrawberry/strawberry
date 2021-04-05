@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import ChallengeFriend from "./components/friends/ChallengeFriend";
 import AddFriend from "./components/friends/AddFriend.jsx";
+import TakeQuiz from "./components/takeQuiz/TakeQuiz.jsx";
 import { theme } from "./theme.js";
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,6 +13,11 @@ function AppRoot() {
     <Box m={2}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <Grid>
+          <Grid item>
+            <TakeQuiz />
+          </Grid>
+        </Grid>
         <Grid container direction="row" spacing={3} align="center">
           <Grid item>
             <Typography>Mike's Components for Testing</Typography>
