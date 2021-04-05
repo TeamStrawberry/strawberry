@@ -7,6 +7,9 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { Grid, Typography, Box } from "@material-ui/core";
 
+//Quiz Creator
+import QuizCreator from './components/quizcreator/QuizCreator.jsx';
+
 function AppRoot() {
   return (
     <Box m={2}>
@@ -23,6 +26,10 @@ function AppRoot() {
             <ChallengeFriend />
           </Grid>
         </Grid>
+        <h3>
+          Quiz Creator Page in Development
+        </h3>
+        <QuizCreator />
       </ThemeProvider>
     </Box>
   );
