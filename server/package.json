@@ -12,7 +12,10 @@
   "dependencies": {
     "debug": "^4.1.1",
     "express": "^4.16.4",
-    "nyc": "^14.1.0"
+    "nodemon": "^2.0.7",
+    "nyc": "^14.1.0",
+    "pg": "^8.5.1",
+    "postgresql": "^0.0.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
