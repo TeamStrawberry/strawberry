@@ -59,14 +59,14 @@ app.post('/createquestion', async (req, res) => {
             difficulty,
             question,
             correct_answer,
-            incorrect_answers,
-            id_quiz,
-            id_users
+            incorrect_answers
+            // id_quiz,
+            // id_users
          } = req.body;
 
         /*incorrect_answers is an array datafield, how can i input data in there? */
         const createQuestion = await pool.query(
-            "INSERT INTO questions (category, type, difficulty, question, correct_answer, incorrect_answers, id_users, id_users VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *", [category, type, difficulty, question, correct_answer, incorrect_answers, id_quiz, id_users]
+            "INSERT INTO questions (category, type, difficulty, question, correct_answer, incorrect_answers) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *", [category, type, difficulty, question, correct_answer, incorrect_answers]
         )
         res.status(201).json(createQuestion)
     } catch (err) {
