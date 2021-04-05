@@ -17,7 +17,13 @@ app.use(
 
 app.post('/createquiz', async (req, res) => {
     try {
-        const { name, category, difficulty, id_users } = req.body;
+        const {
+            name,
+            category,
+            difficulty,
+            id_users
+        } = req.body;
+
         const createQuiz = await pool.query(
             "INSERT INTO quizzes (name, category, difficulty, id_users VALUES ($1, $2, $3, $4) RETURNING *", [name, category, difficulty, id_users]
         )
@@ -26,15 +32,9 @@ app.post('/createquiz', async (req, res) => {
     } catch(err) {
         res.status(500).send(err);
     }
-    // queries.createQuiz((err, data) => {
-    //     if (err) {
-    //         res.status(500).send(err)
-    //     } else res.status(201).send(data);
-    // })
 });
 
 app.post('/createquestion', async (req, res) => {
-    //need to figure out what req.body is going to be
     try {
         const {
             category,
@@ -46,23 +46,16 @@ app.post('/createquestion', async (req, res) => {
             id_quiz,
             id_users
          } = req.body;
+
+        /*incorrect_answers is an array datafield, how can i input data in there? */
         const createQuestion = await pool.query(
-            "INSERT INTO quizzes (name, category, difficulty, id_users VALUES ($1, $2, $3, $4) RETURNING *", [category, type, difficulty, question, correct_answer, incorrect_answers, id_quiz, id_users]
+            "INSERT INTO questions (category, type, difficulty, question, correct_answer, incorrect_answers, id_users, id_users VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *", [category, type, difficulty, question, correct_answer, incorrect_answers, id_quiz, id_users]
         )
         res.status(201).json(createQuestion)
     } catch (err) {
         res.status(500).send(err);
     }
-
-
-
-    // queries.createQuestion((err, data) => {
-    //     if (err) {
-    //         res.status(500).send(err)
-    //     } else res.status(201).send(data);
-    // })
 })
-
 
 app.listen(port, () => {
     console.log(`You are listening on port${port}`)
