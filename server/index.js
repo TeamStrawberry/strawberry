@@ -2,12 +2,12 @@
 const express = require('express');
 const path = require('path');
 const bodyparser = require('body-parser');
-const pool = require('./database/index.js')
+const pool = require('../db/index.js')
 
 const app = express();
 const port = 3000;
 
-app.use(express.static(path.join(__dirname, 'client/public')))
+app.use(express.static(path.join(__dirname, '../dist')))
 app.use(bodyparser.json())
 app.use(
     bodyparser.urlencoded({
