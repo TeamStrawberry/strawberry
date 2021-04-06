@@ -20,21 +20,18 @@ app.post('/createquiz', async (req, res) => {
         const {
             name,
             category,
-            difficulty,
-            id_users
+            difficulty
+            // id_users
         } = req.body;
-        const {description} = req.body;
 
-        const test = await pool.query(
-            "INSERT INTO testing (description) VALUES ($1) RETURNING *", [description]
-        )
+        //until users table is created, leave id_users out of the query and req.body
         const createQuiz = await pool.query(
-            "INSERT INTO quizzes (name, category, difficulty, id_users VALUES ($1, $2, $3, $4) RETURNING *", [name, category, difficulty, id_users]
+            "INSERT INTO quizzes (name, category, difficulty) VALUES ($1, $2, $3) RETURNING *", [name, category, difficulty]
         )
-        res.status(201).json(test);
+        res.status(201).send(createQuiz);
 
     } catch(err) {
-        res.status(500).send(err);
+        console.log(err);
     }
 });
 
@@ -46,14 +43,14 @@ app.post('/createquestion', async (req, res) => {
             difficulty,
             question,
             correct_answer,
-            incorrect_answers,
-            id_quiz,
-            id_users
+            incorrect_answers
+            // id_quiz,
+            // id_users
          } = req.body;
 
-        /*incorrect_answers is an array datafield, how can i input data in there? */
+         //until users table is created, leave id_users out of the query and req.body
         const createQuestion = await pool.query(
-            "INSERT INTO questions (category, type, difficulty, question, correct_answer, incorrect_answers, id_users, id_users VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *", [category, type, difficulty, question, correct_answer, incorrect_answers, id_quiz, id_users]
+            "INSERT INTO questions (category, type, difficulty, question, correct_answer, incorrect_answers) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *", [category, type, difficulty, question, correct_answer, incorrect_answers]
         )
         res.status(201).json(createQuestion)
     } catch (err) {
