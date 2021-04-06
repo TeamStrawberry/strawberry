@@ -16,7 +16,7 @@ CREATE TABLE quizzes (
   name VARCHAR(100) NOT NULL,
   category VARCHAR(50) NOT NULL,
   difficulty VARCHAR(10) NOT NULL,
-  date_created DATE,
+  date_created DATE DEFAULT current_date,
   id_users INT REFERENCES users(id)
 );
 
@@ -51,5 +51,4 @@ CREATE TABLE user_completed_quizzes (
 );
 
 INSERT INTO users (id_auth, username)
-VALUES ($1, $2)
-RETURNING *, [admin, admin];
+VALUES ('admin', 'admin');
