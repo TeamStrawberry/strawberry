@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Modal, Grid, Button, Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import sampleData from '/sampleData.json';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   quiz: {
@@ -34,6 +35,8 @@ const TakeQuiz = () => {
     'incorrect': 0
   });
   const [show, setShow] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [validated, setValidated] = useState(false);
 
   const classes = useStyles();
 
@@ -65,12 +68,6 @@ const TakeQuiz = () => {
       .replace(/&#039;/g, "'");
   };
 
-  const handleChange = (e) => {
-    const previousAnswers = Object.assign({}, userAnswers);
-    previousAnswers[e.target.name] = e.target.value;
-    setUserAnswers(previousAnswers);
-  };
-
   const calculateScore = () => {
     let correct = 0, incorrect = 0;
     for (var key in userAnswers) {
@@ -95,15 +92,46 @@ const TakeQuiz = () => {
     }
   };
 
+  const handleChange = (e) => {
+    const previousAnswers = Object.assign({}, userAnswers);
+    previousAnswers[e.target.name] = e.target.value;
+    setUserAnswers(previousAnswers);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    calculateScore();
-    setShow(true);
+    e.stopPropagation();
+    if (Object.keys(userAnswers).length === quizQuestions.length) {
+      setValidated(true);
+      handleOpen();
+      // submitAnswers();
+    } else {
+      setValidated(false);
+      handleOpen();
+    }
   };
 
   const handleClose = () => {
     setShow(false);
   }
+
+  const handleOpen = () => {
+    calculateScore();
+    setShow(true);
+  }
+
+  const handleBack = () => {
+    if (!validated) {
+      setShow(true);
+    } else {
+      // functionality to route back to previous page using React Router
+      // placeholder console.log for now
+      console.log('i need to go back!')
+    }
+  }
+
+  const submitAnswers = () => {
+  };
 
   useEffect(() => {
     let allQuestions = sampleData;
@@ -131,33 +159,70 @@ const TakeQuiz = () => {
   }, [quizQuestions])
 
   const body = (
-    <Grid className={ classes.modal }>
-      <Grid item>
-        <h1>You scored...</h1>
-        <h1>{ Number(score.correct)/Number(score.total) * 100 }%</h1>
-        <h2>{ score.correct }/{ score.total } questions</h2>
-        <h4>{ score.correct } correct out of a total of { score.total }!</h4>
+    validated
+      ? <Grid className={ classes.modal }>
+        <Grid item>
+          <h1>You scored...</h1>
+          <h1>{ Number(score.correct)/Number(score.total) * 100 }%</h1>
+          <h2>{ score.correct }/{ score.total } questions</h2>
+          <h4>{ score.correct } correct out of a total of { score.total }!</h4>
+        </Grid>
+        <Grid item>
+          <Button
+            variant="contained"
+            variant="outlined"
+            color="primary"
+          >
+            Share Score
+          </Button>
+          <Button
+            variant="contained"
+            variant="outlined"
+            color="primary"
+          >
+            Challenge a Friend
+          </Button>
+          <Button
+            variant="contained"
+            variant="outlined"
+            color="primary"
+            onClick={ handleClose }
+          >
+            Close
+          </Button>
+        </Grid>
       </Grid>
-      <Grid item >
-        <Button
-          variant="contained"
-          variant="outlined"
-          color="primary"
-          onClick={ handleClose }
-        >
-          Back to Quiz
-        </Button>
+      : <Grid className={ classes.modal }>
+        <Grid item>
+          <h1>Looks like you've missed some questions.</h1>
+          <h1>[insert warning icon]</h1>
+          <h1>Please answer all questions then submit your quiz!</h1>
+        </Grid>
+        <Grid item>
+          <Button
+            variant="contained"
+            variant="outlined"
+            color="primary"
+            onClick={ handleClose }
+          >
+            Go Back
+          </Button>
+        </Grid>
       </Grid>
-    </Grid>
-  )
+  );
 
   return (
     <Box>
+      <Button onClick={ handleBack }>Go Back</Button>
       {quizQuestions.length
         ? quizQuestions.map((question, index) => (
           <FormControl key={ index } className={ classes.quiz }>
             <FormLabel>{ question.question }</FormLabel>
-            <RadioGroup aria-label={ question.question } name={ question.question } onChange= { handleChange }>
+            <RadioGroup
+              aria-label={ question.question }
+              name={ question.question }
+              onChange={ handleChange }
+            >
               {question.allAnswers.map((answer, index) => (
                 <FormControlLabel
                   key={ index }
@@ -174,7 +239,6 @@ const TakeQuiz = () => {
       <Modal open={ show } onClose={ handleClose }>
         { body }
       </Modal>
-
     </Box>
   );
 };
