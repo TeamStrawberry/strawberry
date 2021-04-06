@@ -6,6 +6,7 @@ const friendSampleData = [
   { name: "Daniel" },
   { name: "Lukas" },
   { name: "Helen" },
+  { name: "Alex BFF" },
 ];
 
 export default friendSampleData;
