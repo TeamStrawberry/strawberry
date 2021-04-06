@@ -14,7 +14,7 @@ function AppRoot() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Grid container direction="row" spacing={3} align="center">
-          <Grid item>
+          <Grid item xs={12}>
             <Routes />
           </Grid>
         </Grid>
