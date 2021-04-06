@@ -10,7 +10,6 @@ const QuizCreator = () => {
   const [questions, setQuestions] = useState([]);
 
   const handleNameChange = (name) => {
-    console.log(name);
     setName(name);
   }
 
@@ -22,12 +21,24 @@ const QuizCreator = () => {
     setDifficulty(difficulty);
   }
 
+  const handleQuestionInputs = () => {
+    let store = [];
+
+  }
+
+  const handleSubmit = () => {
+    console.log('Clicked!')
+    for (let i = 1; i < 16; i++) {
+      let question = document.getElementById(`question${i}`);
+      console.log(question);
+    }
+  }
+
   return (
     <div>
-      Developing Quiz Creator Page
       <QuizOptions handleCategoryChange={handleCategoryChange} handleDifficultyChange={handleDifficultyChange} handleNameChange={handleNameChange} category={category} difficulty={difficulty} name={name}/>
+      <QuizSubmit handleSubmit={handleSubmit}/>
       <QuizQuestionsAndAnswers />
-      <QuizSubmit />
     </div>
   )
 }

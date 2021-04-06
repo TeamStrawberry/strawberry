@@ -5,11 +5,10 @@ import CategorySelector from './CategorySelector.jsx';
 import QuizName from './QuizName.jsx'
 
 const QuizOptions = ({ handleCategoryChange, handleDifficultyChange, difficulty, category, name, handleNameChange }) => {
-
   return (
     <div>
       <h3>
-        Select Quiz Options:
+        Quiz Options
       </h3>
       <QuizName name={name} handleNameChange={handleNameChange}/>
       <CategorySelector category={category} handleCategoryChange={handleCategoryChange}/>

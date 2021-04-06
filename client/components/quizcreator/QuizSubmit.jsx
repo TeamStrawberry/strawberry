@@ -1,9 +1,12 @@
 import React from 'react';
+import { Button } from '@material-ui/core';
 
-const QuizSubmit = () => {
+const QuizSubmit = ({ handleSubmit }) => {
   return (
     <div>
-      Quiz Submit Btn
+      <Button variant="contained" size="small" onClick={(e) => handleSubmit()}>
+        Submit Quiz
+      </Button>
     </div>
   )
 }
