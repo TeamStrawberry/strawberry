@@ -7,9 +7,9 @@ import axios from 'axios';
 //pass in userid as prop in here
 const QuizCreator = () => {
   const [name, setName] = useState('');
-  const [category, setCategory] = useState('General-Knowledge');
-  const [difficulty, setDifficulty] = useState('Easy');
-  const [quizOptionsLoaded, setQuizOptionsLoaded] = useState(false)
+  const [category, setCategory] = useState('');
+  const [difficulty, setDifficulty] = useState('');
+  const [quizOptionsLoaded, setQuizOptionsLoaded] = useState(false);
 
   const handleNameChange = (name) => {
     setName(name);
@@ -38,7 +38,7 @@ const QuizCreator = () => {
       singleQnA.name = name;
       singleQnA.category = category;
       singleQnA.difficulty = difficulty;
-      singleQnA.Question = question;
+      singleQnA.question = question;
       singleQnA.correct_answer = correctAnswer;
       singleQnA.incorrect_answers = [incorrectAnswerA, incorrectAnswerB, incorrectAnswerC];
       let filteredAnswers = singleQnA.incorrect_answers.filter((answer) => {
@@ -51,48 +51,47 @@ const QuizCreator = () => {
       } else {
         singleQnA.type = 'multiple';
       }
-      // user id
-      // quiz id <-- maybe
-      if (singleQnA.Question.length) {
+      // user id <-- AWAITING
+      if (singleQnA.question.length) {
         allQuizQuestions.push(singleQnA);
       }
     }
     if (allQuizQuestions.length < 3) alert('Please create at least 3 questions.');
 
-    // axios.post('/createquiz')
-    //   .then(res => console.log(res.data)
-    //   .catch(err => console.log(err))
-    //   .then(() => {
-    //     allQuizQuestions.forEach(quizQuestion => {
-    //       let userId = {user}
-    //       axios.post('/createquestion')
-    //         .then (res => console.log(res.data))
-    //         .catch(err => console.log(err))
-    //       })
-    //   })
-    // )
+    axios.post('/createquiz', {name, category, difficulty, user: 1})
+      .then(res => {
+        let quizId = res.data.rows[0].id;
+        return quizId
+      })
+      .then(quizId => {
+        allQuizQuestions.forEach(quizQuestion => {
+          quizQuestion.id_quiz = quizId;
+          quizQuestion.users = 1;
+          axios.post('/createquestion', quizQuestion)
+            .then (res => console.log('Quiz question saved!'))
+            .catch(err => console.log(err))
+          })
+      })
+      .catch(err => console.log(err))
   }
+
   return (
     <div>
       <QuizOptions handleCategoryChange={handleCategoryChange} handleDifficultyChange={handleDifficultyChange} handleNameChange={handleNameChange} category={category} difficulty={difficulty} name={name}/>
       {quizOptionsLoaded ?
-      <div>
-      <QuizSubmit handleSubmit={handleSubmit}/>
-      <QuizQuestionsAndAnswers />
-      </div> :
-      <div>
-        Please Select Quiz Options
-      </div>
+        <div>
+          <QuizSubmit handleSubmit={handleSubmit}/>
+            <p>
+              Insert Directions Here
+            </p>
+          <QuizQuestionsAndAnswers />
+        </div> :
+        <div>
+          Please Select Quiz Options
+        </div>
       }
     </div>
   )
 }
 
 export default QuizCreator;
-
-/*
-Bug Bucket = {
-  1. Cant select Easy or General Knowledge Currently
-}
-
-*/

@@ -17,21 +17,21 @@ app.use(
 
 app.post('/createquiz', async (req, res) => {
     try {
+
         const {
             name,
             category,
-            difficulty
-            // id_users
+            difficulty,
+            id_users
         } = req.body;
 
-        //until users table is created, leave id_users out of the query and req.body
         const createQuiz = await pool.query(
-            "INSERT INTO quizzes (name, category, difficulty) VALUES ($1, $2, $3) RETURNING *", [name, category, difficulty]
+            "INSERT INTO quizzes (name, category, difficulty, id_users) VALUES ($1, $2, $3, $4) RETURNING *", [name, category, difficulty, id_users]
         )
         res.status(201).send(createQuiz);
 
     } catch(err) {
-        console.log(err);
+        res.status(500).send(err)
     }
 });
 
@@ -43,18 +43,17 @@ app.post('/createquestion', async (req, res) => {
             difficulty,
             question,
             correct_answer,
-            incorrect_answers
-            // id_quiz,
-            // id_users
-         } = req.body;
+            incorrect_answers,
+            id_quiz,
+            id_users
+        } = req.body;
 
-         //until users table is created, leave id_users out of the query and req.body
         const createQuestion = await pool.query(
-            "INSERT INTO questions (category, type, difficulty, question, correct_answer, incorrect_answers) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *", [category, type, difficulty, question, correct_answer, incorrect_answers]
+            "INSERT INTO questions (category, type, difficulty, question, correct_answer, incorrect_answers, id_quiz, id_users) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *", [category, type, difficulty, question, correct_answer, incorrect_answers, id_quiz, id_users]
         )
         res.status(201).json(createQuestion)
     } catch (err) {
-        res.status(500).send(err);
+       res.status(500).send(err)
     }
 })
 
