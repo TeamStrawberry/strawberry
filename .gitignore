@@ -4,3 +4,4 @@ node_modules/
 client/secrets.js
 dist/bundle.js
 server/db/config.js
+db/config.js
