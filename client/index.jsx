@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import ChallengeFriend from "./components/friends/ChallengeFriend";
-import AddFriend from "./components/friends/AddFriend.jsx";
+import UserProfile from "./components/users/UserProfile";
 import { theme } from "./theme.js";
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,17 +11,7 @@ function AppRoot() {
     <Box m={2}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Grid container direction="row" spacing={3} align="center">
-          <Grid item>
-            <Typography>Mike's Components for Testing</Typography>
-          </Grid>
-          <Grid item>
-            <AddFriend />
-          </Grid>
-          <Grid item>
-            <ChallengeFriend />
-          </Grid>
-        </Grid>
+        <UserProfile />
       </ThemeProvider>
     </Box>
   );
