@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import UserProfile from "../users/UserProfile";
 import QuizSearch from '../quizSearch/QuizSearch';
+import QuizCreator from '../quizcreator/QuizCreator.jsx';
 
 function Routes() {
   return (
@@ -28,7 +29,7 @@ function Routes() {
             <Quizzes />
           </Route>
           <Route path="/create">
-            <CreateQuiz />
+            <QuizCreator />
           </Route>
           <Route path="/profile">
             <UserProfile />
