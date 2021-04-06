@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import ChallengeFriend from "./components/friends/ChallengeFriend";
 import AddFriend from "./components/friends/AddFriend.jsx";
-import Navbar from "./components/homepage/Navbar";
+import Routes from "./components/routes/Routes.jsx";
 import { theme } from "./theme.js";
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -15,16 +15,7 @@ function AppRoot() {
         <CssBaseline />
         <Grid container direction="row" spacing={3} align="center">
           <Grid item>
-          <Grid item>
-            <Navbar />
-          </Grid>
-            <Typography>Mike's Components for Testing</Typography>
-          </Grid>
-          <Grid item>
-            <AddFriend />
-          </Grid>
-          <Grid item>
-            <ChallengeFriend />
+            <Routes />
           </Grid>
 
         </Grid>
@@ -32,5 +23,7 @@ function AppRoot() {
     </Box>
   );
 }
+
+
 
 ReactDOM.render(AppRoot(), document.getElementById("root"));
