@@ -66,8 +66,8 @@ const QuizCategorySearch = (props) => {
     }
   ];
 
+// This handles the dummy data, and may need to be altered when we have access to the real data
   const tempCategories = {};
-  // This handles the dummy data, and may need to be altered when we have access to the real data
   const categoryMaker = (array) => {
     for (let i = 0; i < array.length; i++) {
       if (!tempCategories[array[i].category]) {

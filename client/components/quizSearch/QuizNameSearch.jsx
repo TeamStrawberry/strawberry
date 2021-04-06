@@ -4,6 +4,8 @@ import SearchIcon from "@material-ui/icons/Search";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
 const QuizNameSearch = () => {
+
+/* This will need to be implemented when I have access to real data */
   // const handleFocus = (event) => {
   //   event.preventDefault();
   //   const { target } = event;
@@ -16,6 +18,7 @@ const QuizNameSearch = () => {
       id='quiz-name-search-bar'
       placeholder='by name...'
       size='small'
+    /* This will need to be implemented when I have access to real data */
       // onChange={(e) => handleSearch(e.target.value)}
       // onFocus={handleFocus}
       fullWidth
