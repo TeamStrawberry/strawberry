@@ -19,10 +19,6 @@ function AppRoot() {
             <Routes />
           </Grid>
         </Grid>
-        <h3>
-          Quiz Creator Page in Development
-        </h3>
-        <QuizCreator />
       </ThemeProvider>
     </Box>
   );

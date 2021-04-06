@@ -1,19 +1,20 @@
-/* eslint-disable no-console */
 const express = require('express');
 const path = require('path');
 const bodyparser = require('body-parser');
 const pool = require('../db/index.js')
 
-const app = express();
 const port = 3000;
+const app = express();
 
-app.use(express.static(path.join(__dirname, '../dist')))
+app.use(express.json());
+app.use(express.static(path.join(__dirname, "../dist")));
 app.use(bodyparser.json())
 app.use(
     bodyparser.urlencoded({
         extended:true,
     })
 )
+
 
 app.post('/createquiz', async (req, res) => {
     try {
