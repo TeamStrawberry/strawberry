@@ -17,15 +17,6 @@ function AppRoot() {
           <Grid item>
             <Routes />
           </Grid>
-          <Grid item>
-            <Typography>Mike's Components for Testing</Typography>
-          </Grid>
-          <Grid item>
-            <AddFriend />
-          </Grid>
-          <Grid item>
-            <ChallengeFriend />
-          </Grid>
         </Grid>
       </ThemeProvider>
     </Box>
