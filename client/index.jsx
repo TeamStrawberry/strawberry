@@ -19,11 +19,6 @@ function AppRoot() {
     <Box m={2}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Grid>
-          <Grid item>
-            <TakeQuiz />
-          </Grid>
-        </Grid>
         <Grid container direction="row" spacing={3} align="center">
           <Grid item xs={12}>
             <Navbar />
