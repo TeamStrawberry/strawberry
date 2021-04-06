@@ -15,7 +15,7 @@ function FriendSearch() {
   return (
     <OutlinedInput
       id="friend-search-bar"
-      defaultValue="Search for a friend..."
+      placeholder="search for a friend..."
       size="small"
       // onChange={(e) => handleSearch(e.target.value)}
       onFocus={handleFocus}
