@@ -15,34 +15,18 @@ app.use(
     })
 )
 
-// app.get('/createquiz', async (req, res) => {
-//     console.log('testing query')
-//     try {
-//     const test = await pool.query(
-//         "SELECT * from quizzes"
-//         )
-
-//         // const createQuiz = await pool.query(
-//         //     "INSERT INTO quizzes (name, category, difficulty, id_users VALUES ($1, $2, $3, $4) RETURNING *", [name, category, difficulty, id_users]
-//         // )
-//         res.json(test);
-
-//     } catch(err) {
-//         res.status(500).send(err);
-//     }
-// });
-
 app.post('/createquiz', async (req, res) => {
     try {
         const {
             name,
             category,
-            difficulty,
-            id_users
+            difficulty
+            // id_users
         } = req.body;
 
+        //until users table is created, leave id_users out of the query and req.body
         const createQuiz = await pool.query(
-            "INSERT INTO quizzes (name, category, difficulty, id_users) VALUES ($1, $2, $3, $4) RETURNING *", [name, category, difficulty, id_users]
+            "INSERT INTO quizzes (name, category, difficulty) VALUES ($1, $2, $3) RETURNING *", [name, category, difficulty]
         )
         res.status(201).send(createQuiz);
 
@@ -64,7 +48,7 @@ app.post('/createquestion', async (req, res) => {
             // id_users
          } = req.body;
 
-        /*incorrect_answers is an array datafield, how can i input data in there? */
+         //until users table is created, leave id_users out of the query and req.body
         const createQuestion = await pool.query(
             "INSERT INTO questions (category, type, difficulty, question, correct_answer, incorrect_answers) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *", [category, type, difficulty, question, correct_answer, incorrect_answers]
         )
