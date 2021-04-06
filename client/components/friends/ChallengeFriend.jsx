@@ -12,16 +12,7 @@ import {
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 import FriendList from "./FriendList";
 import FriendSearch from "./FriendSearch";
-
-const dummyData = [
-  { name: "Mike" },
-  { name: "John" },
-  { name: "Cindy" },
-  { name: "Harshin" },
-  { name: "Daniel" },
-  { name: "Lukas" },
-  { name: "Helen" },
-];
+import friendSampleData from "./friendSampleData";
 
 const useStyles = makeStyles((theme = theme) => ({
   modal: {
@@ -43,7 +34,7 @@ function ChallengeFriend({ link = "http://test.com" }) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [open, setOpen] = useState(false);
-  const [challengees, setChallengees] = useState(dummyData);
+  const [challengees, setChallengees] = useState(friendSampleData);
 
   const handleOpen = () => {
     setOpen(true);

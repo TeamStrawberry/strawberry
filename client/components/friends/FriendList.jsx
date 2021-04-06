@@ -1,19 +1,10 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 import Friend from "./Friend.jsx";
-
-const dummyData = [
-  { name: "Mike" },
-  { name: "John" },
-  { name: "Cindy" },
-  { name: "Harshin" },
-  { name: "Daniel" },
-  { name: "Lukas" },
-  { name: "Helen" },
-];
+import friendSampleData from "./friendSampleData";
 
 function FriendList({ variant }) {
-  let friends = dummyData.map((friend) => {
+  let friends = friendSampleData.map((friend) => {
     return (
       <Grid item>
         <Friend friendName={friend.name} variant={variant} />
