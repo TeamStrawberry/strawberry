@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import UserProfile from "../users/UserProfile";
 import QuizSearch from '../quizSearch/QuizSearch';
 import QuizCreator from '../quizcreator/QuizCreator.jsx';
+import TakeQuiz from '../takeQuiz/TakeQuiz';
 
 function Routes() {
   return (
@@ -22,6 +23,9 @@ function Routes() {
             <li>
               <Link to="/profile">Profile</Link>
             </li>
+            <li>
+              <Link to="/takeQuiz">Take Quiz</Link>
+            </li>
           </ul>
         </nav>
         <Switch>
@@ -33,6 +37,9 @@ function Routes() {
           </Route>
           <Route path="/profile">
             <UserProfile />
+          </Route>
+          <Route path="/takeQuiz">
+            <TakeQuiz />
           </Route>
         </Switch>
       </Router>
