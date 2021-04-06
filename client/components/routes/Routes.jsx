@@ -30,7 +30,7 @@ function Routes() {
             <CreateQuiz />
           </Route>
           <Route path="/profile">
-            <UserProfileRoute />
+            <UserProfile />
           </Route>
         </Switch>
       </Router>
@@ -44,10 +44,6 @@ function Quizzes() {
 
 function CreateQuiz() {
   return <h2>Build your own pizza(quiz) here</h2>;
-}
-
-function UserProfileRoute() {
-  return <UserProfile />;
 }
 
 export default Routes;
