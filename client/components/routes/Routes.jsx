@@ -1,11 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
-
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import UserProfile from "../users/UserProfile";
 
 function Routes() {
   return (
-  <div>
-    <Router>
+    <div>
+      <Router>
         <nav>
           <ul>
             <li>
@@ -18,21 +18,24 @@ function Routes() {
               <Link to="/create">Create A Quiz</Link>
             </li>
             <li>
-              <Link to="/profile">Account</Link>
+              <Link to="/profile">Profile</Link>
             </li>
           </ul>
         </nav>
         <Switch>
           <Route path="/quizzes">
-          <Quizzes />
+            <Quizzes />
           </Route>
           <Route path="/create">
-          <CreateQuiz />
+            <CreateQuiz />
+          </Route>
+          <Route path="/profile">
+            <UserProfile />
           </Route>
         </Switch>
-    </Router>
+      </Router>
     </div>
-    )
+  );
 }
 
 function Quizzes() {
