@@ -89,7 +89,7 @@ const QuizCategorySearch = (props) => {
     <Grid container>
       <Grid item xs={12} >
         <FormControl fullWidth={true}>
-          <InputLabel id='quiz-filter-select-label'>Category</InputLabel>
+          <InputLabel id='quiz-category-select-label'>Category</InputLabel>
           <Select
             labelId='quiz-filter-select-label'
             id='quiz-filter-select'

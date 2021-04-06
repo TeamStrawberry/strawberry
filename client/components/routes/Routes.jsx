@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import UserProfile from "../users/UserProfile";
+import QuizSearch from '../quizSearch/QuizSearch';
 
 function Routes() {
   return (
@@ -39,7 +40,12 @@ function Routes() {
 }
 
 function Quizzes() {
-  return <h2>Take your quizzes here</h2>;
+  return (
+    <div>
+      <h2>Take your quizzes here</h2>
+      <QuizSearch />
+    </div>
+  );
 }
 
 function CreateQuiz() {
