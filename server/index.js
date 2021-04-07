@@ -64,7 +64,8 @@ app.post("/createquestion", async (req, res) => {
 app.post("/friends/:userId/:friendId", async (req, res) => {
   try {
     const addFriend = await pool.query(
-      `INSERT INTO user_friend_relationships (id_user, id_user_friend, date_created) VALUES ($1, $2, to_timestamp(${Date.now()} / 1000.0)), ($2, $1, to_timestamp(${Date.now()} / 1000.0)) RETURNING *`,
+      `INSERT INTO user_friend_relationships (id_user, id_user_friend, date_created) VALUES ($1, $2, to_timestamp(${Date.now()} / 1000.0)), ($2, $1, to_timestamp(${Date.now()} / 1000.0))
+      RETURNING *`,
       [req.params.userId, req.params.friendId]
     );
     res.status(201).send(addFriend);
@@ -74,16 +75,30 @@ app.post("/friends/:userId/:friendId", async (req, res) => {
 });
 
 //gets a list of friends for a user
-app.get("/friends/:userId/", async (req, res) => {
+app.get("/friends/:userId", async (req, res) => {
   try {
-    const addFriend = await pool.query(
+    const getFriends = await pool.query(
       `SELECT u.*
       FROM user_friend_relationships f
       JOIN users u
       ON f.id_user_friend = u.id
       WHERE f.id_user = ${req.params.userId};`
     );
-    res.status(201).send(addFriend);
+    res.status(201).send(getFriends);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+//get all users
+app.get("/users/", async (req, res) => {
+  try {
+    const getUsers = await pool.query(
+      `SELECT *
+      FROM users
+      ORDER BY username ASC;`
+    );
+    res.status(201).send(getUsers);
   } catch (err) {
     res.status(500).send(err);
   }
