@@ -56,9 +56,19 @@ app.post('/createquestion', async (req, res) => {
     }
 });
 
-app.put('/revisequestion', async (req, res) => {
+app.put('/revisequiz/:id', async (req, res) => {
     try{
-        const {id_quiz} = req.body;
+        const {id} = req.params;
+        const {
+            name,
+            category,
+            difficulty
+        } = req.body;
+
+        const reviseQuiz = await pool.query(
+            `UPDATE quizzes SET name = $1, category = $2, difficulty = $3 WHERE ID = ${id}`, [name, category, difficulty]
+        );
+        res.status(200).json(reviseQuiz);
     } catch (err) {
         res.status(500).send(err)
     }
@@ -66,14 +76,15 @@ app.put('/revisequestion', async (req, res) => {
 
 
 app.delete('/deletequiz/:id', async (req, res) => {
-    console.log('testing delete');
     try{
-        const deleteQuestion = await pool.query(
-            `DELETE FROM quizzes WHERE id = ${req.params.id}`
+        const {id} = req.params;
+
+        const deleteQuiz = await pool.query(
+            `DELETE FROM quizzes WHERE id = ${id}`
         )
-        res.status(200).json(deleteQuestion);
+        res.status(200).json(deleteQuiz);
     } catch (err) {
-      console.log(err)
+        res.status(500).send(err)
     }
 });
 
