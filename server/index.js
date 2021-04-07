@@ -73,6 +73,22 @@ app.post("/friends/:userId/:friendId", async (req, res) => {
   }
 });
 
+//gets a list of friends for a user
+app.get("/friends/:userId/", async (req, res) => {
+  try {
+    const addFriend = await pool.query(
+      `SELECT u.*
+      FROM user_friend_relationships f
+      JOIN users u
+      ON f.id_user_friend = u.id
+      WHERE f.id_user = ${req.params.userId};`
+    );
+    res.status(201).send(addFriend);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 app.listen(port, () => {
   console.log(`You are listening on port${port}`);
 });
