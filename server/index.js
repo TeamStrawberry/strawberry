@@ -64,8 +64,9 @@ app.post("/createquestion", async (req, res) => {
 app.post("/friends/:userId/:friendId", async (req, res) => {
   try {
     const addFriend = await pool.query(
-      `INSERT INTO user_friend_relationships (id_user, id_user_friend, date_created) VALUES ($1, $2, to_timestamp(${Date.now()} / 1000.0)), ($2, $1, to_timestamp(${Date.now()} / 1000.0))
-      RETURNING *`,
+      `INSERT INTO user_friend_relationships (id_user, id_user_friend, date_created)
+      VALUES ($1, $2, to_timestamp(${Date.now()} / 1000.0)), ($2, $1, to_timestamp(${Date.now()} / 1000.0))
+        RETURNING *`,
       [req.params.userId, req.params.friendId]
     );
     res.status(201).send(addFriend);
