@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import QuizOptions from './QuizOptions.jsx';
 import QuizQuestionsAndAnswers from './QuizQuestionsAndAnswers.jsx';
 import QuizSubmit from './QuizSubmit.jsx';
+import QuizBank from './QuizBank.jsx';
+import QuizzesPerDayTracker from './QuizzesPerDayTracker';
 import axios from 'axios';
 
+// TIER 3 - ALLOW USERS TO SUBMIT PHOTOS AND VIDEOS
+// TIER 2 - ENTERED DATA SHOULD PERSIST IF USER LEAVES CREATE QUIZ PAGE
 //pass in userid as prop in here
 const QuizCreator = () => {
   const [name, setName] = useState('');
@@ -24,6 +28,8 @@ const QuizCreator = () => {
     setQuizOptionsLoaded(true);
   }
 
+  // rerender page on submit or go to another page
+  // form validators only have either 2 or 4 answers no 3
   const handleSubmit = () => {
     let allQuizQuestions = [];
 
@@ -78,12 +84,14 @@ const QuizCreator = () => {
   return (
     <div>
       <QuizOptions handleCategoryChange={handleCategoryChange} handleDifficultyChange={handleDifficultyChange} handleNameChange={handleNameChange} category={category} difficulty={difficulty} name={name}/>
+      <QuizzesPerDayTracker />
       {quizOptionsLoaded ?
         <div>
           <QuizSubmit handleSubmit={handleSubmit}/>
             <p>
               Insert Directions Here
             </p>
+          <QuizBank />
           <QuizQuestionsAndAnswers />
         </div> :
         <div>
