@@ -81,9 +81,12 @@ app.delete('/deletequiz/:id', async (req, res) => {
         const deleteQuiz = await pool.query(
             `DELETE FROM quizzes WHERE id = ${id}`
         )
-        res.status(200).json(deleteQuiz);
+        const deleteQuestions = await pool.query(
+            `DELETE FROM questions WHERE id_quiz = ${id}`
+        )
+        res.status(200).send('Quiz and quiz-related questions deleted successfully');
     } catch (err) {
-        res.status(500).send(err)
+        console.log(err)
     }
 });
 
