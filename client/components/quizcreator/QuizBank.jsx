@@ -5,7 +5,7 @@ const QuizBank = () => {
   return (
     <div>
       <h3>
-        Quiz Question Bank!
+        Question Bank in Development...
       </h3>
     </div>
   )

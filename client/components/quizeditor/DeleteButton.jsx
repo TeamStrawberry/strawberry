@@ -45,7 +45,7 @@ const DeleteButton = ({ userId, quizName, quizQuestions }) => {
       // Make delete request for quiz
 
       // Delete request for all the questions
-
+        
       // close modal and take user back to their quizzes
     }
 
