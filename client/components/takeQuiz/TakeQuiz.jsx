@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TakeQuiz = () => {
+const TakeQuiz = (quizId) => {
   const [quizQuestions, setQuizQuestions] = useState([]);
   const [quizAnswers, setQuizAnswers] = useState({});
   const [userAnswers, setUserAnswers] = useState({});
@@ -130,6 +130,40 @@ const TakeQuiz = () => {
     }
   }
 
+  const retrieveQuiz = () => {
+    let allAnswers = {}, cleanedQuestions = [], allQuestions;
+    axios
+      // .get(`/quiz/${quizId}`)
+      .get(`/quiz/20`)
+      .then(response => {
+        setQuizQuestions(response.data.rows);
+        return response.data.rows;
+      })
+      .then(response => {
+        allQuestions = response;
+        if (allQuestions.length) {
+          for (var i = 0; i < allQuestions.length; i++) {
+            const questionBody = cleanText(allQuestions[i].question);
+            const randomAnswers = randomizeAnswers(allQuestions[i].correct_answer, allQuestions[i].incorrect_answers);
+            const cleanedQuestion = Object.assign(allQuestions[i], { question: questionBody, randomizedAnswers: randomAnswers });
+            cleanedQuestions.push(cleanedQuestion);
+          }
+          setQuizQuestions(cleanedQuestions);
+          return cleanedQuestions;
+        }
+      })
+      .then(response => {
+        for (var i = 0; i < response.length; i++) {
+          const answer = response[i].correct_answer;
+          allAnswers[answer] = true;
+        }
+        setQuizAnswers(allAnswers);
+      })
+      .catch(err => {
+        console.error('Error: cannot retreive quiz questions from database', err)
+      })
+  }
+
   const submitAnswers = () => {
     axios({
       method: 'post',
@@ -137,39 +171,18 @@ const TakeQuiz = () => {
       data: {
         correct_answer_count: score.correct,
         incorrect_answer_count: score.incorrect,
-        id_quiz: 1,
+        id_quiz: 20,
         id_users: 1
       }
     })
     .catch(err => {
-      console.log('Error: cannot submit quiz answers to database', err);
+      console.error('Error: cannot submit quiz answers to database', err);
     })
   };
 
   useEffect(() => {
-    let allQuestions = sampleData;
-    let cleanedQuestions = [];
-    if (allQuestions.length) {
-      for (var i = 0; i < allQuestions.length; i++) {
-        const questionBody = cleanText(allQuestions[i].question);
-        const randomAnswers = randomizeAnswers(allQuestions[i].correct_answer, allQuestions[i].incorrect_answers);
-        const cleanedQuestion = Object.assign(allQuestions[i], { question: questionBody, allAnswers: randomAnswers });
-        cleanedQuestions.push(cleanedQuestion);
-      }
-    }
-    setQuizQuestions(cleanedQuestions);
+    retrieveQuiz();
   }, [])
-
-  useEffect(() => {
-    const allAnswers = {};
-    if (quizQuestions.length) {
-      for (var i = 0; i < quizQuestions.length; i++) {
-        const answer = quizQuestions[i].correct_answer;
-        allAnswers[answer] = true;
-      }
-      setQuizAnswers(allAnswers);
-    }
-  }, [quizQuestions])
 
   const body = (
     validated
@@ -179,6 +192,14 @@ const TakeQuiz = () => {
           <h1>{ Number(score.correct)/Number(score.total) * 100 }%</h1>
           <h2>{ score.correct }/{ score.total } questions</h2>
           <h4>{ score.correct } correct out of a total of { score.total }!</h4>
+        </Grid>
+        <Grid item>
+          <Grid>
+            <h1>insert score out of friends</h1>
+          </Grid>
+          <Grid>
+            <h1>insert global percentile</h1>
+          </Grid>
         </Grid>
         <Grid item>
           <Button
@@ -227,6 +248,7 @@ const TakeQuiz = () => {
   return (
     <Box>
       <Button onClick={ handleBack }>Go Back</Button>
+      <Button>placeholder for timer: 0:00</Button>
       {quizQuestions.length
         ? quizQuestions.map((question, index) => (
           <FormControl key={ index } className={ classes.quiz }>
@@ -236,16 +258,19 @@ const TakeQuiz = () => {
               name={ question.question }
               onChange={ handleChange }
             >
-              {question.allAnswers.map((answer, index) => (
+              {question.randomizedAnswers
+                ? question.randomizedAnswers.map((answer, index) => (
                 <FormControlLabel
                   key={ index }
                   value={ answer }
                   control={ <Radio /> }
                   label={ answer } />
-              ))}
+                ))
+                : null
+              }
             </RadioGroup>
           </FormControl>
-          ))
+        ))
         : null
       }
       <Button type='submit' onClick={ handleSubmit }>Submit</Button>

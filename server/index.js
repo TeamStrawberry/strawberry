@@ -1,7 +1,6 @@
-// Does this fix your formatting?
 const express = require("express");
 const path = require("path");
-const pool = require("../db/pool.js");
+const { pool } = require("../db/pool.js");
 
 const port = 3000;
 const app = express();
@@ -60,22 +59,35 @@ app.post("/createquestion", async (req, res) => {
   }
 });
 
-app.post('/submitquiz', async (req, res) => {
-    try {
-        const {
-            correct_answer_count,
-            incorrect_answer_count,
-            id_quiz,
-            id_users
-        } = req.body;
+app.get('/quiz/:id', async (req, res) => {
+  try {
+    const quizId = req.params.id;
+    const retrieveQuiz = await pool.query(
+      `SELECT * FROM questions WHERE questions.id_quiz = ${quizId}`
+    )
+    console.log()
+    res.status(200).send(retrieveQuiz);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+})
 
-        const submitQuiz = await pool.query(
-            "INSERT INTO user_completed_quizzes (            correct_answer_count, incorrect_answer_count, id_quiz, id_users) VALUES ($1, $2, $3, $4) RETURNING *", [correct_answer_count, incorrect_answer_count, id_quiz, id_users]
-        )
-        res.status(201).send(submitQuiz);
-    } catch (err) {
-        res.status(500).send(err);
-    }
+app.post('/submitquiz', async (req, res) => {
+  try {
+    const {
+      correct_answer_count,
+      incorrect_answer_count,
+      id_quiz,
+      id_users
+    } = req.body;
+
+    const submitQuiz = await pool.query(
+      "INSERT INTO user_completed_quizzes (correct_answer_count, incorrect_answer_count, id_quiz, id_users) VALUES ($1, $2, $3, $4) RETURNING *", [correct_answer_count, incorrect_answer_count, id_quiz, id_users]
+    )
+    res.status(201).send(submitQuiz);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 })
 
 app.listen(port, () => {
