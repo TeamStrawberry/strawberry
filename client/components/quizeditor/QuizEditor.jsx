@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import DeleteBtn from './DeleteButton.jsx';
 import QuizDisplay from './QuizDisplay.jsx';
-import SubmitEditsBtn from './SubmitEditsButton.jsx';
 import axios from 'axios';
 
 
@@ -17,19 +16,20 @@ import axios from 'axios';
   // Allow user to edit entire quiz and resubmitting the changes (PUT)
   // Allow user to delete quiz by deleting each question (DELETE)
 const QuizEditor = () => {
-
+  // userId and quizName will most likely be passed down as props
   const [userId, setUserId] = useState('');
-  const [quizName, setQuizName] = useState('');
-  const [quizQuestions, setQuizQuestions] = useState([]);
+  const [quizName, setQuizName] = useState('Solar System Quiz');
+  //const [quizQuestions, setQuizQuestions] = useState([]); <--May be props May be from request
 
   // make axios request to database
 
   return (
     <div>
-      Quiz Editor in Development
-      <QuizDisplay questions={quizQuestions}/>
-      <SubmitEditsBtn />
-      <DeleteBtn />
+      <h2>
+        {quizName}
+      </h2>
+      <DeleteBtn userId={userId} quizName={quizName} quizQuestions={''}/>
+      <QuizDisplay userId={userId} quizName={quizName} quizQuestions={''}/>
     </div>
   )
 }

@@ -15,10 +15,8 @@ app.use(
     })
 )
 
-
 app.post('/createquiz', async (req, res) => {
     try {
-
         const {
             name,
             category,
@@ -57,6 +55,37 @@ app.post('/createquestion', async (req, res) => {
        res.status(500).send(err)
     }
 })
+
+app.put('/revisequiz/:id', async (req, res) => {
+    try{
+        const {id} = req.params;
+        const {
+            name,
+            category,
+            difficulty
+        } = req.body;
+
+        const reviseQuiz = await pool.query(
+            `UPDATE quizzes SET name = $1, category = $2, difficulty = $3 WHERE ID = ${id}`, [name, category, difficulty]
+        );
+        res.status(200).json(reviseQuiz);
+    } catch (err) {
+        res.status(500).send(err)
+    }
+});
+
+app.delete('/deletequiz/:id', async (req, res) => {
+    try{
+        const {id} = req.params;
+
+        const deleteQuiz = await pool.query(
+            `DELETE FROM quizzes WHERE id = ${id}`
+        )
+        res.status(200).json(deleteQuiz);
+    } catch (err) {
+        res.status(500).send(err)
+    }
+});
 
 app.listen(port, () => {
     console.log(`You are listening on port${port}`)

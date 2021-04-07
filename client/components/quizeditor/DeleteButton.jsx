@@ -1,13 +1,76 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
+import { Button, Modal } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
 
-const DeleteBtn = () => {
-
-  return (
-    <div>
-      <Button>Delete Quiz</Button>
-    </div>
-  )
+function getModalStyle() {
+    const top = 50;
+    const left = 50;
+    return {
+        top: `${top}%`,
+        left: `${left}%`,
+        transform: `translate(-${top}%, -${left}%)`,
+    };
 }
 
-export default DeleteBtn;
+const useStyles = makeStyles(theme => ({
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    paper: {
+        position: 'absolute',
+        width: 450,
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+    },
+}));
+
+const DeleteButton = ({ userId, quizName, quizQuestions }) => {
+    const classes = useStyles();
+    const [modalStyle] = React.useState(getModalStyle);
+    const [open, setOpen] = React.useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleQuizDelete = () => {
+      // Make delete request for quiz
+
+      // Delete request for all the questions
+
+      // close modal and take user back to their quizzes
+    }
+
+    return (
+        <div>
+            <Button variant="contained" color="primary" onClick={handleOpen}>
+                Delete Quiz
+            </Button>
+
+            <Modal
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                open={open}
+                onClose={handleClose}
+            >
+                <div style={modalStyle} className={classes.paper}>
+                    <h2>Warning!</h2>
+                    <p>
+                      Deleting a quiz cannot be undone.
+                    </p>
+                    <Button>Delete Anyway</Button>
+                </div>
+            </Modal>
+        </div>
+    );
+}
+
+export default DeleteButton;
