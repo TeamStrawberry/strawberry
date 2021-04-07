@@ -17,21 +17,11 @@ app.post("/createquiz", async (req, res) => {
   try {
     const { name, category, difficulty, id_users } = req.body;
 
-    // const createQuiz = await pool.connect((err, client, done) => {
-    //     if (err) return console.err("connection error: ", err);
-
-    //     client.query(
-    //         "INSERT INTO quizzes (name, category, difficulty, id_users) VALUES ($1, $2, $3, $4) RETURNING *",
-    //         [name, category, difficulty, id_users], (err,res) => {
-    //             done();
-    //             if (err) {
-    //                 return console.error('Error running quiz query: ', err);
-    //         } else res.status(201).send(createQuiz);
-    //         })
-    // })
-
     const createQuiz = await pool.query(
-      "INSERT INTO quizzes (name, category, difficulty, id_users) VALUES ($1, $2, $3, $4) RETURNING *",
+      `INSERT INTO quizzes
+        (name, category, difficulty, id_users)
+        VALUES ($1, $2, $3, $4)
+        RETURNING *`,
       [name, category, difficulty, id_users]
     );
     res.status(201).send(createQuiz);
@@ -54,7 +44,9 @@ app.post("/createquestion", async (req, res) => {
     } = req.body;
 
     const createQuestion = await pool.query(
-      "INSERT INTO questions (category, type, difficulty, question, correct_answer, incorrect_answers, id_quiz, id_users) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
+      `INSERT INTO questions
+        (category, type, difficulty, question, correct_answer, incorrect_answers, id_quiz, id_users) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        RETURNING *`,
       [
         category,
         type,
@@ -82,7 +74,13 @@ app.put('/revisequiz/:id', async (req, res) => {
         } = req.body;
 
         const reviseQuiz = await pool.query(
-            `UPDATE quizzes SET name = $1, category = $2, difficulty = $3 WHERE ID = ${id}`, [name, category, difficulty]
+            `UPDATE quizzes
+                SET
+                    name = $1,
+                    category = $2,
+                    difficulty = $3
+                WHERE ID = ${id}`,
+            [name, category, difficulty]
         );
         res.status(200).json(reviseQuiz);
     } catch (err) {
@@ -94,15 +92,27 @@ app.put('/revisequestion/:id', async (req, res) => {
     try{
         const {id} = req.params;
         const {
-            name,
             category,
-            difficulty
+            type,
+            difficulty,
+            question,
+            correct_answer,
+            incorrect_answers
         } = req.body;
 
-        const reviseQuiz = await pool.query(
-            `UPDATE quizzes SET name = $1, category = $2, difficulty = $3 WHERE ID = ${id}`, [name, category, difficulty]
+        const reviseQuestion = await pool.query(
+            `UPDATE questions
+                SET
+                    category = $1,
+                    type = $2,
+                    difficulty = $3,
+                    question = $4,
+                    correct_answer = $5,
+                    incorrect_answers = $6
+                WHERE ID = ${id}`,
+            [name, category, difficulty, question, correct_answer, incorrect_answers]
         );
-        res.status(200).json(reviseQuiz);
+        res.status(200).json(reviseQuestion);
     } catch (err) {
         res.status(500).send(err);
     }
