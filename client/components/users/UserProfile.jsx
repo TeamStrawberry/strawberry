@@ -6,6 +6,8 @@ import ChallengeFriend from "../friends/ChallengeFriend";
 import UserAvatar from "./UserAvatar";
 import UserStats from "./UserStats";
 import UserRankings from "./UserRankings";
+import UserQuizHistoryTaken from "./UserQuizHistoryTaken";
+import UserQuizHistoryCreated from "./UserQuizHistoryCreated";
 
 function UserProfile() {
   return (
@@ -28,7 +30,7 @@ function UserProfile() {
         </Grid>
         <Grid
           item
-          xs={10}
+          xs={5}
           container
           direction="column"
           display="flex"
@@ -36,6 +38,17 @@ function UserProfile() {
         >
           <UserStats />
           <UserRankings />
+        </Grid>
+        <Grid
+          item
+          xs={5}
+          container
+          direction="column"
+          display="flex"
+          spacing={2}
+        >
+          <UserQuizHistoryTaken />
+          <UserQuizHistoryCreated />
         </Grid>
       </Grid>
     </Grid>
