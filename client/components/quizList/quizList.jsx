@@ -46,7 +46,7 @@ const QuizList = ({ name, category, difficulty }) => {
         alignItems='center'
         spacing={2}
       >
-        { dummyQuizzes.map((quiz, index) =>  <QuizListCard quiz={ quiz } key={`${index}`}/>) }
+        { dummyQuizzes.map((quiz, index) =>  <QuizListCard quiz={ quiz } key={ index }/>) }
       </Grid>
     </div>
   )
