@@ -58,6 +58,24 @@ app.post('/createquestion', async (req, res) => {
     }
 })
 
+app.post('/submitquiz', async (req, res) => {
+    try {
+        const {
+            correct_answer_count,
+            incorrect_answer_count,
+            id_quiz,
+            id_users
+        } = req.body;
+
+        const submitQuiz = await pool.query(
+            "INSERT INTO user_completed_quizzes (            correct_answer_count, incorrect_answer_count, id_quiz, id_users) VALUES ($1, $2, $3, $4) RETURNING *", [correct_answer_count, incorrect_answer_count, id_quiz, id_users]
+        )
+        res.status(201).send(submitQuiz);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+})
+
 app.listen(port, () => {
     console.log(`You are listening on port${port}`)
 });

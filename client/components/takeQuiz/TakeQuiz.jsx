@@ -131,6 +131,19 @@ const TakeQuiz = () => {
   }
 
   const submitAnswers = () => {
+    axios({
+      method: 'post',
+      url: '/submitquiz',
+      data: {
+        correct_answer_count: score.correct,
+        incorrect_answer_count: score.incorrect,
+        id_quiz: 1,
+        id_users: 1
+      }
+    })
+    .catch(err => {
+      console.log('Error: cannot submit quiz answers to database', err);
+    })
   };
 
   useEffect(() => {
