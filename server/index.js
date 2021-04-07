@@ -74,7 +74,6 @@ app.put('/revisequiz/:id', async (req, res) => {
     }
 });
 
-
 app.delete('/deletequiz/:id', async (req, res) => {
     try{
         const {id} = req.params;
