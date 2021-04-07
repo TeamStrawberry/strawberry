@@ -1,8 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import UserProfile from "../users/UserProfile";
-import QuizSearch from '../quizSearch/QuizSearch';
 import QuizCreator from '../quizcreator/QuizCreator.jsx';
+import QuizList from '../quizList/QuizList';
+import QuizSearch from '../quizSearch/QuizSearch';
+import UserProfile from "../users/UserProfile";
 import TakeQuiz from '../takeQuiz/TakeQuiz';
 
 function Routes() {
@@ -30,7 +31,7 @@ function Routes() {
         </nav>
         <Switch>
           <Route path="/quizzes">
-            <Quizzes />
+            <QuizList />
           </Route>
           <Route path="/create">
             <QuizCreator />
@@ -43,15 +44,6 @@ function Routes() {
           </Route>
         </Switch>
       </Router>
-    </div>
-  );
-}
-
-function Quizzes() {
-  return (
-    <div>
-      <h2>Take your quizzes here</h2>
-      <QuizSearch />
     </div>
   );
 }
