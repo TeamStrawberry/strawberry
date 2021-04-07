@@ -110,11 +110,11 @@ app.put('/revisequestion/:id', async (req, res) => {
                     correct_answer = $5,
                     incorrect_answers = $6
                 WHERE ID = ${id}`,
-            [name, category, difficulty, question, correct_answer, incorrect_answers]
+            [category, type, difficulty, question, correct_answer, incorrect_answers]
         );
         res.status(200).json(reviseQuestion);
     } catch (err) {
-        res.status(500).send(err);
+        console.log(err);
     }
 });
 
