@@ -85,7 +85,7 @@ app.get("/friends/:userId", async (req, res) => {
       ON f.id_user_friend = u.id
       WHERE f.id_user = ${req.params.userId};`
     );
-    res.status(201).send(getFriends);
+    res.status(200).send(getFriends);
   } catch (err) {
     res.status(500).send(err);
   }
@@ -99,7 +99,7 @@ app.get("/users", async (req, res) => {
       FROM users
       ORDER BY username ASC;`
     );
-    res.status(201).send(getUsers);
+    res.status(200).send(getUsers);
   } catch (err) {
     res.status(500).send(err);
   }
