@@ -15,10 +15,8 @@ app.use(
     })
 )
 
-
 app.post('/createquiz', async (req, res) => {
     try {
-
         const {
             name,
             category,
@@ -56,7 +54,28 @@ app.post('/createquestion', async (req, res) => {
     } catch (err) {
        res.status(500).send(err)
     }
-})
+});
+
+app.put('/revisequestion', async (req, res) => {
+    try{
+        const {id_quiz} = req.body;
+    } catch (err) {
+        res.status(500).send(err)
+    }
+});
+
+
+app.delete('/deletequiz/:id', async (req, res) => {
+    console.log('testing delete');
+    try{
+        const deleteQuestion = await pool.query(
+            `DELETE FROM quizzes WHERE id = ${req.params.id}`
+        )
+        res.status(200).json(deleteQuestion);
+    } catch (err) {
+      console.log(err)
+    }
+});
 
 app.listen(port, () => {
     console.log(`You are listening on port${port}`)
