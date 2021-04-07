@@ -1,3 +1,9 @@
+DROP DATABASE IF EXISTS blueocean;
+
+CREATE DATABASE blueocean;
+
+\c blueocean
+
 DROP TABLE users, quizzes, questions, user_friend_relationships, user_completed_quizzes;
 
 CREATE TABLE users (
