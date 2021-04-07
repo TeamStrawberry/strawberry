@@ -2,8 +2,8 @@
 const Pool = require('pg').Pool;
 
 const pool = new Pool({
-  user: 'danielko',
-  password: '',
+  user: 'acerslee',
+  password: 'password',
   host: 'localhost',
   database: 'blueocean',
   port: 5432,
