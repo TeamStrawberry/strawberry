@@ -60,6 +60,7 @@ app.post("/createquestion", async (req, res) => {
   }
 });
 
+//creates both sides of a friend relationship
 app.post("/friends/:userId/:friendId", async (req, res) => {
   try {
     const addFriend = await pool.query(
