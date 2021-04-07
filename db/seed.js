@@ -139,7 +139,7 @@ function getQuizData() {
       });
     })
     .catch((err) => {
-      console.log("ERR: ", err);
+      console.error("ERR: ", err);
     });
 }
 
@@ -148,7 +148,9 @@ function insertQuestion(qu, userId, quizId) {
     if (err) return console.error("connection error: ", err);
 
     client.query(
-      "INSERT INTO questions (category, type, difficulty, question, correct_answer, incorrect_answers, id_users, id_quiz) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
+      "INSERT INTO questions (category, type, difficulty, question, " +
+        "correct_answer, incorrect_answers, id_users, id_quiz) " +
+        "VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
       [
         qu.category,
         qu.type,
