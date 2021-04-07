@@ -91,7 +91,7 @@ app.get("/friends/:userId", async (req, res) => {
 });
 
 //get all users
-app.get("/users/", async (req, res) => {
+app.get("/users", async (req, res) => {
   try {
     const getUsers = await pool.query(
       `SELECT *
