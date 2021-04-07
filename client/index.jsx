@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import ChallengeFriend from "./components/friends/ChallengeFriend";
 import AddFriend from "./components/friends/AddFriend.jsx";
 import Navbar from "./components/homepage/Navbar.jsx";
+import HomePage from "./components/homepage/HomePage.jsx"
 import Routes from "./components/routes/Routes.jsx";
 import { theme } from "./theme.js";
 import { ThemeProvider } from "@material-ui/core/styles";
@@ -27,7 +28,9 @@ function AppRoot() {
           <Grid item xs={12}>
             <Routes />
           </Grid>
-
+          <Grid item xs ={12}>
+          <HomePage />
+          </Grid>
         </Grid>
       </ThemeProvider>
     </Box>
