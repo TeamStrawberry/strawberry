@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const pool = require("../db/pool.js");
+const { pool } = require("../db/pool.js");
 
 const port = 3000;
 const app = express();
@@ -17,13 +17,26 @@ app.post("/createquiz", async (req, res) => {
   try {
     const { name, category, difficulty, id_users } = req.body;
 
+    // const createQuiz = await pool.connect((err, client, done) => {
+    //     if (err) return console.err("connection error: ", err);
+
+    //     client.query(
+    //         "INSERT INTO quizzes (name, category, difficulty, id_users) VALUES ($1, $2, $3, $4) RETURNING *",
+    //         [name, category, difficulty, id_users], (err,res) => {
+    //             done();
+    //             if (err) {
+    //                 return console.error('Error running quiz query: ', err);
+    //         } else res.status(201).send(createQuiz);
+    //         })
+    // })
+
     const createQuiz = await pool.query(
       "INSERT INTO quizzes (name, category, difficulty, id_users) VALUES ($1, $2, $3, $4) RETURNING *",
       [name, category, difficulty, id_users]
     );
     res.status(201).send(createQuiz);
   } catch (err) {
-    res.status(500).send(err);
+   console.log(err);
   }
 });
 
@@ -55,7 +68,7 @@ app.post("/createquestion", async (req, res) => {
     );
     res.status(201).json(createQuestion);
   } catch (err) {
-    res.status(500).send(err);
+    console.log(err);
   }
 });
 
@@ -73,20 +86,42 @@ app.put('/revisequiz/:id', async (req, res) => {
         );
         res.status(200).json(reviseQuiz);
     } catch (err) {
-        res.status(500).send(err)
+        res.status(500).send(err);
     }
 });
 
-app.delete('/deletequiz/:id', async (req, res) => {
+app.put('/revisequestion/:id', async (req, res) => {
     try{
         const {id} = req.params;
+        const {
+            name,
+            category,
+            difficulty
+        } = req.body;
+
+        const reviseQuiz = await pool.query(
+            `UPDATE quizzes SET name = $1, category = $2, difficulty = $3 WHERE ID = ${id}`, [name, category, difficulty]
+        );
+        res.status(200).json(reviseQuiz);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
+
+app.delete('/delete/:id', async (req, res) => {
+    try{
+        const {id} = req.params;
+
+        const deleteQuestions = await pool.query(
+            `DELETE FROM questions WHERE id_quiz = ${id}`
+        )
 
         const deleteQuiz = await pool.query(
             `DELETE FROM quizzes WHERE id = ${id}`
         )
         res.status(200).json(deleteQuiz);
     } catch (err) {
-        res.status(500).send(err)
+        res.status(500).send(err);
     }
 });
 
