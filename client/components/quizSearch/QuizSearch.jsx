@@ -54,7 +54,10 @@ const QuizSearch = (props) => {
 
   return(
     <Box>
-      <Button onClick={handleOpen} size="small">
+      <Button
+        onClick={handleOpen}
+        size='medium'
+      >
         &#x1F50D;
       </Button>
       <Modal open={open} onClose={handleClose}>
