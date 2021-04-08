@@ -13,9 +13,9 @@ const QuizDisplayer = ({ quizQuestions, userId, handleRenderingQuestions }) => {
           <br></br>
           {`Incorrect Answer: ${question.incorrect_answers[0]}`}
           <br></br>
-          {`Incorrect Answer: ${question.incorrect_answers[1]}`}
+          {question.incorrect_answers[1] ? `Incorrect Answer: ${question.incorrect_answers[1]}` : null}
           <br></br>
-          {`Incorrect Answer: ${question.incorrect_answers[2]}`}
+          {question.incorrect_answers[2] ? `Incorrect Answer: ${question.incorrect_answers[2]}` : null}
           <br></br>
         </h5>
         <EditQuestionButton question={question} userId={userId} handleRenderingQuestions={handleRenderingQuestions} />

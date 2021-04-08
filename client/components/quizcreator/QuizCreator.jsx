@@ -76,19 +76,38 @@ const QuizCreator = () => {
       let filteredAnswers = singleQnA.incorrect_answers.filter((answer) => {
         return answer.length
       })
-      singleQnA.incorrect_answers = filteredAnswers;
-
       if (filteredAnswers.length === 1) {
-        singleQnA.type = 'boolean';
+        if (filteredAnswers[0] === 'True' || filteredAnswers[0] === 'False' || filteredAnswers[0] === 'false' || filteredAnswers[0] === 'true') {
+          singleQnA.type = 'boolean';
+        }
       } else {
         singleQnA.type = 'multiple';
       }
+      singleQnA.incorrect_answers = filteredAnswers;
       // user id <-- AWAITING
       if (singleQnA.question.length) {
         allQuizQuestions.push(singleQnA);
       }
     }
-    if (allQuizQuestions.length < 3) alert('Please create at least 3 questions.');
+    let errors = false
+
+    allQuizQuestions.forEach((question) => {
+      if (!question.corect_answer) {
+        errors = true
+      }
+      if (question.incorrect_answers.length === 2) {
+        errors = true
+      }
+    })
+    if (errors) {
+      alert('Please ensure multiple choice questions have four answer choices and that each question has a correct answer.')
+      return
+    }
+
+    if (allQuizQuestions.length < 3) {
+      alert('Please create at least 3 questions.');
+      return
+    }
 
     createQuiz({name, category, difficulty, id_users: 1})
       .then(res => {
