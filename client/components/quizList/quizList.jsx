@@ -5,38 +5,44 @@ import axios from 'axios';
 import QuizSearch from '../quizSearch/QuizSearch';
 import QuizListCard from './QuizListCard';
 
-const QuizList = ({ name, category, difficulty }) => {
+const QuizList = ({ criteria }) => {
 
   const [quizzesBySelection, updateSelection] = useState([]);
+  const [initialLoad, refreshPage] = useState(true);
 
   const axiosGetQuizzesByRandomSelection = () => {
-    axios
-      .get('/quizzes')
-      .then(quizzes => updateSelection(quizzes.data.rows))
-      .catch(err => console.error(err))
+    // axios
+      if (initialLoad) {
+        axios
+          .get('/quizzes')
+          .then(quizzes => updateSelection(quizzes.data.rows))
+          .then(res => refreshPage(false))
+          .catch(err => console.error(err))
+      } else if (criteria) {
+        axios
+          .get(`/quizzes/${criteria}`)
+          .then(quizzes => updateSelection(quizzes.data.rows))
+          .catch(err => console.error(err))
+      }
   };
 
-  const axiosGetQuizzesBySelection = () => {
-    axios
-      .get('/quizzes/:criteria')
-      .then(quizzes => updateSelection(quizzes.data.rows))
-      .catch(err => console.error(err))
-  };
+  // const axiosGetQuizzesBySelection = () => {
+  //   axios
+  //     .get('/quizzes/:criteria')
+  //     .then(quizzes => updateSelection(quizzes.data.rows))
+  //     .catch(err => console.error(err))
+  // };
 
   useEffect(() => {
     axiosGetQuizzesByRandomSelection();
   }, []);
 
-  useEffect(() => {
-    axiosGetQuizzesBySelection();
-  }, [quizzesBySelection]);
-
 
   return (
     <div>
-      <Box>
+      {/* <Box>
         <QuizSearch />
-      </Box>
+      </Box> */}
       <Grid
         direction='column'
         container

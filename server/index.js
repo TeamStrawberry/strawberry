@@ -60,6 +60,7 @@ app.post("/createquestion", async (req, res) => {
   }
 });
 
+
 app.get("/quizzes", async (req, res) => {
   try {
     const getLastId = await pool.query(
@@ -88,6 +89,28 @@ app.get("/quizzes", async (req, res) => {
     res.status(500).send(err);
   }
 });
+
+app.get('/categories', async (req, res) => {
+  try{
+    const getCategories = await pool.query (
+      'SELECT category FROM quizzes'
+    )
+    const categoryMaster = {};
+    for (let i = 0; i < getCategories.rows.length; i++) {
+      let current = getCategories.rows[i].category;
+      if (current.includes(':')) {
+        let temp = current.split(':');
+        current = temp[0];
+      }
+      if (categoryMaster[current] === undefined){
+        categoryMaster[current] = 1;
+      }
+    }
+    res.send(Object.keys(categoryMaster));
+  } catch (err) {
+    res.status(500).send(err);
+  }
+})
 
 app.get('/quizzes/:criteria', async (req, res) => {
   try {
