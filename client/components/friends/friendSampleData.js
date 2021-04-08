@@ -1,12 +1,12 @@
 const friendSampleData = [
-  { name: "Mike" },
-  { name: "John" },
-  { name: "Cindy" },
-  { name: "Harshin" },
-  { name: "Daniel" },
-  { name: "Lukas" },
-  { name: "Helen" },
-  { name: "Alex BFF" },
+  { username: "Mike" },
+  { username: "John" },
+  { username: "Cindy" },
+  { username: "Harshin" },
+  { username: "Daniel" },
+  { username: "Lukas" },
+  { username: "Helen" },
+  { username: "Alex BFF" },
 ];
 
 export default friendSampleData;

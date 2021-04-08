@@ -19,11 +19,11 @@ const useStyles = makeStyles({
   },
 });
 
-function FriendGrid() {
-  let friends = friendSampleData.map((friend) => {
+function FriendGrid({ loggedInUser, friends }) {
+  let friendGridItems = friends.map((friend) => {
     return (
       <Grid item>
-        <FriendGridItem friendName={friend.name} />
+        <FriendGridItem friendName={friend.username} />
       </Grid>
     );
   });
@@ -40,26 +40,26 @@ function FriendGrid() {
           <Grid item container direction="row" spacing={1}>
             <Grid item xs={6}>
               <Grid container direction="column" spacing={1}>
-                {friends[0]}
-                {friends[1]}
+                {friendGridItems[0]}
+                {friendGridItems[1]}
               </Grid>
             </Grid>
             <Grid item xs={6}>
               <Grid container direction="column" spacing={1}>
-                {friends[2]}
-                {friends[3]}
+                {friendGridItems[2]}
+                {friendGridItems[3]}
               </Grid>
             </Grid>
             <Grid item xs={6}>
               <Grid container direction="column" spacing={1}>
-                {friends[4]}
-                {friends[5]}
+                {friendGridItems[4]}
+                {friendGridItems[5]}
               </Grid>
             </Grid>
             <Grid item xs={6}>
               <Grid container direction="column" spacing={1}>
-                {friends[6]}
-                {friends[7]}
+                {friendGridItems[6]}
+                {friendGridItems[7]}
               </Grid>
             </Grid>
           </Grid>
@@ -70,7 +70,7 @@ function FriendGrid() {
               <Link src="#">See all</Link>
             </Grid>
             <Grid item>
-              <AddFriend />
+              <AddFriend loggedInUser={loggedInUser} friends={friends} />
             </Grid>
           </Grid>
         </CardActions>
