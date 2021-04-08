@@ -111,7 +111,7 @@ export {
   getQuestionsByCategory,
   getFriends,
   getSingleQuiz,
-  getQuizHistory
+  getQuizHistory,
   createFriendship,
   submitQuizAnswers,
   createQuiz,
