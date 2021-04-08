@@ -18,7 +18,7 @@ const QuizCreator = () => {
   const [quizOptionsLoaded, setQuizOptionsLoaded] = useState(false);
   const [quizTrackerCount, setQuizTrackerCount] = useState(0);
 
-  let tempUserId = 1;
+  let tempUserId = 1; //this will be removed when the user_id is passed down
   var dailyQuizCount = 0;
 
   //will trigger when track counter changes
@@ -104,10 +104,10 @@ const QuizCreator = () => {
             .then (res => {
               console.log('Quiz question saved!')
             })
-            .catch(err => console.error('Error', err))
+            .catch(err => console.error('Error. Cannot create questions', err))
           })
       })
-      .catch(err => console.log(err))
+      .catch(err => console.error('Error. Cannot create quiz', err))
   }
 
   let errorMessage = null;

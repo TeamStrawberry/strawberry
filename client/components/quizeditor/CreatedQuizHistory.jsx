@@ -52,7 +52,7 @@ const CreatedQuizHistory = ({ userId }) => {
           break;
         }
       }
-      setQuestionsToEdit(copy);
+      setQuestionsToEdit(questionsCopy);
   };
 
   return (

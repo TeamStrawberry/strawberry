@@ -46,7 +46,7 @@ app.get("/getcreatedquizquestions/:id", async (req, res) => {
 app.get('/questions/:category', async (req, res) => {
   try {
     const {category} = req.params;
-    
+
     const getQuestionsByCategory = await pool.query(
       `SELECT * from questions
         WHERE category LIKE '${category}%'`
@@ -60,7 +60,6 @@ app.get('/questions/:category', async (req, res) => {
 
 app.post("/createquiz", async (req, res) => {
   try {
-    console.log(req.body)
     const { name, category, difficulty, id_users } = req.body;
 
     const createQuiz = await pool.query(
