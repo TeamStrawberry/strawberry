@@ -16,7 +16,7 @@ const QuizList = ({ name, category, difficulty }) => {
       .catch(err => console.error(err))
   };
 
-  const axiosGetQuizzesByRandomSelection = () => {
+  const axiosGetQuizzesBySelection = () => {
     axios
       .get('/quizzes/:criteria')
       .then(quizzes => updateSelection(quizzes.data.rows))

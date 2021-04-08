@@ -120,7 +120,53 @@ app.get('/quizzes/:criteria', async (req, res) => {
         `SELECT * FROM quizzes WHERE category = '${req.params.criteria}'`
       );
       res.send(getQuizByCategory);
+    } catch (err) {
+      res.status(500).send(err);
     }
+  }
+});
+
+//creates both sides of a friend relationship
+app.post("/friends/:userId/:friendId", async (req, res) => {
+  try {
+    const addFriend = await pool.query(
+      `INSERT INTO user_friend_relationships (id_user, id_user_friend, date_created)
+      VALUES ($1, $2, to_timestamp(${Date.now()} / 1000.0)), ($2, $1, to_timestamp(${Date.now()} / 1000.0))
+        RETURNING *`,
+      [req.params.userId, req.params.friendId]
+    );
+    res.status(201).send(addFriend);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+
+//gets a list of friends for a user
+app.get("/friends/:userId", async (req, res) => {
+  try {
+    const getFriends = await pool.query(
+      `SELECT u.*
+      FROM user_friend_relationships f
+      JOIN users u
+      ON f.id_user_friend = u.id
+      WHERE f.id_user = ${req.params.userId};`
+    );
+    res.status(200).send(getFriends);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+//get all users
+app.get("/users", async (req, res) => {
+  try {
+    const getUsers = await pool.query(
+      `SELECT *
+      FROM users
+      ORDER BY username ASC;`
+    );
+    res.status(200).send(getUsers);
   } catch (err) {
     res.status(500).send(err);
   }
