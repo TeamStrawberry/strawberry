@@ -1,5 +1,4 @@
 import React from "react";
-import friendSampleData from "./friendSampleData";
 import FriendGridItem from "./FriendGridItem";
 import AddFriend from "../friends/AddFriend";
 import {
