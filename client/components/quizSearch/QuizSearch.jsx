@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Grid, Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+
 import QuizNameSearch from './QuizNameSearch.jsx';
 import QuizCategorySearch from './QuizCategorySearch.jsx';
 import QuizDifficultySearch from './QuizDifficultySearch.jsx';
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme = theme) => ({
   }
 }));
 
-const QuizSearch = (props) => {
+const QuizSearch = ({ setCriteria }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
@@ -41,13 +42,13 @@ const QuizSearch = (props) => {
         </h3>
       </Grid>
       <Grid item>
-        <QuizNameSearch />
+        <QuizNameSearch setCriteria={setCriteria}/>
       </Grid>
       <Grid item>
-        <QuizCategorySearch />
+        <QuizCategorySearch setCriteria={setCriteria}/>
       </Grid>
       <Grid item>
-        <QuizDifficultySearch />
+        <QuizDifficultySearch setCriteria={setCriteria}/>
       </Grid>
     </Grid>
   )

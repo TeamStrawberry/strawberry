@@ -1,13 +1,17 @@
-import React from "react";
 import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Navbar from "../homepage/Navbar.jsx";
+import React, { useState, useEffect } from 'react';
 import QuizCreator from '../quizcreator/QuizCreator.jsx';
 import QuizList from '../quizList/quizList';
 import QuizSearch from '../quizSearch/QuizSearch';
 import UserProfile from "../users/UserProfile";
 import TakeQuiz from '../takeQuiz/TakeQuiz';
 
+
 function Routes() {
+
+  const [criteria, setCriteria] = useState(false);
+
   return (
     <div>
       <Router>
@@ -25,20 +29,22 @@ function Routes() {
             <li>
               <Link to="/profile">Profile</Link>
             </li>
-            <li>
-              <Link to="/takeQuiz">Take Quiz</Link>
-            </li>
           </ul>
         <Switch>
-          <Route path="/quizzes" exact component = {QuizList} />
+
+          <Route path="/quizzes">
+            <QuizSearch setCriteria={ setCriteria }/>
+            <QuizList criteria={ criteria }/>
+          </Route>
+
           <Route path="/create">
             <QuizCreator />
           </Route>
           <Route path="/profile">
             <UserProfile />
           </Route>
-          <Route path="/takeQuiz">
-            <TakeQuiz />
+          <Route path='/quiz/:quizId'>
+            <TakeQuiz/>
           </Route>
         </Switch>
       </Router>
