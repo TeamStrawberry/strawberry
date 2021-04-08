@@ -63,9 +63,9 @@ app.get('/quiz/:id', async (req, res) => {
   try {
     const quizId = req.params.id;
     const retrieveQuiz = await pool.query(
-      `SELECT * FROM questions WHERE questions.id_quiz = ${quizId}`
+      `SELECT * FROM questions
+      WHERE id_quiz = ${quizId}`
     )
-    console.log()
     res.status(200).send(retrieveQuiz);
   } catch (err) {
     res.status(500).send(err);
@@ -82,7 +82,15 @@ app.post('/submitquiz', async (req, res) => {
     } = req.body;
 
     const submitQuiz = await pool.query(
-      "INSERT INTO user_completed_quizzes (correct_answer_count, incorrect_answer_count, id_quiz, id_users) VALUES ($1, $2, $3, $4) RETURNING *", [correct_answer_count, incorrect_answer_count, id_quiz, id_users]
+      `INSERT INTO user_completed_quizzes (correct_answer_count, incorrect_answer_count, id_quiz, id_users)
+      VALUES ($1, $2, $3, $4)
+      RETURNING *`,
+      [
+        correct_answer_count,
+        incorrect_answer_count,
+        id_quiz,
+        id_users
+      ]
     )
     res.status(201).send(submitQuiz);
   } catch (err) {
