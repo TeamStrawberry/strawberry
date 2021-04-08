@@ -26,15 +26,20 @@ function UserQuizHistoryTaken(userId) {
   const classes = useStyles();
 
   const retrieveQuizHistory = () => {
-    let quizIds = {};
+    let quizIds = {}, uniqueQuizzes = [];
     axios
-      .get('/quiz/history/taken/7') // later change to: `/quiz/history/taken/${userId}`
+      .get('/quiz/history/taken/9') // later change to: `/quiz/history/taken/${userId}`
       .then(response => {
         let quizzes = response.data.rows;
+        for (let i = 0; i < quizzes.length; i++) {
+          if (!quizIds[quizzes[i].id_quiz]) {
+            quizIds[quizzes[i].id_quiz] = true;
+            uniqueQuizzes.push(quizzes[i]);
+          }
+        }
         return uniqueQuizzes;
       })
       .then(data => {
-        console.log('data', data);
         setQuizList(data)
       })
       .catch(err => {
