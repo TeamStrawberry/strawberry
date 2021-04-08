@@ -11,38 +11,29 @@ const QuizList = ({ criteria }) => {
   const [initialLoad, refreshPage] = useState(true);
 
   const axiosGetQuizzesByRandomSelection = () => {
-    // axios
-      if (initialLoad) {
-        axios
-          .get('/quizzes')
-          .then(quizzes => updateSelection(quizzes.data.rows))
-          .then(res => refreshPage(false))
-          .catch(err => console.error(err))
-      } else if (criteria) {
-        axios
-          .get(`/quizzes/${criteria}`)
-          .then(quizzes => updateSelection(quizzes.data.rows))
-          .catch(err => console.error(err))
-      }
+    if (initialLoad) {
+      axios
+        .get('/quizzes')
+        .then(quizzes => {
+          refreshPage(false)
+          updateSelection(quizzes.data.rows)
+        })
+        .catch(err => console.error(err))
+    } else if (criteria) {
+      axios
+        .get(`/quizzes/${criteria}`)
+        .then(quizzes => updateSelection(quizzes.data))
+        .catch(err => console.error(err))
+    }
   };
-
-  // const axiosGetQuizzesBySelection = () => {
-  //   axios
-  //     .get('/quizzes/:criteria')
-  //     .then(quizzes => updateSelection(quizzes.data.rows))
-  //     .catch(err => console.error(err))
-  // };
 
   useEffect(() => {
     axiosGetQuizzesByRandomSelection();
-  }, []);
+  }, [criteria]);
 
 
   return (
     <div>
-      {/* <Box>
-        <QuizSearch />
-      </Box> */}
       <Grid
         direction='column'
         container
