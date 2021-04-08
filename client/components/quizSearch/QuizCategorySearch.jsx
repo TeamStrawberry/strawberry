@@ -3,6 +3,8 @@ import { FormControl, Grid, InputLabel, MenuItem, Select } from '@material-ui/co
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 
+import { getCategories } from "../../../api_master";
+
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -25,8 +27,7 @@ const QuizCategorySearch = ({setCriteria}) => {
   }
 
   const axiosGetCategoryList = () => {
-    axios
-      .get('/categories')
+    getCategories()
       .then(newCategories => setCategories(newCategories.data))
       .catch(err => console.error(err))
   }
@@ -34,11 +35,6 @@ const QuizCategorySearch = ({setCriteria}) => {
   useEffect(() => {
     axiosGetCategoryList();
   }, []);
-
-  // const handleClick = (e) => {
-  //   console.log('Value: ', e.value);
-  //   history.push(`/quizzes/${e.value}`);
-  // };
 
   return (
     <Grid container>
