@@ -1,6 +1,7 @@
 import React from "react";
 import friendSampleData from "./friendSampleData";
 import FriendGridItem from "./FriendGridItem";
+import AddFriend from "../friends/AddFriend";
 import {
   Grid,
   Link,
@@ -64,9 +65,12 @@ function FriendGrid() {
           </Grid>
         </CardContent>
         <CardActions>
-          <Grid container direction="column" align="center">
+          <Grid container direction="column" align="center" spacing={1}>
             <Grid item>
               <Link src="#">See all</Link>
+            </Grid>
+            <Grid item>
+              <AddFriend />
             </Grid>
           </Grid>
         </CardActions>

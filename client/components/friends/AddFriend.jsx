@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Grid, Button, Box } from "@material-ui/core";
+import { Modal, Grid, Button, Box, Link } from "@material-ui/core";
 import UserList from "../users/UserList";
 import UserSearch from "../users/UserSearch";
 import { makeStyles } from "@material-ui/core/styles";
@@ -75,9 +75,9 @@ function AddFriend({ loggedInUser = { id: 1, username: "admin" } }) {
 
   return (
     <Box>
-      <Button variant="outlined" onClick={handleOpen} size="small">
-        Add Friend
-      </Button>
+      <Link href="#" onClick={handleOpen}>
+        Add a friend
+      </Link>
       <Modal open={open} onClose={handleClose}>
         {body}
       </Modal>

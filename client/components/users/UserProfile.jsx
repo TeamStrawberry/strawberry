@@ -1,7 +1,6 @@
 import { Box, Grid, Typography } from "@material-ui/core";
 import React from "react";
 import FriendGrid from "../friends/FriendGrid";
-import AddFriend from "../friends/AddFriend";
 import ChallengeFriend from "../friends/ChallengeFriend";
 import UserAvatar from "./UserAvatar";
 import UserStats from "./UserStats";
@@ -15,9 +14,6 @@ function UserProfile() {
       <Grid item container direction="row" spacing={3} justify="center">
         <Grid item>
           <Typography>Mike's Components for Testing</Typography>
-        </Grid>
-        <Grid item>
-          <AddFriend />
         </Grid>
         <Grid item>
           <ChallengeFriend />
