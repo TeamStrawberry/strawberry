@@ -22,13 +22,14 @@ const useStyles = makeStyles(theme => ({
 function UserQuizHistoryTaken(userId) {
   const [quizList, setQuizList] = useState([]);
   const [show, setShow] = useState(false);
+  const [count, setCount] = useState(0);
 
   const classes = useStyles();
 
   const retrieveQuizHistory = () => {
     let quizIds = {}, uniqueQuizzes = [];
     axios
-      .get('/quiz/history/taken/9') // later change to: `/quiz/history/taken/${userId}`
+      .get('/quiz/history/taken/1') // later change to: `/quiz/history/taken/${userId}`
       .then(response => {
         let quizzes = response.data.rows;
         for (let i = 0; i < quizzes.length; i++) {
@@ -41,6 +42,7 @@ function UserQuizHistoryTaken(userId) {
       })
       .then(data => {
         setQuizList(data)
+        setCount(data.length)
       })
       .catch(err => {
         console.error('Error: cannot retrieve user\'s quiz history from database', err)
@@ -55,20 +57,42 @@ function UserQuizHistoryTaken(userId) {
     setShow(false);
   }
 
+  const handleRedirect = (e) => {
+    const quizId = e.target.name;
+    // add functionality to redirect to TakeQuiz component
+  }
+
   useEffect(() => {
     retrieveQuizHistory();
   }, [])
 
   const body = (
     <Grid className={ classes.modal }>
-      <Grid item>
         {quizList.length
           ? quizList.map(quiz => (
-            <h4>{ quiz.name }</h4>
+            <Grid item>
+              <h4>{ quiz.name }</h4>
+              <Button
+                variant="contained"
+                variant="outlined"
+                color="primary"
+                onClick={ handleRedirect }
+                name={ quiz.id_quiz }
+              >
+                Retake Quiz
+              </Button>
+            </Grid>
           ))
           : null
         }
-      </Grid>
+        <Button
+          variant="contained"
+          variant="outlined"
+          color="primary"
+          onClick={ handleClose }
+        >
+          Close
+        </Button>
     </Grid>
   )
 
@@ -82,17 +106,37 @@ function UserQuizHistoryTaken(userId) {
         />
         <CardContent>
           <Grid>
-            <Grid item>
               {quizList.length
                 ? quizList.slice(0, 5).map(quiz => (
-                  <h4>{ quiz.name }</h4>
+                  <Grid item>
+                    <h4>{ quiz.name }</h4>
+                    <h4>Score: { quiz.correct_answer_count }/{ quiz.correct_answer_count + quiz.incorrect_answer_count} ({(Number(quiz.correct_answer_count)/Number(quiz.correct_answer_count + quiz.incorrect_answer_count) * 100).toFixed(0) }%)</h4>
+                    <Button
+                      variant="contained"
+                      variant="outlined"
+                      color="primary"
+                      onClick={ handleRedirect }
+                      name={ quiz.id_quiz }
+                    >
+                      Retake Quiz
+                    </Button>
+                  </Grid>
                 ))
                 : null
               }
-            </Grid>
-            <Grid item>
-              <Button onClick={ handleOpen }>See more</Button>
-            </Grid>
+            {count > 5
+              ? <Grid item>
+                <Button
+                  variant="contained"
+                  variant="outlined"
+                  color="primary"
+                  onClick={ handleOpen }
+                >
+                  See more
+                </Button>
+              </Grid>
+              : null
+            }
             <Grid item>
               <Modal open={ show } onClose={ handleClose }>
                 { body }
