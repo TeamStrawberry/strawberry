@@ -4,6 +4,7 @@ import QuizQuestionsAndAnswers from './QuizQuestionsAndAnswers.jsx';
 import QuizSubmit from './QuizSubmit.jsx';
 import QuizBank from './QuizBank.jsx';
 import QuizzesPerDayTracker from './QuizzesPerDayTracker';
+import CreatedQuizHistory from '../quizEditor/CreatedQuizHistory.jsx'
 import axios from 'axios';
 
 // TIER 3 - ALLOW USERS TO SUBMIT PHOTOS AND VIDEOS
@@ -30,7 +31,7 @@ const QuizCreator = () => {
 
   // rerender page on submit or go to another page
   // form validators only have either 2 or 4 answers no 3
-  // Quiz submit becomes clickable 'enabled' once all 3 options are entered 
+  // Quiz submit becomes clickable 'enabled' once all 3 options are entered
   const handleSubmit = () => {
     let allQuizQuestions = [];
 
@@ -99,6 +100,7 @@ const QuizCreator = () => {
           Please Select Quiz Options
         </div>
       }
+      <CreatedQuizHistory />
     </div>
   )
 }

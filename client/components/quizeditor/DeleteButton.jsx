@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const DeleteButton = ({ userId, quizName, quizQuestions }) => {
+const DeleteButton = ({ quizId }) => {
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
     const [open, setOpen] = React.useState(false);
@@ -41,12 +41,12 @@ const DeleteButton = ({ userId, quizName, quizQuestions }) => {
         setOpen(false);
     };
 
-    const handleQuizDelete = () => {
-      // Make delete request for quiz
+    const handleQuizDelete = (quiz_id) => {
+        axios.delete(`/deletequiz/${quiz_id}`)
+            .then(() => console.log('Quiz and questions deleted successfully'))
+            .catch(err => console.log(err))
 
-      // Delete request for all the questions
-        
-      // close modal and take user back to their quizzes
+      setOpen(false);
     }
 
     return (
@@ -66,7 +66,7 @@ const DeleteButton = ({ userId, quizName, quizQuestions }) => {
                     <p>
                       Deleting a quiz cannot be undone.
                     </p>
-                    <Button>Delete Anyway</Button>
+                    <Button onClick={()=>{handleQuizDelete(quizId)}}>Delete Anyway</Button>
                 </div>
             </Modal>
         </div>

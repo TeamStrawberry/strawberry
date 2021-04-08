@@ -1,15 +1,10 @@
 import React from 'react';
 import EditQuestionButton from './EditQuestionButton.jsx';
 
-const QuizDisplayer = ({ userId, quizName, quizQuestions }) => {
-    // render quiz questions with edit button on each quiz question
-    // button should display modal of questiona and answer options that are editable
-
-  let tester = [{question: 'How many planets are there in our solar system?', correct_answer: '8', incorrect_answers: ['10', '9', '7']}];
-
-  return tester.map((question) => {
+const QuizDisplayer = ({ quizQuestions, userId, handleRenderingQuestions }) => {
+  return quizQuestions.map((question) => {
     return (
-      <div id="editor-question">
+      <div id={`edit-question-${question.id}`} key={question.id}>
         <h3>
           {`Question: ${question.question}`}
         </h3>
@@ -23,7 +18,7 @@ const QuizDisplayer = ({ userId, quizName, quizQuestions }) => {
           {`Incorrect Answer: ${question.incorrect_answers[2]}`}
           <br></br>
         </h5>
-        <EditQuestionButton question={question} userId={userId} quizName={quizName}/>
+        <EditQuestionButton question={question} userId={userId} handleRenderingQuestions={handleRenderingQuestions} />
       </div>
     )
   });

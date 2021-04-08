@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const EditQuestionButton = ({ question }) => {
+const EditQuestionButton = ({ question, userId, handleRenderingQuestions }) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [newQuestion, setNewQuestion] = useState(null);
@@ -26,6 +26,7 @@ const EditQuestionButton = ({ question }) => {
     const [incorrectAnswer1, setIncorrectAnswer1] = useState(null);
     const [incorrectAnswer2, setIncorrectAnswer2] = useState(null);
     const [incorrectAnswer3, setIncorrectAnswer3] = useState(null);
+    const [editQuestionsPage, setEditQuestionsPage] = useState(false);
 
     const handleOpen = () => {
         setOpen(true);
@@ -36,7 +37,6 @@ const EditQuestionButton = ({ question }) => {
     };
 
     const handleQChange = (newQuestion) => {
-      console.log(newQuestion)
       setNewQuestion(newQuestion);
     }
 
@@ -49,7 +49,6 @@ const EditQuestionButton = ({ question }) => {
     }
 
     const handleIA2Change = (newIncorrectAnswer2) => {
-      console.log(newIncorrectAnswer2)
       setIncorrectAnswer2(newIncorrectAnswer2);
     }
 
@@ -58,11 +57,26 @@ const EditQuestionButton = ({ question }) => {
     }
 
     const handleUpdateClick = () => {
-      // On question update we want to reflect changes on page
+      if (!newQuestion && !correctAnswer && !incorrectAnswer1 && !incorrectAnswer2 && !incorrectAnswer3) {
+        return
+      }
+      let questionId = question.id;
+      let editedQuestion = {
+        category: question.category,
+        type: question.type,
+        difficulty: question.difficulty,
+        question: newQuestion || question.question,
+        correct_answer: correctAnswer || question.correct_answer,
+        incorrect_answers: [incorrectAnswer1 || question.incorrect_answers[0], incorrectAnswer2 || question.incorrect_answers[1], incorrectAnswer3 || question.incorrect_answers[2]]
+      }
 
-      // Submit PUT request to the server
+      axios.put(`/revisequestion/${questionId}`, editedQuestion)
+        .then(res => {
+          console.log('Update successful');
+          handleRenderingQuestions(res.data);
+        })
+        .catch(err => console.log(err))
 
-      // Close Modal
       setOpen(false);
     }
 
