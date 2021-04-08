@@ -97,6 +97,77 @@ app.post('/submitquiz', async (req, res) => {
     res.status(500).send(err);
   }
 })
+app.get("/quizzes", async (req, res) => {
+  try {
+    const getLastId = await pool.query(
+      'SELECT * FROM quizzes ORDER BY id DESC LIMIT 1'
+      );
+      const finalId = getLastId.rows[0].id;
+      let randomQuizList;
+      (() => {
+        const randomQuizIds = {};
+        const max = 10;
+        let iterator = 0;
+        while (iterator < max) {
+          let temp = Math.floor(Math.random() * (finalId + 1));
+          if (randomQuizIds[temp] === undefined) {
+            randomQuizIds[temp] = 1;
+            iterator++;
+          }
+        }
+        randomQuizList = Object.keys(randomQuizIds);
+      })();
+    const getRandomQuizzes = await pool.query(
+      `SELECT * FROM quizzes WHERE id IN (${randomQuizList})`
+    )
+    res.send(getRandomQuizzes);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+app.get('/quizzes/:criteria', async (req, res) => {
+  try {
+    if (req.params.criteria === 'new') {
+      const getNewQuizzes = await pool.query (
+        'SELECT * FROM quizzes ORDER BY date_created DESC LIMIT 10'
+      );
+      res.send(getNewQuizzes);
+    } else if (req.params.criteria === 'hot') {
+      const getHotQuizzes = await pool.query (
+        /* FILL_ME_IN */
+        'SELECT q.id, q.name, COUNT(c.id) as taken_count ' +
+        'from user_completed_quizzes c ' +
+        'join quizzes q on c.id_quiz = q.id ' +
+        /* This does Hot n' New, to make it just hot, remove the line below */
+        'where c.date_created > CURRENT_DATE - 1 ' +
+        'group by q.id order by taken_count desc limit 10'
+      );
+    } else if (req.params.criteria === 'easy') {
+      const getEasyQuizzes = await pool.query (
+        "SELECT * FROM quizzes WHERE difficulty = 'easy'"
+      );
+      res.send(getEasyQuizzes);
+    } else if (req.params.criteria === 'medium') {
+      const getMediumQuizzes = await pool.query (
+        "SELECT * FROM quizzes WHERE difficulty = 'medium'"
+      );
+      res.send(getMediumQuizzes);
+    } else if (req.params.criteria === 'hard') {
+      const getHardQuizzes = await pool.query (
+        "SELECT * FROM quizzes WHERE difficulty = 'hard'"
+      );
+      res.send(getHardQuizzes);
+    } else {
+      const getQuizByCategory = await pool.query (
+        `SELECT * FROM quizzes WHERE category = '${req.params.criteria}'`
+      );
+      res.send(getQuizByCategory);
+    }
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
 
 //creates both sides of a friend relationship
 app.post("/friends/:userId/:friendId", async (req, res) => {
@@ -112,6 +183,7 @@ app.post("/friends/:userId/:friendId", async (req, res) => {
     res.status(500).send(err);
   }
 });
+
 
 //gets a list of friends for a user
 app.get("/friends/:userId", async (req, res) => {
