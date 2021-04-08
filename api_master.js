@@ -37,6 +37,10 @@ function getQuizHistory(userId) {
   return handleGetRequests(`/quiz/history/taken/${userId}`);
 }
 
+function getQuizGlobalRankings(quizId) {
+  return handleGetRequests(`/quiz/rankings/global/${quizId}`);
+}
+
 // Handles all POST requests, takes a route, params, and data object
 function handlePostRequests(route, data = {}, params = {}) {
   let options = {
@@ -55,13 +59,8 @@ function createFriendship(userId, friendUserId) {
   return handlePostRequests(`/friends/${userId}/${friendUserId}`);
 }
 
-function submitQuizAnswers(quizId, userId, userScore) {
-  return handlePostRequests('/submitquiz', {}, {
-    correct_answer_count: userScore.correct,
-    incorrect_answer_count: userScore.incorrect,
-    id_quiz: quizId,
-    id_users: userId
-  });
+function submitQuizAnswers(quizAnswers) {
+  return handlePostRequests('/submitquiz', quizAnswers);
 }
 
 function createQuiz(quizData) {
@@ -112,6 +111,7 @@ export {
   getFriends,
   getSingleQuiz,
   getQuizHistory,
+  getQuizGlobalRankings,
   createFriendship,
   submitQuizAnswers,
   createQuiz,

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Grid, Button, Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { getSingleQuiz, submitQuizAnswers } from "../../../api_master";
+import { getSingleQuiz, submitQuizAnswers, getQuizGlobalRankings } from "../../../api_master";
 import { useHistory, useParams } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
@@ -37,6 +37,8 @@ const TakeQuiz = (userId) => {
   const [show, setShow] = useState(false);
   const [showError, setShowError] = useState(false);
   const [validated, setValidated] = useState(false);
+  const [globalScores, setGlobalScores] = useState([]);
+  const [percentile, setPercentile] = useState(0);
 
   const classes = useStyles();
   let { quizId } = useParams();
@@ -101,6 +103,7 @@ const TakeQuiz = (userId) => {
       return currentScore;
     })()
     .then(response => {
+      getGlobalRankings(response);
       submitAnswers(response);
     })
     .catch(err => {
@@ -177,11 +180,65 @@ const TakeQuiz = (userId) => {
   }
 
   const submitAnswers = (userScore) => {
-    submitQuizAnswers(14, 1, userScore) // later change to: submitQuizAnswers(quizId, userId, userScore);
+    submitQuizAnswers({
+      correct_answer_count: userScore.correct,
+      incorrect_answer_count: userScore.incorrect,
+      id_quiz: quizId,
+      id_users: 8 // later change to: userId
+    })
     .catch(err => {
       console.error('Error: cannot submit quiz answers to database', err);
     })
   };
+
+  const getGlobalRankings = (userScore) => {
+    let rankings = [];
+    let percentage = (userScore.correct / userScore.total * 100).toFixed(0);
+    let allScores;
+    getQuizGlobalRankings(quizId)
+      .then(response => {
+        allScores = response.data.rows;
+        if (!allScores.length) {
+          setPercentile(100);
+          return [];
+        } else {
+          return allScores;
+        }
+      })
+      .then(response => {
+        if (response.length) {
+          for (let i = 0; i < response.length; i++) {
+            const correct = Number(response[i].correct_answer_count)
+            const incorrect = Number(response[i].incorrect_answer_count)
+            const total = correct + incorrect;
+            rankings.push((correct/total * 100).toFixed(0));
+          }
+          setGlobalScores(rankings);
+          return rankings;
+        } else {
+          return [];
+        }
+      })
+      .then(response => {
+        if (response.length) {
+          let sorted = response.sort();
+          let below = 0;
+          let equal = -1;
+          for (let i = 0; i < sorted.length; i++) {
+            if (sorted[i] < percentage) {
+              below++;
+            } else if (sorted[i] === percentage) {
+              equal++;
+            }
+          }
+          let userPercentile = (below + (0.5 * equal) / sorted.length) * 100;
+          setPercentile(userPercentile);
+        }
+      })
+      .catch(err => {
+        console.error('Error: cannot retrieve global rankings for quiz', err);
+      })
+  }
 
   useEffect(() => {
     retrieveQuiz();
@@ -201,7 +258,7 @@ const TakeQuiz = (userId) => {
             <h1>insert score out of friends</h1>
           </Grid>
           <Grid>
-            <h1>insert global percentile</h1>
+            <h1>You are in the { percentile.toFixed(0) } percentile!</h1>
           </Grid>
         </Grid>
         <Grid item>

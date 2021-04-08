@@ -46,7 +46,7 @@ app.get("/getcreatedquizquestions/:id", async (req, res) => {
 app.get('/questions/:category', async (req, res) => {
   try {
     const {category} = req.params;
-    
+
     const getQuestionsByCategory = await pool.query(
       `SELECT * from questions
         WHERE category LIKE '${category}%'`
@@ -188,6 +188,19 @@ app.get(`/quiz/history/taken/:userId`, async (req, res) => {
   }
 })
 
+app.get(`/quiz/rankings/global/:quizId`, async (req, res) => {
+  try {
+    const quizId = req.params.quizId;
+    const retrieveQuizGlobalRankings = await pool.query(
+      `SELECT * FROM user_completed_quizzes
+      WHERE id_quiz = ${quizId}`
+    )
+    res.status(200).send(retrieveQuizGlobalRankings);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+})
+
 app.post('/submitquiz', async (req, res) => {
   try {
     const {
@@ -213,6 +226,7 @@ app.post('/submitquiz', async (req, res) => {
     res.status(500).send(err);
   }
 })
+
 app.get("/quizzes", async (req, res) => {
   try {
     const getLastId = await pool.query(
