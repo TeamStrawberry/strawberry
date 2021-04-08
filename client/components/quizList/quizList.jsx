@@ -1,38 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Grid } from '@material-ui/core';
+import axios from 'axios';
 
 import QuizSearch from '../quizSearch/QuizSearch';
 import QuizListCard from './QuizListCard';
 
 const QuizList = ({ name, category, difficulty }) => {
 
-   // Dummy data that needs to be deleted
-   const dummyQuizzes = [
-    {
-      "id": 2,
-      "name": "Entertainment 2",
-      "category": "Entertainment",
-      "difficulty": "medium",
-      "date_created": "Mon Apr 05 2021 14:37:37 GMT-0500 (Central Daylight Time)",
-      "id_users": 2,
-    },
-    {
-      "id": 4,
-      "name": "Entertainment 4",
-      "category": "Entertainment",
-      "difficulty": "easy",
-      "date_created": "Mon Apr 05 2021 14:37:37 GMT-0500 (Central Daylight Time)",
-      "id_users": 2,
-    },
-    {
-      "id": 5,
-      "name": "Entertainement 5",
-      "category": "Entertainment",
-      "difficulty": "medium",
-      "date_created": "Mon Apr 05 2021 14:37:37 GMT-0500 (Central Daylight Time)",
-      "id_users": 4,
-    },
-  ];
+  const [quizzesBySelection, updateSelection] = useState([]);
+  const [maxQuizNumber, updateMaxQuizNumber] = useState(0);
+
+  const axiosGetQuizzesByRandomSelection = () => {
+    axios
+      .get('/quizzes')
+      .then(quizzes => updateSelection(quizzes.data.rows))
+      .catch(err => console.error(err))
+  };
+
+  useEffect(() => {
+    axiosGetQuizzesByRandomSelection();
+  }, []);
 
 
   return (
@@ -46,7 +33,7 @@ const QuizList = ({ name, category, difficulty }) => {
         alignItems='center'
         spacing={2}
       >
-        { dummyQuizzes.map((quiz, index) =>  <QuizListCard quiz={ quiz } key={ index }/>) }
+        { quizzesBySelection.map((quiz, index) =>  <QuizListCard quiz={ quiz } key={ index }/>) }
       </Grid>
     </div>
   )
