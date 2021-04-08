@@ -1,8 +1,9 @@
-import React from "react";
-import { Modal, Grid, Button, Box } from "@material-ui/core";
-import FriendList from "./FriendList";
-import FriendSearch from "./FriendSearch";
+import React, { useState, useEffect } from "react";
+import { Modal, Grid, Button, Box, Link } from "@material-ui/core";
+import UserList from "../users/UserList";
+import UserSearch from "../users/UserSearch";
 import { makeStyles } from "@material-ui/core/styles";
+import { getStrangers } from "../../../api_master";
 
 const useStyles = makeStyles((theme = theme) => ({
   modal: {
@@ -20,17 +21,26 @@ const useStyles = makeStyles((theme = theme) => ({
   },
 }));
 
-function AddFriend() {
+function AddFriend({ loggedInUser = { id: 1, username: "admin" } }) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [strangers, setStrangers] = useState([]);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-  const handleOpen = () => {
-    setOpen(true);
+  var refreshStrangers = () => {
+    getStrangers(loggedInUser.id).then((res) => {
+      setStrangers(res.data.rows);
+    });
   };
+  refreshStrangers = refreshStrangers.bind(this);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  useEffect(() => {
+    refreshStrangers();
+    return () => {
+      setStrangers([]);
+    };
+  }, []);
 
   const body = (
     <Grid container className={classes.modal} direction="column" spacing={3}>
@@ -40,10 +50,15 @@ function AddFriend() {
         </h3>
       </Grid>
       <Grid item>
-        <FriendSearch />
+        <UserSearch />
       </Grid>
       <Grid item>
-        <FriendList variant="add_friend" />
+        <UserList
+          loggedInUser={loggedInUser}
+          variant="add_friend"
+          list={strangers}
+          refreshList={refreshStrangers}
+        />
       </Grid>
       <Grid item container justify="center">
         <Button
@@ -60,9 +75,9 @@ function AddFriend() {
 
   return (
     <Box>
-      <Button variant="outlined" onClick={handleOpen} size="small">
-        Add Friend
-      </Button>
+      <Link href="#" onClick={handleOpen}>
+        Add a friend
+      </Link>
       <Modal open={open} onClose={handleClose}>
         {body}
       </Modal>
