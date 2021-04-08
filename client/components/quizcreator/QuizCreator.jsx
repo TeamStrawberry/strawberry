@@ -113,7 +113,7 @@ const QuizCreator = () => {
   let errorMessage = null;
   let quizCreator = null;
 
-  quizTrackerCount >= 3
+  quizTrackerCount >= 50
     ? errorMessage = <h2 style = {{color: 'red'}}>DAILY LIMIT REACHED. CANNOT CREATE ANYMORE QUIZZES </h2>
     : quizCreator =
       <div className = 'quiz-creator'>
