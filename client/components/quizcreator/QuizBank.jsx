@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 const { getQuestionsByCategory } = require('../../../api_master.js');
 
-const QuizBank = ({ category }) => {
+const QuizBank = ({ category, handleQuestionBankClick }) => {
   // get quiz questions by category input
   const [questionBank, setQuestionBank] = useState([])
 
@@ -15,12 +15,12 @@ const QuizBank = ({ category }) => {
   })
 
   return (
-    <div>
+    <div id="question-bank">
       {questionBank.length
       ?
         questionBank.map((question) => {
           return (
-            <div key={question.id}>
+            <div key={question.id} onClick={() => {handleQuestionBankClick(question)}}>
               {question.question}
             </div>
           )

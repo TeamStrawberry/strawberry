@@ -31,6 +31,11 @@ const QuizCreator = () => {
     setQuizOptionsLoaded(true);
   }
 
+  const handleQuestionBankClick = (question) => {
+    // take question and prefill form
+    console.log(question);
+  }
+
   // rerender page on submit or go to another page
   // form validators only have either 2 or 4 answers no 3
   // Quiz submit becomes clickable 'enabled' once all 3 options are entered
@@ -95,7 +100,7 @@ const QuizCreator = () => {
             <p>
               Insert Directions Here
             </p>
-          <QuizBank category={category}/>
+          <QuizBank category={category} handleQuestionBankClick={handleQuestionBankClick}/>
           <QuizQuestionsAndAnswers />
         </div> :
         <div>
