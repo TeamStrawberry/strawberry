@@ -21,6 +21,10 @@ function getCreatedQuizQuestions(quizId) {
   return handleGetRequests(`/getcreatedquizquestions/${quizId}`)
 }
 
+function getQuestionsByCategory(category) {
+  return handleGetRequests(`/questions/${category}`)
+}
+
 // Handles all POST requests, takes a route, params, and data object
 function handlePostRequests(route, data = {}, params = {}) {
   let options = {
@@ -88,5 +92,6 @@ export {
   reviseQuizQuestion,
   getUserQuizHistory,
   getCreatedQuizQuestions,
+  getQuestionsByCategory,
   removeQuiz
 };

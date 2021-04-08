@@ -95,7 +95,7 @@ const QuizCreator = () => {
             <p>
               Insert Directions Here
             </p>
-          <QuizBank />
+          <QuizBank category={category}/>
           <QuizQuestionsAndAnswers />
         </div> :
         <div>
