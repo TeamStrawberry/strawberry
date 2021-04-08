@@ -3,7 +3,7 @@ import { Typography, Grid, Avatar, IconButton } from "@material-ui/core";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import AddIcon from "@material-ui/icons/Add";
 
-function Friend({ friendName, variant }) {
+function Friend({ username, variant }) {
   const icon = () => {
     if (variant === "add_friend") {
       return (
@@ -31,7 +31,7 @@ function Friend({ friendName, variant }) {
       style={{ marginLeft: 5, marginRight: 5, maxWidth: "97%" }}
     >
       <Grid item container xs={2}>
-        <Avatar alt="FRIEND NAME" />
+        <Avatar alt="user name" />
       </Grid>
       <Grid
         item
@@ -41,7 +41,7 @@ function Friend({ friendName, variant }) {
         display="flex"
         justify="center"
       >
-        <Typography variant="body1">{friendName}</Typography>
+        <Typography variant="body1">{username}</Typography>
       </Grid>
       <Grid item container xs={2} direction="column" display="flex">
         {icon()}

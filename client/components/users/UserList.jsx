@@ -1,13 +1,13 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import Friend from "./Friend.jsx";
-import friendSampleData from "./friendSampleData";
+import UserListItem from "./UserListItem.jsx";
+import friendSampleData from "../friends/friendSampleData";
 
-function FriendList({ variant }) {
-  let friends = friendSampleData.map((friend) => {
+function UserList({ variant, list }) {
+  list = list.map((user) => {
     return (
       <Grid item>
-        <Friend friendName={friend.name} variant={variant} />
+        <UserListItem username={user.username} variant={variant} />
       </Grid>
     );
   });
@@ -18,10 +18,10 @@ function FriendList({ variant }) {
       style={{ maxHeight: "25vh", overflowX: "auto", overflowY: "scroll" }}
     >
       <Grid container direction="column" style={{ margin: 0, width: "100%" }}>
-        {friends}
+        {list}
       </Grid>
     </Grid>
   );
 }
 
-export default FriendList;
+export default UserList;

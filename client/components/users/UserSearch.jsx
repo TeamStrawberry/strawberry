@@ -3,7 +3,7 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 import SearchIcon from "@material-ui/icons/Search";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
-function FriendSearch() {
+function UserSearch() {
   var handleFocus = (event) => {
     event.preventDefault();
     const { target } = event;
@@ -33,4 +33,4 @@ function FriendSearch() {
   );
 }
 
-export default FriendSearch;
+export default UserSearch;

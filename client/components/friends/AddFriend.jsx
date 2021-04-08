@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Grid, Button, Box } from "@material-ui/core";
-import FriendList from "./FriendList";
-import FriendSearch from "./FriendSearch";
+import UserList from "../users/UserList";
+import UserSearch from "../users/UserSearch";
 import { makeStyles } from "@material-ui/core/styles";
+import { getStrangers } from "../../../api_master";
 
 const useStyles = makeStyles((theme = theme) => ({
   modal: {
@@ -20,17 +21,21 @@ const useStyles = makeStyles((theme = theme) => ({
   },
 }));
 
-function AddFriend() {
+function AddFriend({ userId = 2 }) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [strangers, setStrangers] = useState([]);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  useEffect(() => {
+    getStrangers(userId).then((res) => {
+      setStrangers(res.data.rows);
+    });
+    return () => {
+      setStrangers([]);
+    };
+  }, []);
 
   const body = (
     <Grid container className={classes.modal} direction="column" spacing={3}>
@@ -40,10 +45,10 @@ function AddFriend() {
         </h3>
       </Grid>
       <Grid item>
-        <FriendSearch />
+        <UserSearch />
       </Grid>
       <Grid item>
-        <FriendList variant="add_friend" />
+        <UserList variant="add_friend" list={strangers} />
       </Grid>
       <Grid item container justify="center">
         <Button
