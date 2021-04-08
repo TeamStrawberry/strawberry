@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import UserProfile from "../users/UserProfile";
-import QuizSearch from '../quizSearch/QuizSearch';
 import QuizCreator from '../quizcreator/QuizCreator.jsx';
+import QuizList from '../quizList/quizList';
+import QuizSearch from '../quizSearch/QuizSearch';
+import UserProfile from "../users/UserProfile";
+import TakeQuiz from '../takeQuiz/TakeQuiz';
 
 function Routes() {
+
+  const [criteria, setCriteria] = useState();
+  const [quizId, setQuizId] = useState();
+
+
   return (
     <div>
       <Router>
@@ -22,11 +29,15 @@ function Routes() {
             <li>
               <Link to="/profile">Profile</Link>
             </li>
+            <li>
+              <Link to="/takeQuiz">Take Quiz</Link>
+            </li>
           </ul>
         </nav>
         <Switch>
           <Route path="/quizzes">
-            <Quizzes />
+            <QuizSearch search={ setCriteria }/>
+            <QuizList criteria={ criteria }/>
           </Route>
           <Route path="/create">
             <QuizCreator />
@@ -34,23 +45,13 @@ function Routes() {
           <Route path="/profile">
             <UserProfile />
           </Route>
+          <Route path="/takeQuiz">
+            <TakeQuiz />
+          </Route>
         </Switch>
       </Router>
     </div>
   );
-}
-
-function Quizzes() {
-  return (
-    <div>
-      <h2>Take your quizzes here</h2>
-      <QuizSearch />
-    </div>
-  );
-}
-
-function CreateQuiz() {
-  return <h2>Build your own pizza(quiz) here</h2>;
 }
 
 export default Routes;

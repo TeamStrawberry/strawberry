@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme = theme) => ({
   }
 }));
 
-const QuizSearch = (props) => {
+const QuizSearch = ({ setCriteria }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
@@ -54,7 +54,10 @@ const QuizSearch = (props) => {
 
   return(
     <Box>
-      <Button onClick={handleOpen} size="small">
+      <Button
+        onClick={handleOpen}
+        size='medium'
+      >
         &#x1F50D;
       </Button>
       <Modal open={open} onClose={handleClose}>
