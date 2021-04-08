@@ -182,9 +182,9 @@ app.get('/quizzes/:criteria', async (req, res) => {
       res.send(getHardQuizzes);
     } else {
       const getQuizByCategory = await pool.query (
-        `SELECT * FROM quizzes WHERE category = '${req.params.criteria}'`
+        `SELECT * FROM quizzes WHERE category LIKE '${req.params.criteria}%'`
       );
-      res.send(getQuizByCategory);
+      res.send(getQuizByCategory.rows);
     }
   } catch (err) {
     res.status(500).send(err);

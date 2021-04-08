@@ -13,14 +13,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const QuizCategorySearch = (props) => {
+const QuizCategorySearch = ({setCriteria}) => {
 
   const classes = useStyles();
   const [categories, setCategories] = useState([]);
 
+
   function handleChange(e) {
     e.preventDefault();
-    console.log(e.target.value);
+    setCriteria(e.target.value);
   }
 
   const axiosGetCategoryList = () => {
@@ -33,6 +34,11 @@ const QuizCategorySearch = (props) => {
   useEffect(() => {
     axiosGetCategoryList();
   }, []);
+
+  // const handleClick = (e) => {
+  //   console.log('Value: ', e.value);
+  //   history.push(`/quizzes/${e.value}`);
+  // };
 
   return (
     <Grid container>
