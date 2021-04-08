@@ -13,12 +13,45 @@ app.use(
   })
 );
 
+/* Dan and Alex's section */
+
+app.get("/getcreatedquizzes/:id", async (req, res) => {
+  try {
+    const {id} = req.params;
+
+    const getCreatedQuizzes = await pool.query(
+      `SELECT * from quizzes
+        WHERE id_users = ${id}`
+    );
+    res.send(getCreatedQuizzes);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+app.get("/getcreatedquizquestions/:id", async (req, res) => {
+  try {
+    const {id} = req.params;
+
+    const getCreatedQuizQuestions = await pool.query(
+      `SELECT * from questions
+        WHERE id_quiz = ${id}`
+    );
+    res.send(getCreatedQuizQuestions);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 app.post("/createquiz", async (req, res) => {
   try {
     const { name, category, difficulty, id_users } = req.body;
 
     const createQuiz = await pool.query(
-      "INSERT INTO quizzes (name, category, difficulty, id_users) VALUES ($1, $2, $3, $4) RETURNING *",
+      `INSERT INTO quizzes
+        (name, category, difficulty, id_users)
+        VALUES ($1, $2, $3, $4)
+        RETURNING *`,
       [name, category, difficulty, id_users]
     );
     res.status(201).send(createQuiz);
@@ -41,7 +74,10 @@ app.post("/createquestion", async (req, res) => {
     } = req.body;
 
     const createQuestion = await pool.query(
-      "INSERT INTO questions (category, type, difficulty, question, correct_answer, incorrect_answers, id_quiz, id_users) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
+      `INSERT INTO questions
+        (category, type, difficulty, question, correct_answer, incorrect_answers, id_quiz, id_users)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        RETURNING *`,
       [
         category,
         type,
@@ -58,6 +94,55 @@ app.post("/createquestion", async (req, res) => {
     res.status(500).send(err);
   }
 });
+
+app.put('/revisequestion/:id', async (req, res) => {
+  try{
+      const {id} = req.params;
+      const {
+          category,
+          type,
+          difficulty,
+          question,
+          correct_answer,
+          incorrect_answers
+      } = req.body;
+
+      const reviseQuestion = await pool.query(
+          `UPDATE questions
+              SET
+                  category = $1,
+                  type = $2,
+                  difficulty = $3,
+                  question = $4,
+                  correct_answer = $5,
+                  incorrect_answers = $6
+              WHERE ID = ${id}`,
+          [category, type, difficulty, question, correct_answer, incorrect_answers]
+      );
+      res.json([reviseQuestion, id, question, correct_answer, incorrect_answers]);
+  } catch (err) {
+      console.log(err);
+  }
+});
+
+app.delete('/deletequiz/:id', async (req, res) => {
+  try{
+      const {id} = req.params;
+
+      const deleteQuestions = await pool.query(
+          `DELETE FROM questions WHERE id_quiz = ${id}`
+      )
+
+      const deleteQuiz = await pool.query(
+          `DELETE FROM quizzes WHERE id = ${id}`
+      )
+      res.json(deleteQuiz);
+  } catch (err) {
+      res.status(500).send(err);
+  }
+});
+
+/* End of Dan and Alex's section */
 
 app.get('/quiz/:id', async (req, res) => {
   try {
