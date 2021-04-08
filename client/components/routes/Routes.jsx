@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import QuizCreator from '../quizcreator/QuizCreator.jsx';
 import QuizList from '../quizList/QuizList';
@@ -7,6 +7,11 @@ import UserProfile from "../users/UserProfile";
 import TakeQuiz from '../takeQuiz/TakeQuiz';
 
 function Routes() {
+
+  const [criteria, setCriteria] = useState();
+  const [quizId, setQuizId] = useState();
+
+
   return (
     <div>
       <Router>
@@ -31,7 +36,8 @@ function Routes() {
         </nav>
         <Switch>
           <Route path="/quizzes">
-            <QuizList />
+            <QuizSearch search={ setCriteria }/>
+            <QuizList criteria={ criteria }/>
           </Route>
           <Route path="/create">
             <QuizCreator />
