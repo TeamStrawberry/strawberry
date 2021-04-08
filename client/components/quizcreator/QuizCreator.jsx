@@ -48,6 +48,11 @@ const QuizCreator = () => {
     setQuizOptionsLoaded(true);
   }
 
+  const handleQuestionBankClick = (question) => {
+    // take question and prefill form
+    console.log(question);
+  }
+
   // rerender page on submit or go to another page
   // form validators only have either 2 or 4 answers no 3
   // Quiz submit becomes clickable 'enabled' once all 3 options are entered
@@ -108,7 +113,7 @@ const QuizCreator = () => {
   let errorMessage = null;
   let quizCreator = null;
 
-  quizTrackerCount >= 50
+  quizTrackerCount >= 3
     ? errorMessage = <h2 style = {{color: 'red'}}>DAILY LIMIT REACHED. CANNOT CREATE ANYMORE QUIZZES </h2>
     : quizCreator =
       <div className = 'quiz-creator'>
@@ -126,7 +131,10 @@ const QuizCreator = () => {
               <p>
                 Insert Directions Here
               </p>
-            <QuizBank />
+            <QuizBank
+              category = {category}
+              handleQuestionBankClick = {handleQuestionBankClick}
+            />
             <QuizQuestionsAndAnswers />
           </div> :
           <div>

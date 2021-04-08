@@ -6,11 +6,10 @@ import QuizSearch from '../quizSearch/QuizSearch';
 import UserProfile from "../users/UserProfile";
 import TakeQuiz from '../takeQuiz/TakeQuiz';
 
+
 function Routes() {
 
-  const [criteria, setCriteria] = useState();
-  const [quizId, setQuizId] = useState();
-
+  const [criteria, setCriteria] = useState(false);
 
   return (
     <div>
@@ -29,14 +28,11 @@ function Routes() {
             <li>
               <Link to="/profile">Profile</Link>
             </li>
-            <li>
-              <Link to="/takeQuiz">Take Quiz</Link>
-            </li>
           </ul>
         </nav>
         <Switch>
           <Route path="/quizzes">
-            <QuizSearch search={ setCriteria }/>
+            <QuizSearch setCriteria={ setCriteria }/>
             <QuizList criteria={ criteria }/>
           </Route>
           <Route path="/create">
@@ -45,8 +41,8 @@ function Routes() {
           <Route path="/profile">
             <UserProfile />
           </Route>
-          <Route path="/takeQuiz">
-            <TakeQuiz />
+          <Route path='/quiz/:quizId'>
+            <TakeQuiz/>
           </Route>
         </Switch>
       </Router>
