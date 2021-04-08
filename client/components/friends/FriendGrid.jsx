@@ -11,13 +11,6 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles({
-  root: {
-    maxWidth: 345,
-    justify: "center",
-  },
-});
-
 function FriendGrid({ loggedInUser, friends }) {
   let friendGridItems = friends.map((friend) => {
     return (
