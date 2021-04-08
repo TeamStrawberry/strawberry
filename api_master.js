@@ -9,8 +9,36 @@ function handleGetRequests(route, params) {
   return axios(options);
 }
 
+function getStrangers(userId) {
+  return handleGetRequests(`/strangers/${userId}`);
+}
+
+function getUserQuizHistory(userId) {
+  return handleGetRequests(`/getcreatedquizzes/${userId}`);
+}
+
+function getCreatedQuizQuestions(quizId) {
+  return handleGetRequests(`/getcreatedquizquestions/${quizId}`);
+}
+
+function getQuestionsByCategory(category) {
+  return handleGetRequests(`/questions/${category}`)
+}
+
+function getFriends(userId) {
+  return handleGetRequests(`/friends/${userId}`);
+}
+
+function getSingleQuiz(quizId) {
+  return handleGetRequests(`/quiz/${quizId}`);
+}
+
+function getQuizHistory(userId) {
+  return handleGetRequests(`/quiz/history/taken/${userId}`);
+}
+
 // Handles all POST requests, takes a route, params, and data object
-function handlePostRequests(route, params = {}, data = {}) {
+function handlePostRequests(route, data = {}, params = {}) {
   let options = {
     method: "post",
     url: url + route,
@@ -23,16 +51,8 @@ function handlePostRequests(route, params = {}, data = {}) {
   return axios(options);
 }
 
-function getStrangers(userId) {
-  return handleGetRequests(`/strangers/${userId}`);
-}
-
 function createFriendship(userId, friendUserId) {
   return handlePostRequests(`/friends/${userId}/${friendUserId}`);
-}
-
-function getSingleQuiz(quizId) {
-  return handleGetRequests(`/quiz/${quizId}`);
 }
 
 function submitQuizAnswers(quizId, userId, userScore) {
@@ -44,8 +64,59 @@ function submitQuizAnswers(quizId, userId, userScore) {
   });
 }
 
-function getQuizHistory(userId) {
-  return handleGetRequests(`/quiz/history/taken/${userId}`);
+function createQuiz(quizData) {
+  return handlePostRequests(`/createquiz`, quizData);
 }
 
-export { getStrangers, createFriendship, getSingleQuiz, submitQuizAnswers, getQuizHistory };
+function createQuestion(questionsData) {
+  return handlePostRequests(`/createquestion`, questionsData);
+}
+
+// Handles all PUT requests, takes a route and a params
+function handlePutRequests(route, data = {}, params = {}) {
+  let options = {
+    method: "put",
+    url: url + route,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    params: params,
+    data: data,
+  };
+  return axios(options);
+}
+
+function reviseQuizQuestion(questionId, newQuestionData) {
+  return handlePutRequests(`/revisequestion/${questionId}`, newQuestionData);
+}
+
+// Handles all DELETE requests, takes a route and a params
+function handleDeleteRequests(route, params) {
+  let options = {
+    method: "delete",
+    url: url + route,
+    params: params,
+  };
+  return axios(options);
+}
+
+function removeQuiz(quizId) {
+  return handleDeleteRequests(`/deletequiz/${quizId}`);
+}
+
+export {
+  getStrangers,
+  getUserQuizHistory,
+  getCreatedQuizQuestions,
+  getQuestionsByCategory,
+  getFriends,
+  getSingleQuiz,
+  getQuizHistory
+  createFriendship,
+  submitQuizAnswers,
+  createQuiz,
+  createQuestion,
+  reviseQuizQuestion,
+  removeQuiz,
+};
+

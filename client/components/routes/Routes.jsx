@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import QuizCreator from '../quizcreator/QuizCreator.jsx';
-import QuizList from '../quizList/QuizList';
+import QuizList from '../quizList/quizList';
 import QuizSearch from '../quizSearch/QuizSearch';
 import UserProfile from "../users/UserProfile";
 import TakeQuiz from '../takeQuiz/TakeQuiz';
 
+
 function Routes() {
+
+  const [criteria, setCriteria] = useState(false);
+
   return (
     <div>
       <Router>
@@ -28,7 +32,8 @@ function Routes() {
         </nav>
         <Switch>
           <Route path="/quizzes">
-            <QuizList />
+            <QuizSearch setCriteria={ setCriteria }/>
+            <QuizList criteria={ criteria }/>
           </Route>
           <Route path="/create">
             <QuizCreator />
@@ -43,10 +48,6 @@ function Routes() {
       </Router>
     </div>
   );
-}
-
-function CreateQuiz() {
-  return <h2>Build your own pizza(quiz) here</h2>;
 }
 
 export default Routes;

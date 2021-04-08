@@ -1,8 +1,7 @@
 import React from 'react';
-import { TextField, FormGroup} from '@material-ui/core';
+import { TextField, FormGroup } from '@material-ui/core';
 
 const QuestionGenerator = ({ number }) => {
-
   return (
     <div>
       <FormGroup id={`QuestionAndAnswer${number}`}>
