@@ -86,7 +86,6 @@ const QuizCreator = () => {
       singleQnA.incorrect_answers = filteredAnswers;
       // user id <-- AWAITING
       if (singleQnA.question.length) {
-        console.log(singleQnA)
         allQuizQuestions.push(singleQnA);
       }
     }
