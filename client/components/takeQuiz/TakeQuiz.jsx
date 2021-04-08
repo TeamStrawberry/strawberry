@@ -126,7 +126,6 @@ const TakeQuiz = (userId) => {
       handleOpen();
     } else {
       setValidated(false);
-      calculateScore();
       handleOpen();
     }
   };
@@ -184,7 +183,7 @@ const TakeQuiz = (userId) => {
       correct_answer_count: userScore.correct,
       incorrect_answer_count: userScore.incorrect,
       id_quiz: quizId,
-      id_users: 8 // later change to: userId
+      id_users: 11 // later change to: userId
     })
     .catch(err => {
       console.error('Error: cannot submit quiz answers to database', err);
@@ -223,7 +222,7 @@ const TakeQuiz = (userId) => {
         if (response.length) {
           let sorted = response.sort();
           let below = 0;
-          let equal = -1;
+          let equal = 1;
           for (let i = 0; i < sorted.length; i++) {
             if (sorted[i] < percentage) {
               below++;
@@ -231,6 +230,8 @@ const TakeQuiz = (userId) => {
               equal++;
             }
           }
+          console.log('sorted', sorted)
+          console.log('below', below, 'equal', equal)
           let userPercentile = (below + (0.5 * equal) / sorted.length) * 100;
           setPercentile(userPercentile);
         }
