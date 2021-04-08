@@ -68,15 +68,16 @@ const QuizCreator = () => {
     }
     if (allQuizQuestions.length < 3) alert('Please create at least 3 questions.');
 
-    createQuiz({name, category, difficulty, user: 1})
+    createQuiz({name, category, difficulty, id_users: 1})
       .then(res => {
         let quizId = res.data.rows[0].id;
+        console.log(res.data)
         return quizId
       })
       .then(quizId => {
         allQuizQuestions.forEach(quizQuestion => {
           quizQuestion.id_quiz = quizId;
-          quizQuestion.users = 1;
+          quizQuestion.id_users = 1;
           createQuestion(quizQuestion)
             .then (res => console.log('Quiz question saved!'))
             .catch(err => console.error('Error', err))
