@@ -99,6 +99,12 @@ app.get('/quizzes/:criteria', async (req, res) => {
     } else if (req.params.criteria === 'hot') {
       const getHotQuizzes = await pool.query (
         /* FILL_ME_IN */
+        'SELECT q.id, q.name, COUNT(c.id) as taken_count ' +
+        'from user_completed_quizzes c ' +
+        'join quizzes q on c.id_quiz = q.id ' +
+        /* This does Hot n' New, to make it just hot, remove the line below */
+        'where c.date_created > CURRENT_DATE - 1 ' +
+        'group by q.id order by taken_count desc limit 10'
       );
     } else if (req.params.criteria === 'easy') {
       const getEasyQuizzes = await pool.query (
@@ -120,9 +126,9 @@ app.get('/quizzes/:criteria', async (req, res) => {
         `SELECT * FROM quizzes WHERE category = '${req.params.criteria}'`
       );
       res.send(getQuizByCategory);
-    } catch (err) {
-      res.status(500).send(err);
     }
+  } catch (err) {
+    res.status(500).send(err);
   }
 });
 
