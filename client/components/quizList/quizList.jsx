@@ -8,7 +8,6 @@ import QuizListCard from './QuizListCard';
 const QuizList = ({ name, category, difficulty }) => {
 
   const [quizzesBySelection, updateSelection] = useState([]);
-  const [maxQuizNumber, updateMaxQuizNumber] = useState(0);
 
   const axiosGetQuizzesByRandomSelection = () => {
     axios
@@ -17,9 +16,20 @@ const QuizList = ({ name, category, difficulty }) => {
       .catch(err => console.error(err))
   };
 
+  const axiosGetQuizzesByRandomSelection = () => {
+    axios
+      .get('/quizzes/:criteria')
+      .then(quizzes => updateSelection(quizzes.data.rows))
+      .catch(err => console.error(err))
+  };
+
   useEffect(() => {
     axiosGetQuizzesByRandomSelection();
   }, []);
+
+  useEffect(() => {
+    axiosGetQuizzesBySelection();
+  }, [quizzesBySelection]);
 
 
   return (
