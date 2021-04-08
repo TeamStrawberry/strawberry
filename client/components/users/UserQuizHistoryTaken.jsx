@@ -26,10 +26,16 @@ function UserQuizHistoryTaken(userId) {
   const classes = useStyles();
 
   const retrieveQuizHistory = () => {
+    let quizIds = {};
     axios
-      .get('/quiz/history/1') // later change to: `/quiz/history/${userId}`
+      .get('/quiz/history/taken/7') // later change to: `/quiz/history/taken/${userId}`
       .then(response => {
-        setQuizList(response.data.rows);
+        let quizzes = response.data.rows;
+        return uniqueQuizzes;
+      })
+      .then(data => {
+        console.log('data', data);
+        setQuizList(data)
       })
       .catch(err => {
         console.error('Error: cannot retrieve user\'s quiz history from database', err)
