@@ -12,7 +12,6 @@ import {
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 import UserList from "../users/UserList";
 import UserSearch from "../users/UserSearch";
-import friendSampleData from "./friendSampleData";
 
 const useStyles = makeStyles((theme = theme) => ({
   modal: {
@@ -30,11 +29,10 @@ const useStyles = makeStyles((theme = theme) => ({
   },
 }));
 
-function ChallengeFriend({ link = "http://test.com" }) {
+function ChallengeFriend({ loggedInUser, friends, link = "http://test.com" }) {
   const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
   const [open, setOpen] = useState(false);
-  const [challengees, setChallengees] = useState(friendSampleData);
+  const [challengees, setChallengees] = useState([]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -47,7 +45,13 @@ function ChallengeFriend({ link = "http://test.com" }) {
   const challengeGroup = (
     <AvatarGroup max={5} className={classes.small}>
       {challengees.map((friend) => {
-        return <Avatar alt={friend.name} className={classes.small} />;
+        return (
+          <Avatar
+            key={friend.id}
+            alt={friend.username}
+            className={classes.small}
+          />
+        );
       })}
     </AvatarGroup>
   );
@@ -63,7 +67,11 @@ function ChallengeFriend({ link = "http://test.com" }) {
         <UserSearch />
       </Grid>
       <Grid item>
-        <UserList variant="challenge" />
+        <UserList
+          loggedInUser={loggedInUser}
+          variant="challenge"
+          list={friends}
+        />
       </Grid>
       <Grid item>
         <TextField
@@ -71,7 +79,7 @@ function ChallengeFriend({ link = "http://test.com" }) {
           label="Message"
           multiline
           rows={4}
-          defaultValue="Talk some trash..."
+          placeholder="Talk some trash..."
           variant="outlined"
           fullWidth
         />
