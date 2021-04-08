@@ -8,7 +8,7 @@ const QuizOptions = ({ handleCategoryChange, handleDifficultyChange, difficulty,
   return (
     <div>
       <h3>
-        Quiz Options
+        Create a New Quiz
       </h3>
       <QuizName name={name} handleNameChange={handleNameChange}/>
       <CategorySelector category={category} handleCategoryChange={handleCategoryChange}/>
