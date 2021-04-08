@@ -2,6 +2,7 @@ import { Modal, Button, Grid, Card, CardContent, CardHeader } from "@material-ui
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useState, useEffect } from "react";
 import { getQuizHistory } from "../../../api_master";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -25,6 +26,7 @@ function UserQuizHistoryTaken(userId) {
   const [count, setCount] = useState(0);
 
   const classes = useStyles();
+  let history = useHistory();
 
   const retrieveQuizHistory = () => {
     let quizIds = {}, uniqueQuizzes = [];
@@ -58,7 +60,7 @@ function UserQuizHistoryTaken(userId) {
 
   const handleRedirect = (e) => {
     const quizId = e.target.name;
-    // add functionality to redirect to TakeQuiz component
+    history.push(`/quiz/${quizId}`);
   }
 
   useEffect(() => {
@@ -71,7 +73,7 @@ function UserQuizHistoryTaken(userId) {
         ? quizList.map(quiz => (
           <Grid item>
             <h4>{ quiz.name }</h4>
-            <Button
+            <button
               variant="contained"
               variant="outlined"
               color="primary"
@@ -79,7 +81,7 @@ function UserQuizHistoryTaken(userId) {
               name={ quiz.id_quiz }
             >
               Retake Quiz
-            </Button>
+            </button>
           </Grid>
         ))
         : null
@@ -110,7 +112,7 @@ function UserQuizHistoryTaken(userId) {
                 <Grid item>
                   <h4>{ quiz.name }</h4>
                   <h4>Score: { quiz.correct_answer_count }/{ quiz.correct_answer_count + quiz.incorrect_answer_count} ({(Number(quiz.correct_answer_count)/Number(quiz.correct_answer_count + quiz.incorrect_answer_count) * 100).toFixed(0) }%)</h4>
-                  <Button
+                  <button
                     variant="contained"
                     variant="outlined"
                     color="primary"
@@ -118,7 +120,7 @@ function UserQuizHistoryTaken(userId) {
                     name={ quiz.id_quiz }
                   >
                     Retake Quiz
-                  </Button>
+                  </button>
                 </Grid>
               ))
               : null

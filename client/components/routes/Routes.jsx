@@ -24,9 +24,6 @@ function Routes() {
             <li>
               <Link to="/profile">Profile</Link>
             </li>
-            <li>
-              <Link to="/takeQuiz">Take Quiz</Link>
-            </li>
           </ul>
         </nav>
         <Switch>
@@ -39,8 +36,8 @@ function Routes() {
           <Route path="/profile">
             <UserProfile />
           </Route>
-          <Route path="/takeQuiz">
-            <TakeQuiz />
+          <Route path='/quiz/:quizId'>
+            <TakeQuiz/>
           </Route>
         </Switch>
       </Router>
