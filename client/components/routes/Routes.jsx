@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import QuizCreator from '../quizcreator/QuizCreator.jsx';
-import QuizList from '../quizList/QuizList';
+import QuizList from '../quizList/quizList';
 import QuizSearch from '../quizSearch/QuizSearch';
 import UserProfile from "../users/UserProfile";
 import TakeQuiz from '../takeQuiz/TakeQuiz';

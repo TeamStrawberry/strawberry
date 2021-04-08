@@ -4,7 +4,7 @@ import QuizQuestionsAndAnswers from './QuizQuestionsAndAnswers.jsx';
 import QuizSubmit from './QuizSubmit.jsx';
 import QuizBank from './QuizBank.jsx';
 import QuizzesPerDayTracker from './QuizzesPerDayTracker.jsx';
-import CreatedQuizHistory from '../quizEditor/CreatedQuizHistory.jsx';
+import CreatedQuizHistory from '../quizeditor/CreatedQuizHistory.jsx';
 const { createQuiz, createQuestion } = require('../../../api_master.js');
 import axios from 'axios';
 
