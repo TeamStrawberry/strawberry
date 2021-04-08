@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme = theme) => ({
   },
 }));
 
-function AddFriend({ loggedInUser = { id: 1, username: "admin" } }) {
+function AddFriend({ loggedInUser }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [strangers, setStrangers] = useState([]);
