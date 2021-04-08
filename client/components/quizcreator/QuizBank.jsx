@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 const { getQuestionsByCategory } = require('../../../api_master.js');
 
 const QuizBank = ({ category, handleQuestionBankClick }) => {
-  // get quiz questions by category input
   const [questionBank, setQuestionBank] = useState([])
 
   getQuestionsByCategory(category)
