@@ -36,7 +36,7 @@ const QuizDifficultySearch = ({setCriteria}) => {
           >
             { difficulties.map((difficulty, index) => {
               return (
-                <MenuItem value={difficulty}>
+                <MenuItem value={difficulty} key={index}>
                   { difficulty }
                 </MenuItem>
               )
