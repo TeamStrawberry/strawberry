@@ -13,6 +13,35 @@ app.use(
   })
 );
 
+
+app.get("/getcreatedquizzes/:id", async (req, res) => {
+  try {
+    const {id} = req.params;
+
+    const getCreatedQuizzes = await pool.query(
+      `SELECT * from quizzes
+        WHERE id_users = ${id}`
+    );
+    res.status(200).send(getCreatedQuizzes);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+app.get("/getcreatedquizquestions/:id", async (req, res) => {
+  try {
+    const {id} = req.params;
+
+    const getCreatedQuizQuestions = await pool.query(
+      `SELECT * from questions
+        WHERE id_quiz = ${id}`
+    );
+    res.status(200).send(getCreatedQuizQuestions);
+  } catch (err) {
+   console.log(err);
+  }
+});
+
 app.post("/createquiz", async (req, res) => {
   try {
     const { name, category, difficulty, id_users } = req.body;
@@ -118,7 +147,7 @@ app.put('/revisequestion/:id', async (req, res) => {
     }
 });
 
-app.delete('/delete/:id', async (req, res) => {
+app.delete('/deletequiz/:id', async (req, res) => {
     try{
         const {id} = req.params;
 
