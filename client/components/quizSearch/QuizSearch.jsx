@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme = theme) => ({
   }
 }));
 
-const QuizSearch = (props) => {
+const QuizSearch = ({ setCriteria }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
