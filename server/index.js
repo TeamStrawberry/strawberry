@@ -1,4 +1,3 @@
-// Does this fix your formatting?
 const express = require("express");
 const path = require("path");
 const { pool } = require("../db/pool.js");
@@ -60,7 +59,44 @@ app.post("/createquestion", async (req, res) => {
   }
 });
 
+app.get('/quiz/:id', async (req, res) => {
+  try {
+    const quizId = req.params.id;
+    const retrieveQuiz = await pool.query(
+      `SELECT * FROM questions
+      WHERE id_quiz = ${quizId}`
+    )
+    res.status(200).send(retrieveQuiz);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+})
 
+app.post('/submitquiz', async (req, res) => {
+  try {
+    const {
+      correct_answer_count,
+      incorrect_answer_count,
+      id_quiz,
+      id_users
+    } = req.body;
+
+    const submitQuiz = await pool.query(
+      `INSERT INTO user_completed_quizzes (correct_answer_count, incorrect_answer_count, id_quiz, id_users)
+      VALUES ($1, $2, $3, $4)
+      RETURNING *`,
+      [
+        correct_answer_count,
+        incorrect_answer_count,
+        id_quiz,
+        id_users
+      ]
+    )
+    res.status(201).send(submitQuiz);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+})
 app.get("/quizzes", async (req, res) => {
   try {
     const getLastId = await pool.query(
@@ -182,6 +218,28 @@ app.get("/friends/:userId", async (req, res) => {
       WHERE f.id_user = ${req.params.userId};`
     );
     res.status(200).send(getFriends);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+//get all users who are strangers to a user
+app.get("/strangers/:userId", async (req, res) => {
+  try {
+    const getUsers = await pool.query(
+      `SELECT u.*
+      FROM users u
+      LEFT JOIN (SELECT u.id
+            FROM user_friend_relationships f
+            JOIN users u
+            ON f.id_user_friend = u.id
+            WHERE f.id_user = ${req.params.userId}) f
+      ON u.id = f.id
+      WHERE f.id is null
+      AND u.id <> ${req.params.userId}
+      ORDER BY u.username ASC;`
+    );
+    res.status(200).send(getUsers);
   } catch (err) {
     res.status(500).send(err);
   }
