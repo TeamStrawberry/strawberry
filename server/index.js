@@ -201,6 +201,28 @@ app.get("/friends/:userId", async (req, res) => {
   }
 });
 
+//get all users who are strangers to a user
+app.get("/strangers/:userId", async (req, res) => {
+  try {
+    const getUsers = await pool.query(
+      `SELECT u.*
+      FROM users u
+      LEFT JOIN (SELECT u.id
+            FROM user_friend_relationships f
+            JOIN users u
+            ON f.id_user_friend = u.id
+            WHERE f.id_user = ${req.params.userId}) f
+      ON u.id = f.id
+      WHERE f.id is null
+      AND u.id <> ${req.params.userId}
+      ORDER BY u.username ASC;`
+    );
+    res.status(200).send(getUsers);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 //get all users
 app.get("/users", async (req, res) => {
   try {
