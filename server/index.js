@@ -65,8 +65,19 @@ app.get('/quiz/:id', async (req, res) => {
     const retrieveQuiz = await pool.query(
       `SELECT * FROM questions WHERE questions.id_quiz = ${quizId}`
     )
-    console.log()
     res.status(200).send(retrieveQuiz);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+})
+
+app.get(`/quiz/history/:userId`, async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const retrieveQuizHistory = await pool.query(
+      `SELECT * FROM quizzes WHERE quizzes.id_users = ${userId}`
+    )
+    res.status(200).send(retrieveQuizHistory);
   } catch (err) {
     res.status(500).send(err);
   }
