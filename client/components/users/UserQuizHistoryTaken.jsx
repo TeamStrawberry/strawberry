@@ -1,7 +1,7 @@
 import { Modal, Button, Grid, Card, CardContent, CardHeader } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import { getQuizHistory } from "../../../api_master";
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -28,8 +28,7 @@ function UserQuizHistoryTaken(userId) {
 
   const retrieveQuizHistory = () => {
     let quizIds = {}, uniqueQuizzes = [];
-    axios
-      .get('/quiz/history/taken/1') // later change to: `/quiz/history/taken/${userId}`
+    getQuizHistory(1) // later change to: getQuizHistory(userId)
       .then(response => {
         let quizzes = response.data.rows;
         for (let i = 0; i < quizzes.length; i++) {
@@ -68,31 +67,31 @@ function UserQuizHistoryTaken(userId) {
 
   const body = (
     <Grid className={ classes.modal }>
-        {quizList.length
-          ? quizList.map(quiz => (
-            <Grid item>
-              <h4>{ quiz.name }</h4>
-              <Button
-                variant="contained"
-                variant="outlined"
-                color="primary"
-                onClick={ handleRedirect }
-                name={ quiz.id_quiz }
-              >
-                Retake Quiz
-              </Button>
-            </Grid>
-          ))
-          : null
-        }
-        <Button
-          variant="contained"
-          variant="outlined"
-          color="primary"
-          onClick={ handleClose }
-        >
-          Close
-        </Button>
+      {quizList.length
+        ? quizList.map(quiz => (
+          <Grid item>
+            <h4>{ quiz.name }</h4>
+            <Button
+              variant="contained"
+              variant="outlined"
+              color="primary"
+              onClick={ handleRedirect }
+              name={ quiz.id_quiz }
+            >
+              Retake Quiz
+            </Button>
+          </Grid>
+        ))
+        : null
+      }
+      <Button
+        variant="contained"
+        variant="outlined"
+        color="primary"
+        onClick={ handleClose }
+      >
+        Close
+      </Button>
     </Grid>
   )
 
@@ -106,24 +105,24 @@ function UserQuizHistoryTaken(userId) {
         />
         <CardContent>
           <Grid>
-              {quizList.length
-                ? quizList.slice(0, 5).map(quiz => (
-                  <Grid item>
-                    <h4>{ quiz.name }</h4>
-                    <h4>Score: { quiz.correct_answer_count }/{ quiz.correct_answer_count + quiz.incorrect_answer_count} ({(Number(quiz.correct_answer_count)/Number(quiz.correct_answer_count + quiz.incorrect_answer_count) * 100).toFixed(0) }%)</h4>
-                    <Button
-                      variant="contained"
-                      variant="outlined"
-                      color="primary"
-                      onClick={ handleRedirect }
-                      name={ quiz.id_quiz }
-                    >
-                      Retake Quiz
-                    </Button>
-                  </Grid>
-                ))
-                : null
-              }
+            {quizList.length
+              ? quizList.slice(0, 5).map(quiz => (
+                <Grid item>
+                  <h4>{ quiz.name }</h4>
+                  <h4>Score: { quiz.correct_answer_count }/{ quiz.correct_answer_count + quiz.incorrect_answer_count} ({(Number(quiz.correct_answer_count)/Number(quiz.correct_answer_count + quiz.incorrect_answer_count) * 100).toFixed(0) }%)</h4>
+                  <Button
+                    variant="contained"
+                    variant="outlined"
+                    color="primary"
+                    onClick={ handleRedirect }
+                    name={ quiz.id_quiz }
+                  >
+                    Retake Quiz
+                  </Button>
+                </Grid>
+              ))
+              : null
+            }
             {count > 5
               ? <Grid item>
                 <Button

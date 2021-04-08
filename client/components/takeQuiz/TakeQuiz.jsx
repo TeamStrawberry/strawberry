@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Grid, Button, Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import sampleData from '/sampleData.json';
-import axios from 'axios';
+import { getSingleQuiz, submitQuizAnswers } from "../../../api_master";
 
 const useStyles = makeStyles(theme => ({
   quiz: {
@@ -147,8 +146,7 @@ const TakeQuiz = (quizId, userId) => {
 
   const retrieveQuiz = () => {
     let allAnswers = {}, cleanedQuestions = [], allQuestions;
-    axios
-      .get(`/quiz/13`) // later change to: `/quiz/${quizId}`
+    getSingleQuiz(5) // later change to: getSingleQuiz(quizId)
       .then(response => {
         setQuizQuestions(response.data.rows);
         return response.data.rows;
@@ -179,16 +177,7 @@ const TakeQuiz = (quizId, userId) => {
   }
 
   const submitAnswers = (userScore) => {
-    axios({
-      method: 'post',
-      url: '/submitquiz',
-      data: {
-        correct_answer_count: userScore.correct,
-        incorrect_answer_count: userScore.incorrect,
-        id_quiz: 11, // later change to: quizId
-        id_users: 7 // later change to: userId
-      }
-    })
+    submitQuizAnswers(14, 1, userScore) // later change to: submitQuizAnswers(quizId, userId, userScore);
     .catch(err => {
       console.error('Error: cannot submit quiz answers to database', err);
     })

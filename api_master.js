@@ -31,4 +31,21 @@ function createFriendship(userId, friendUserId) {
   return handlePostRequests(`/friends/${userId}/${friendUserId}`);
 }
 
-export { getStrangers, createFriendship };
+function getSingleQuiz(quizId) {
+  return handleGetRequests(`/quiz/${quizId}`);
+}
+
+function submitQuizAnswers(quizId, userId, userScore) {
+  return handlePostRequests('/submitquiz', {}, {
+    correct_answer_count: userScore.correct,
+    incorrect_answer_count: userScore.incorrect,
+    id_quiz: quizId,
+    id_users: userId
+  });
+}
+
+function getQuizHistory(userId) {
+  return handleGetRequests(`/quiz/history/taken/${userId}`);
+}
+
+export { getStrangers, createFriendship, getSingleQuiz, submitQuizAnswers, getQuizHistory };
