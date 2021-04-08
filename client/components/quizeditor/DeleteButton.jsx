@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+const { removeQuiz } = require('../../../api_master.js');
 
 function getModalStyle() {
     const top = 50;
@@ -42,7 +43,7 @@ const DeleteButton = ({ quizId }) => {
     };
 
     const handleQuizDelete = (quiz_id) => {
-        axios.delete(`/deletequiz/${quiz_id}`)
+        removeQuiz(quiz_id)
             .then(() => console.log('Quiz and questions deleted successfully'))
             .catch(err => console.log(err))
 

@@ -3,6 +3,7 @@ import { Button } from '@material-ui/core';
 import axios from 'axios';
 import QuizHistoryDisplay from './QuizHistoryDisplay.jsx';
 import QuizEditor from './QuizEditor.jsx';
+const { getUserQuizHistory, getCreatedQuizQuestions } = require('../../../api_master.js');
 
 const CreatedQuizHistory = ({ userId }) => {
   const [quizHistory, setQuizHistory] = useState([]);
@@ -13,7 +14,7 @@ const CreatedQuizHistory = ({ userId }) => {
   let tempId = 1;
 
   const getQuizHistory = () => {
-    axios.get(`/getcreatedquizzes/${tempId}`)
+    getUserQuizHistory(tempId)
     .then((res) => {
       let quizzes = res.data.rows;
       setQuizHistory(quizzes);
@@ -25,7 +26,7 @@ const CreatedQuizHistory = ({ userId }) => {
   getQuizHistory();
 
   const handleEditQuizClick = (quizId, quizName) => {
-    axios.get(`/getcreatedquizquestions/${quizId}`)
+    getCreatedQuizQuestions(quizId)
     .then((res) => {
       let quizQuestions = res.data.rows;
       setQuizName(quizName);

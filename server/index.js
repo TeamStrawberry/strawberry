@@ -13,6 +13,8 @@ app.use(
   })
 );
 
+/* Dan and Alex's section */
+
 app.get("/getcreatedquizzes/:id", async (req, res) => {
   try {
     const {id} = req.params;
@@ -92,6 +94,55 @@ app.post("/createquestion", async (req, res) => {
     res.status(500).send(err);
   }
 });
+
+app.put('/revisequestion/:id', async (req, res) => {
+  try{
+      const {id} = req.params;
+      const {
+          category,
+          type,
+          difficulty,
+          question,
+          correct_answer,
+          incorrect_answers
+      } = req.body;
+
+      const reviseQuestion = await pool.query(
+          `UPDATE questions
+              SET
+                  category = $1,
+                  type = $2,
+                  difficulty = $3,
+                  question = $4,
+                  correct_answer = $5,
+                  incorrect_answers = $6
+              WHERE ID = ${id}`,
+          [category, type, difficulty, question, correct_answer, incorrect_answers]
+      );
+      res.status(200).json([reviseQuestion, id, question, correct_answer, incorrect_answers]);
+  } catch (err) {
+      console.log(err);
+  }
+});
+
+app.delete('/deletequiz/:id', async (req, res) => {
+  try{
+      const {id} = req.params;
+
+      const deleteQuestions = await pool.query(
+          `DELETE FROM questions WHERE id_quiz = ${id}`
+      )
+
+      const deleteQuiz = await pool.query(
+          `DELETE FROM quizzes WHERE id = ${id}`
+      )
+      res.status(200).json(deleteQuiz);
+  } catch (err) {
+      res.status(500).send(err);
+  }
+});
+
+/* End of Dan and Alex's section */
 
 app.get('/quiz/:id', async (req, res) => {
   try {

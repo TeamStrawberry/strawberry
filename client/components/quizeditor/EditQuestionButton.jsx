@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Modal, Backdrop, Fade, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+const { reviseQuizQuestion } = require ('../../../api_master.js');
 
 const useStyles = makeStyles(theme => ({
     modal: {
@@ -70,7 +71,7 @@ const EditQuestionButton = ({ question, userId, handleRenderingQuestions }) => {
         incorrect_answers: [incorrectAnswer1 || question.incorrect_answers[0], incorrectAnswer2 || question.incorrect_answers[1], incorrectAnswer3 || question.incorrect_answers[2]]
       }
 
-      axios.put(`/revisequestion/${questionId}`, editedQuestion)
+      reviseQuizQuestion(questionId, editedQuestion)
         .then(res => {
           console.log('Update successful');
           handleRenderingQuestions(res.data);

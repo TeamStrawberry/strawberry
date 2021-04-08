@@ -4,8 +4,10 @@ import QuizQuestionsAndAnswers from './QuizQuestionsAndAnswers.jsx';
 import QuizSubmit from './QuizSubmit.jsx';
 import QuizBank from './QuizBank.jsx';
 import QuizzesPerDayTracker from './QuizzesPerDayTracker';
-import CreatedQuizHistory from '../quizEditor/CreatedQuizHistory.jsx'
+import CreatedQuizHistory from '../quizEditor/CreatedQuizHistory.jsx';
+const { createQuiz, createQuestion } = require('../../../api_master.js');
 import axios from 'axios';
+
 
 // TIER 3 - ALLOW USERS TO SUBMIT PHOTOS AND VIDEOS
 // TIER 2 - ENTERED DATA SHOULD PERSIST IF USER LEAVES CREATE QUIZ PAGE
@@ -66,7 +68,7 @@ const QuizCreator = () => {
     }
     if (allQuizQuestions.length < 3) alert('Please create at least 3 questions.');
 
-    axios.post('/createquiz', {name, category, difficulty, user: 1})
+    createQuiz({name, category, difficulty, user: 1})
       .then(res => {
         let quizId = res.data.rows[0].id;
         return quizId
@@ -75,7 +77,7 @@ const QuizCreator = () => {
         allQuizQuestions.forEach(quizQuestion => {
           quizQuestion.id_quiz = quizId;
           quizQuestion.users = 1;
-          axios.post('/createquestion', quizQuestion)
+          createQuestion(quizQuestion)
             .then (res => console.log('Quiz question saved!'))
             .catch(err => console.log(err))
           })
