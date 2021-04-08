@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Modal, Grid, Button, Box, TextField, Typography} from '@material-ui/core'
 import { makeStyles } from "@material-ui/core/styles";
+import axios from 'axios';
 
 const useStyles = makeStyles((theme = theme) => ({
   modal: {
@@ -35,6 +36,13 @@ function Authentication () {
 
   const handleLogin = () => {
     console.log('login');
+    axios.get('/login')
+    .then((data) => {
+      console.log('data: ', data);
+    })
+    .catch((err) => {
+      console.log('error: ', err);
+    });
     handleClose();
   };
 
