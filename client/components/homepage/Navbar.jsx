@@ -119,9 +119,15 @@ export default function Navbar() {
           <div className={classes.sectionDesktop}>
             {login ?
             <div>
-              <Typography  className={classes.intro} variant="h6" style={{ textDecoration: 'none', color: 'unset' }} noWrap>
+              <Typography
+              className={classes.intro}
+              variant="h6"
+              style={{ textDecoration: 'none', color: 'unset' }}
+              noWrap
+              >
             Hello, username
           </Typography>
+
              <IconButton
              edge="end"
              aria-label="account of current user"
