@@ -76,7 +76,7 @@ const EditQuestionButton = ({ question, userId, handleRenderingQuestions }) => {
           console.log('Update successful');
           handleRenderingQuestions(res.data);
         })
-        .catch(err => console.log(err))
+        .catch(err => console.error('Error', err))
 
       setOpen(false);
     }
@@ -103,15 +103,41 @@ const EditQuestionButton = ({ question, userId, handleRenderingQuestions }) => {
                 <Fade in={open}>
                     <div className={classes.paper}>
                       <form>
-                        <TextField variant='outlined' id={`question-${question.id}`} label={question.question} onChange={(e)=>{handleQChange(e.target.value)}} fullWidth='true'/>
+                        <TextField
+                          variant='outlined'
+                          id={`question-${question.id}`}
+                          label={question.question}
+                          onChange={(e)=>{handleQChange(e.target.value)}}
+                          fullWidth='true'
+                        />
                         <br></br>
-                        <TextField variant='outlined' id={`correct-answer-${question.id}`} label={question.correct_answer} onChange={(e) => {handleCAChange(e.target.value)}}/>
+                        <TextField
+                          variant='outlined'
+                          id={`correct-answer-${question.id}`}
+                          label={question.correct_answer}
+                          onChange={(e) => {handleCAChange(e.target.value)}}
+                        />
                         <br></br>
-                        <TextField variant='outlined' id={`incorrect-answer-a-${question.id}`} label={question.incorrect_answers[0]} onChange={(e) => {handleIA1Change(e.target.value)}}/>
+                        <TextField
+                          variant='outlined'
+                          id={`incorrect-answer-a-${question.id}`}
+                          label={question.incorrect_answers[0]}
+                          onChange={(e) => {handleIA1Change(e.target.value)}}
+                        />
                         <br></br>
-                        <TextField variant='outlined' id={`incorrect-answer-b-${question.id}`} label={question.incorrect_answers[1]} onChange={(e) => {handleIA2Change(e.target.value)}}/>
+                        <TextField
+                          variant='outlined'
+                          id={`incorrect-answer-b-${question.id}`}
+                          label={question.incorrect_answers[1]}
+                          onChange={(e) => {handleIA2Change(e.target.value)}}
+                        />
                         <br></br>
-                        <TextField variant='outlined' id={`incorrect-answer-c-${question.id}`} label={question.incorrect_answers[2]} onChange={(e) => {handleIA3Change(e.target.value)}}/>
+                        <TextField
+                          variant='outlined'
+                          id={`incorrect-answer-c-${question.id}`}
+                          label={question.incorrect_answers[2]}
+                          onChange={(e) => {handleIA3Change(e.target.value)}}
+                        />
                       </form>
                       <Button onClick={() => {handleUpdateClick()}}>Update</Button>
                     </div>

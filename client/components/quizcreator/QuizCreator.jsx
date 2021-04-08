@@ -79,7 +79,7 @@ const QuizCreator = () => {
           quizQuestion.users = 1;
           createQuestion(quizQuestion)
             .then (res => console.log('Quiz question saved!'))
-            .catch(err => console.log(err))
+            .catch(err => console.error('Error', err))
           })
       })
       .catch(err => console.log(err))

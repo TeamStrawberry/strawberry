@@ -20,7 +20,7 @@ const CreatedQuizHistory = ({ userId }) => {
       setQuizHistory(quizzes);
     })
     .catch((err) => {
-      console.log(err)
+      console.error('Error', err)
     });
   }
   getQuizHistory();
@@ -34,7 +34,7 @@ const CreatedQuizHistory = ({ userId }) => {
       setQuestionsLoaded(true);
     })
     .catch((err) => {
-      console.log(err)
+      console.error('Error', err)
     });
   }
 
@@ -45,10 +45,10 @@ const CreatedQuizHistory = ({ userId }) => {
         correct_answer: updateResponse[3],
         incorrect_answers: updateResponse[4],
       }
-      let copy = questionsToEdit.slice();
-      for (let i = 0; i < copy.length; i++) {
-        if (copy[i].id === updatedQuestion.id) {
-          copy[i] = updatedQuestion;
+      let questionsCopy = questionsToEdit.slice();
+      for (let i = 0; i < questionsCopy.length; i++) {
+        if (questionsCopy[i].id === updatedQuestion.id) {
+          questionsCopy[i] = updatedQuestion;
           break;
         }
       }
@@ -59,11 +59,11 @@ const CreatedQuizHistory = ({ userId }) => {
     <div>
       Created Quiz History Display
       <ul>
-      <QuizHistoryDisplay quizzes={quizHistory} getQuiz={handleEditQuizClick}/>
+        <QuizHistoryDisplay quizzes={quizHistory} getQuiz={handleEditQuizClick}/>
       </ul>
       {questionsLoaded
-      ? <QuizEditor questions={questionsToEdit} quizName={quizName} handleRenderingQuestions={handleRenderingQuestions}/>
-      : <></>
+        ? <QuizEditor questions={questionsToEdit} quizName={quizName} handleRenderingQuestions={handleRenderingQuestions}/>
+        : null
       }
     </div>
   )

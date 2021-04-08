@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
@@ -31,8 +31,8 @@ const useStyles = makeStyles(theme => ({
 
 const DeleteButton = ({ quizId }) => {
     const classes = useStyles();
-    const [modalStyle] = React.useState(getModalStyle);
-    const [open, setOpen] = React.useState(false);
+    const [modalStyle] = useState(getModalStyle);
+    const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
         setOpen(true);
@@ -45,7 +45,7 @@ const DeleteButton = ({ quizId }) => {
     const handleQuizDelete = (quiz_id) => {
         removeQuiz(quiz_id)
             .then(() => console.log('Quiz and questions deleted successfully'))
-            .catch(err => console.log(err))
+            .catch(err => console.error('Error', err))
 
       setOpen(false);
     }
