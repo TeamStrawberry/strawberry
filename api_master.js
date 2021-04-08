@@ -27,8 +27,12 @@ function getStrangers(userId) {
   return handleGetRequests(`/strangers/${userId}`);
 }
 
+function getFriends(userId) {
+  return handleGetRequests(`/friends/${userId}`);
+}
+
 function createFriendship(userId, friendUserId) {
   return handlePostRequests(`/friends/${userId}/${friendUserId}`);
 }
 
-export { getStrangers, createFriendship };
+export { getStrangers, createFriendship, getFriends };
