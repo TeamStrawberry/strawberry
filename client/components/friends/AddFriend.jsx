@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme = theme) => ({
   },
 }));
 
-function AddFriend({ userId = 2 }) {
+function AddFriend({ loggedInUser = { id: 1, username: "admin" } }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [strangers, setStrangers] = useState([]);
@@ -29,7 +29,7 @@ function AddFriend({ userId = 2 }) {
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
-    getStrangers(userId).then((res) => {
+    getStrangers(loggedInUser.id).then((res) => {
       setStrangers(res.data.rows);
     });
     return () => {
@@ -48,7 +48,11 @@ function AddFriend({ userId = 2 }) {
         <UserSearch />
       </Grid>
       <Grid item>
-        <UserList variant="add_friend" list={strangers} />
+        <UserList
+          loggedInUser={loggedInUser}
+          variant="add_friend"
+          list={strangers}
+        />
       </Grid>
       <Grid item container justify="center">
         <Button

@@ -1,13 +1,16 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 import UserListItem from "./UserListItem.jsx";
-import friendSampleData from "../friends/friendSampleData";
 
-function UserList({ variant, list }) {
+function UserList({ loggedInUser, variant, list }) {
   list = list.map((user) => {
     return (
-      <Grid item>
-        <UserListItem username={user.username} variant={variant} />
+      <Grid item key={user.id}>
+        <UserListItem
+          loggedInUser={loggedInUser}
+          user={user}
+          variant={variant}
+        />
       </Grid>
     );
   });

@@ -104,7 +104,8 @@ app.get("/strangers/:userId", async (req, res) => {
             WHERE f.id_user = ${req.params.userId}) f
       ON u.id = f.id
       WHERE f.id is null
-      AND u.id <> ${req.params.userId};`
+      AND u.id <> ${req.params.userId}
+      ORDER BY u.username ASC;`
     );
     res.status(200).send(getUsers);
   } catch (err) {
