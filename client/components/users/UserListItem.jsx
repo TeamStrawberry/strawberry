@@ -4,11 +4,15 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import AddIcon from "@material-ui/icons/Add";
 import { createFriendship } from "../../../api_master";
 
-function UserListItem({ loggedInUser, user, variant }) {
+function UserListItem({ loggedInUser, user, variant, refreshList }) {
   const icon = () => {
     if (variant === "add_friend") {
       return (
-        <IconButton onClick={() => createFriendship(loggedInUser.id, user.id)}>
+        <IconButton
+          onClick={() =>
+            createFriendship(loggedInUser.id, user.id).then(refreshList)
+          }
+        >
           <PersonAddIcon />
         </IconButton>
       );

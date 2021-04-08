@@ -2,7 +2,7 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 import UserListItem from "./UserListItem.jsx";
 
-function UserList({ loggedInUser, variant, list }) {
+function UserList({ loggedInUser, variant, list, refreshList }) {
   list = list.map((user) => {
     return (
       <Grid item key={user.id}>
@@ -10,6 +10,7 @@ function UserList({ loggedInUser, variant, list }) {
           loggedInUser={loggedInUser}
           user={user}
           variant={variant}
+          refreshList={refreshList}
         />
       </Grid>
     );

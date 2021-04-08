@@ -28,10 +28,15 @@ function AddFriend({ loggedInUser = { id: 1, username: "admin" } }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  useEffect(() => {
+  var refreshStrangers = () => {
     getStrangers(loggedInUser.id).then((res) => {
       setStrangers(res.data.rows);
     });
+  };
+  refreshStrangers = refreshStrangers.bind(this);
+
+  useEffect(() => {
+    refreshStrangers();
     return () => {
       setStrangers([]);
     };
@@ -52,6 +57,7 @@ function AddFriend({ loggedInUser = { id: 1, username: "admin" } }) {
           loggedInUser={loggedInUser}
           variant="add_friend"
           list={strangers}
+          refreshList={refreshStrangers}
         />
       </Grid>
       <Grid item container justify="center">
