@@ -105,30 +105,42 @@ const QuizCreator = () => {
       .catch(err => console.log(err))
   }
 
-  let errorMessage;
-  quizTrackerCount >= 2
-    ? errorMessage =  <h2 style = {{color: 'red'}}>DAILY LIMIT REACHED. CANNOT CREATE ANYMORE QUIZZES </h2>
-    : errorMessage = null
+  let errorMessage = null;
+  let quizCreator = null;
+
+  quizTrackerCount >= 50
+    ? errorMessage = <h2 style = {{color: 'red'}}>DAILY LIMIT REACHED. CANNOT CREATE ANYMORE QUIZZES </h2>
+    : quizCreator =
+      <div className = 'quiz-creator'>
+        <QuizOptions
+          handleCategoryChange={handleCategoryChange}
+          handleDifficultyChange={handleDifficultyChange}
+          handleNameChange={handleNameChange}
+          category={category}
+          difficulty={difficulty}
+          name={name}
+        />
+        {quizOptionsLoaded ?
+          <div>
+            <QuizSubmit handleSubmit={handleSubmit}/>
+              <p>
+                Insert Directions Here
+              </p>
+            <QuizBank />
+            <QuizQuestionsAndAnswers />
+          </div> :
+          <div>
+            Please Select Quiz Options
+          </div>
+        }
+      </div>
 
   return (
-    <div className = 'quiz-creator'>
+    <div className = 'quiz-creator-container'>
       <h2 className = 'quiz-count'>Total Quizzes Created Today: {quizTrackerCount}</h2>
       {errorMessage}
-      <QuizOptions handleCategoryChange={handleCategoryChange} handleDifficultyChange={handleDifficultyChange} handleNameChange={handleNameChange} category={category} difficulty={difficulty} name={name}/>
-      {quizOptionsLoaded ?
-        <div>
-          <QuizSubmit handleSubmit={handleSubmit}/>
-            <p>
-              Insert Directions Here
-            </p>
-          <QuizBank />
-          <QuizQuestionsAndAnswers />
-        </div> :
-        <div>
-          Please Select Quiz Options
-        </div>
-      }
-      <CreatedQuizHistory />
+      {quizCreator}
+        <CreatedQuizHistory />
     </div>
   )
 }
