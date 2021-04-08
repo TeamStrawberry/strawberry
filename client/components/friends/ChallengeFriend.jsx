@@ -33,6 +33,7 @@ function ChallengeFriend({ loggedInUser, friends, link = "http://test.com" }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [challengees, setChallengees] = useState([]);
+  const [toChallenge, updateToChallenge] = useState([]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -56,6 +57,11 @@ function ChallengeFriend({ loggedInUser, friends, link = "http://test.com" }) {
     </AvatarGroup>
   );
 
+  const addChallengers = (friend) => {
+    updateToChallenge([friend]);
+    console.log('USERS TO CHALLENGE: ', toChallenge);
+  }
+
   const body = (
     <Grid container className={classes.modal} direction="column" spacing={3}>
       <Grid item>
@@ -71,6 +77,7 @@ function ChallengeFriend({ loggedInUser, friends, link = "http://test.com" }) {
           loggedInUser={loggedInUser}
           variant="challenge"
           list={friends}
+          addChallengers={addChallengers}
         />
       </Grid>
       <Grid item>
