@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import QuizOptions from './QuizOptions.jsx';
 import QuizQuestionsAndAnswers from './QuizQuestionsAndAnswers.jsx';
 import QuizSubmit from './QuizSubmit.jsx';
 import QuizBank from './QuizBank.jsx';
-import QuizzesPerDayTracker from './QuizzesPerDayTracker.jsx';
 import CreatedQuizHistory from '../quizeditor/CreatedQuizHistory.jsx';
-const { createQuiz, createQuestion } = require('../../../api_master.js');
+const { createQuiz, createQuestion, getUserQuizHistory } = require('../../../api_master.js');
 import axios from 'axios';
 
 
@@ -17,6 +16,24 @@ const QuizCreator = () => {
   const [category, setCategory] = useState('');
   const [difficulty, setDifficulty] = useState('');
   const [quizOptionsLoaded, setQuizOptionsLoaded] = useState(false);
+  const [quizTrackerCount, setQuizTrackerCount] = useState(0);
+
+  let tempUserId = 1;
+  var dailyQuizCount = 0;
+
+  //will trigger when track counter changes
+  useEffect(() => {
+    getUserQuizHistory(tempUserId)
+      .then(res => {
+        let today = new Date().toISOString().slice(0, 10);
+        for (let i  = 0; i < res.data.rows.length; i++) {
+          let createdDate = res.data.rows[i]['date_created'].slice(0,10);
+          if (createdDate === today) dailyQuizCount++;
+        }
+        setQuizTrackerCount(dailyQuizCount);
+      })
+      .catch(err => console.err('Error retrieving quiz count', err))
+  }, [quizTrackerCount])
 
   const handleNameChange = (name) => {
     setName(name);
@@ -93,41 +110,65 @@ const QuizCreator = () => {
       return
     }
 
-    createQuiz({name, category, difficulty, user: 1})
+    createQuiz({name, category, difficulty, id_users: 1})
       .then(res => {
         let quizId = res.data.rows[0].id;
+        setQuizTrackerCount(quizTrackerCount + 1)
         return quizId
       })
       .then(quizId => {
         allQuizQuestions.forEach(quizQuestion => {
           quizQuestion.id_quiz = quizId;
-          quizQuestion.users = 1;
+          quizQuestion.id_users = 1;
           createQuestion(quizQuestion)
-            .then (res => console.log('Quiz question saved!'))
+            .then (res => {
+              console.log('Quiz question saved!')
+            })
             .catch(err => console.error('Error', err))
           })
       })
       .catch(err => console.log(err))
   }
 
+  let errorMessage = null;
+  let quizCreator = null;
+
+  quizTrackerCount >= 50
+    ? errorMessage = <h2 style = {{color: 'red'}}>DAILY LIMIT REACHED. CANNOT CREATE ANYMORE QUIZZES </h2>
+    : quizCreator =
+      <div className = 'quiz-creator'>
+        <QuizOptions
+          handleCategoryChange={handleCategoryChange}
+          handleDifficultyChange={handleDifficultyChange}
+          handleNameChange={handleNameChange}
+          category={category}
+          difficulty={difficulty}
+          name={name}
+        />
+        {quizOptionsLoaded ?
+          <div>
+            <QuizSubmit handleSubmit={handleSubmit}/>
+              <p>
+                Insert Directions Here
+              </p>
+            <QuizBank
+              category = {category}
+              handleQuestionBankClick = {handleQuestionBankClick}
+            />
+            <QuizQuestionsAndAnswers />
+          </div> :
+          <div>
+            Please Select Quiz Options
+          </div>
+        }
+      </div>
+
   return (
-    <div>
-      <QuizOptions handleCategoryChange={handleCategoryChange} handleDifficultyChange={handleDifficultyChange} handleNameChange={handleNameChange} category={category} difficulty={difficulty} name={name}/>
-      <QuizzesPerDayTracker />
-      {quizOptionsLoaded ?
-        <div>
-          <QuizSubmit handleSubmit={handleSubmit}/>
-            <p>
-              Insert Directions Here
-            </p>
-          <QuizBank category={category} handleQuestionBankClick={handleQuestionBankClick}/>
-          <QuizQuestionsAndAnswers />
-        </div> :
-        <div>
-          Please Select Quiz Options
-        </div>
-      }
-      <CreatedQuizHistory />
+    <div className = 'quiz-creator-container'>
+      <h2 className = 'quiz-count'>Total Quizzes Created Today: {quizTrackerCount}</h2>
+      {errorMessage}
+      {quizCreator}
+        <CreatedQuizHistory />
     </div>
   )
 }

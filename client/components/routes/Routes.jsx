@@ -1,5 +1,6 @@
+import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Navbar from "../homepage/Navbar.jsx";
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import QuizCreator from '../quizcreator/QuizCreator.jsx';
 import QuizList from '../quizList/quizList';
 import QuizSearch from '../quizSearch/QuizSearch';
@@ -14,7 +15,7 @@ function Routes() {
   return (
     <div>
       <Router>
-        <nav>
+        <Navbar />
           <ul>
             <li>
               <Link to="/">Home</Link>
@@ -28,24 +29,22 @@ function Routes() {
             <li>
               <Link to="/profile">Profile</Link>
             </li>
-            <li>
-              <Link to="/takeQuiz">Take Quiz</Link>
-            </li>
           </ul>
-        </nav>
         <Switch>
+
           <Route path="/quizzes">
             <QuizSearch setCriteria={ setCriteria }/>
             <QuizList criteria={ criteria }/>
           </Route>
+
           <Route path="/create">
             <QuizCreator />
           </Route>
           <Route path="/profile">
             <UserProfile />
           </Route>
-          <Route path="/takeQuiz">
-            <TakeQuiz />
+          <Route path='/quiz/:quizId'>
+            <TakeQuiz/>
           </Route>
         </Switch>
       </Router>
