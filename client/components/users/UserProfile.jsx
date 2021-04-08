@@ -1,11 +1,12 @@
 import { Box, Grid, Typography } from "@material-ui/core";
 import React from "react";
 import FriendGrid from "../friends/FriendGrid";
-import AddFriend from "../friends/AddFriend";
 import ChallengeFriend from "../friends/ChallengeFriend";
 import UserAvatar from "./UserAvatar";
 import UserStats from "./UserStats";
 import UserRankings from "./UserRankings";
+import UserQuizHistoryTaken from "./UserQuizHistoryTaken";
+import UserQuizHistoryCreated from "./UserQuizHistoryCreated";
 
 function UserProfile() {
   return (
@@ -13,9 +14,6 @@ function UserProfile() {
       <Grid item container direction="row" spacing={3} justify="center">
         <Grid item>
           <Typography>Mike's Components for Testing</Typography>
-        </Grid>
-        <Grid item>
-          <AddFriend />
         </Grid>
         <Grid item>
           <ChallengeFriend />
@@ -28,7 +26,7 @@ function UserProfile() {
         </Grid>
         <Grid
           item
-          xs={10}
+          xs={5}
           container
           direction="column"
           display="flex"
@@ -36,6 +34,17 @@ function UserProfile() {
         >
           <UserStats />
           <UserRankings />
+        </Grid>
+        <Grid
+          item
+          xs={5}
+          container
+          direction="column"
+          display="flex"
+          spacing={2}
+        >
+          <UserQuizHistoryTaken />
+          <UserQuizHistoryCreated />
         </Grid>
       </Grid>
     </Grid>

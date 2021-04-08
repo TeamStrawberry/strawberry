@@ -48,8 +48,4 @@ function Routes() {
   );
 }
 
-function CreateQuiz() {
-  return <h2>Build your own pizza(quiz) here</h2>;
-}
-
 export default Routes;

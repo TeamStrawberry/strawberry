@@ -10,8 +10,8 @@ import {
   Avatar,
 } from "@material-ui/core";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
-import FriendList from "./FriendList";
-import FriendSearch from "./FriendSearch";
+import UserList from "../users/UserList";
+import UserSearch from "../users/UserSearch";
 import friendSampleData from "./friendSampleData";
 
 const useStyles = makeStyles((theme = theme) => ({
@@ -60,10 +60,10 @@ function ChallengeFriend({ link = "http://test.com" }) {
         </h3>
       </Grid>
       <Grid item>
-        <FriendSearch />
+        <UserSearch />
       </Grid>
       <Grid item>
-        <FriendList variant="challenge" />
+        <UserList variant="challenge" />
       </Grid>
       <Grid item>
         <TextField
