@@ -10,7 +10,7 @@ const QuizHistoryDisplay = ({ quizzes, getQuiz}) => {
           <h3>
           {quiz.name}
           </h3>
-          <Button onClick={()=>{getQuiz(quiz.id, quiz.name)}}>Start Edits</Button>
+          <Button variant = 'contained' color = 'primary' onClick={()=>{getQuiz(quiz.id, quiz.name)}}>Start Edits</Button>
           <DeleteButton quizId={quiz.id}/>
         </li>
     )
