@@ -201,7 +201,7 @@ function Authentication (props) {
   }
   return (
     <Box>
-      <Button variant="text" onClick={handleOpen} size="small">
+      <Button variant="h6" onClick={handleOpen} size="small" style={{ textDecoration: 'none', color: 'unset' }}>
         Login/Sign-Up
       </Button>
       <Modal

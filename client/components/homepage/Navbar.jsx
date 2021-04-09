@@ -16,6 +16,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import Authentication from '../authentication/Authentication.jsx'
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -59,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Navbar() {
+export default function Navbar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -97,11 +98,14 @@ export default function Navbar() {
       onClose={handleMenuClose}
     >
       <MenuItem component={Link} to={'/profile'} onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Log Out</MenuItem>
+      <MenuItem component={Link} to={'/'} onClick={() => {handleMenuClose(); props.setUser({});}}>Log Out</MenuItem>
     </Menu>
   );
-  return (
-    <div className={classes.grow}>
+
+  //if username exists (is not undefined) return a fully functioning navbar
+  if (props.user.username) {
+    return (
+      <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
           <Button component={Link} to={'/'} className={classes.title} variant="h6" style={{ textDecoration: 'none', color: 'unset' }} noWrap>
@@ -117,7 +121,6 @@ export default function Navbar() {
           </Button>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            {login ?
             <div>
               <Typography
               className={classes.intro}
@@ -125,32 +128,51 @@ export default function Navbar() {
               style={{ textDecoration: 'none', color: 'unset' }}
               noWrap
               >
-            Hello, username
-          </Typography>
+              Hello, {props.user.username}!
+              </Typography>
 
-             <IconButton
-             edge="end"
-             aria-label="account of current user"
-             aria-controls={menuId}
-             aria-haspopup="true"
-             onClick={handleProfileMenuOpen}
-             color="inherit"
-           >
-             <AccountCircle  />
-           </IconButton>
-           </div>
-           :
-           <div>
-             <Button  className={classes.title} variant="h6" style={{ textDecoration: 'none', color: 'unset' }} noWrap>
-            Login/Signup
-          </Button>
-           </div>
-             }
-
+              <IconButton
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+              >
+              <AccountCircle  />
+              </IconButton>
+            </div>
           </div>
         </Toolbar>
       </AppBar>
       {renderMenu}
     </div>
+    );
+  }
+  //otherwise return a navbar where all the links just open up the login modal, except the home button, which can stay the same
+  return (
+    <div className={classes.grow}>
+    <AppBar position="static">
+      <Toolbar>
+        <Button component={Link} to={'/'} className={classes.title} variant="h6" style={{ textDecoration: 'none', color: 'unset' }} noWrap>
+          InterMingle
+        </Button>
+
+        <Button onClick={() => {props.setLoginOpen(true)}} className={classes.title} variant="h6" style={{ textDecoration: 'none', color: 'unset' }} noWrap>
+          Quizzes/Categories
+        </Button>
+
+        <Button onClick={() => {props.setLoginOpen(true)}} className={classes.title} variant="h6" style={{ textDecoration: 'none', color: 'unset' }} noWrap>
+          Create A Quiz
+        </Button>
+
+        <div className={classes.grow} />
+        <div className={classes.sectionDesktop}>
+          <Authentication setUser={props.setUser} loginOpen={props.loginOpen} setLoginOpen={props.setLoginOpen}/>
+        </div>
+      </Toolbar>
+    </AppBar>
+    {renderMenu}
+  </div>
   );
 }
