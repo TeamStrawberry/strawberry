@@ -13,13 +13,15 @@ const QuizNameSearch = ({setCriteria, setOpen}) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setCriteria(search.substring(1));
+    let temp = search.toLowerCase();
+    setCriteria(temp);
     setOpen(false);
   };
 
   const handleKeyPress = (e) => {
     if(e.key === 'Enter'){
-      setCriteria(search.substring(1));
+      let temp = search.toLowerCase();
+      setCriteria(temp);
       setOpen(false);
     }
   }
