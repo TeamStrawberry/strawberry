@@ -23,8 +23,13 @@ const QuizCategorySearch = ({setCriteria, setOpen}) => {
 
   function handleChange(e) {
     e.preventDefault();
-    setCriteria(e.target.value);
-    setOpen(false);
+    if (e.target.value === 'General Knowledge') {
+      setCriteria('General%20Knowledge');
+      setOpen(false);
+    } else {
+      setCriteria(e.target.value);
+      setOpen(false);
+    }
   }
 
   const axiosGetCategoryList = () => {
