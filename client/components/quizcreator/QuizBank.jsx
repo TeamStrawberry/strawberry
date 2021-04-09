@@ -13,13 +13,25 @@ const QuizBank = ({ category, handleQuestionBankClick }) => {
     console.error('Error: ', err)
   })
 
+  const onDragStart = (e, question) => {
+    console.log('dragstart: ', question);
+    e.dataTransfer.setData('id', question);
+  }
+
   return (
     <div id="question-bank">
       {questionBank.length
       ?
         questionBank.map((question) => {
           return (
-            <div key={question.id} onClick={() => {handleQuestionBankClick(question)}}>
+            <div
+            key={question.id}
+            onDragStart={(e) => {onDragStart(e, question)}}
+            draggable
+            className='draggable'
+            style={{border: '2px solid black'}}
+            onClick={() => {handleQuestionBankClick(question)}}
+            >
               {question.question}
             </div>
           )

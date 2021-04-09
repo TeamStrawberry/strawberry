@@ -6,6 +6,19 @@ import QuizBank from './QuizBank.jsx';
 import CreatedQuizHistory from '../quizeditor/CreatedQuizHistory.jsx';
 const { createQuiz, createQuestion, getUserQuizHistory } = require('../../../api_master.js');
 import axios from 'axios';
+import { Grid, Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.pallete.text.secondary
+  }
+}))
 
 
 // TIER 3 - ALLOW USERS TO SUBMIT PHOTOS AND VIDEOS
