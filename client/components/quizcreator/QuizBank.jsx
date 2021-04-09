@@ -39,11 +39,11 @@ const QuizBank = ({ category, handleQuestionBankClick }) => {
         questionBank.map((question) => {
           return (
             <div
-            key={question.id}
-            onDragStart={(e) => {onDragStart(e, question)}}
-            draggable
-            className={classes.question}
-            onClick={() => {handleQuestionBankClick(question)}}
+              key={question.id}
+              onDragStart={(e) => {onDragStart(e, question)}}
+              draggable
+              className={classes.question}
+              onClick={() => {handleQuestionBankClick(question)}}
             >
               {question.question}
             </div>
