@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-// import Table from '@material-ui/core/Table';
-// import TableBody from '@material-ui/core/TableBody';
-// import TableCell from '@material-ui/core/TableCell';
-// import TableContainer from '@material-ui/core/TableContainer';
-// import TableHead from '@material-ui/core/TableHead';
-// import TableRow from '@material-ui/core/TableRow';
 import CreatedQuizHistory from '../quizeditor/CreatedQuizHistory.jsx';
 
 
@@ -30,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   // },
   paper: {
       position: 'absolute',
-      width: 450,
+      width: 'auto',
       backgroundColor: theme.palette.background.paper,
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
