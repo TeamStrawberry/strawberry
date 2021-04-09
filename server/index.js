@@ -246,7 +246,7 @@ app.get("/quizzes", async (req, res) => {
 
 app.get('/quizzes/:criteria', async (req, res) => {
   try {
-    const categories = ['General Knowledge', 'Entertainment', 'Science', 'Mythology', 'Sports', 'Geography', 'History', 'Politics', 'Art', 'Celebrities', 'Animals', 'Vehicles'];
+    const categories = ['General%20Knowledge', 'Entertainment', 'Science', 'Mythology', 'Sports', 'Geography', 'History', 'Politics', 'Art', 'Celebrities', 'Animals', 'Vehicles'];
     const difficulties = ['easy', 'medium', 'hard'];
     if (req.params.criteria === 'new') {
       const getNewQuizzes = await pool.query (
@@ -266,6 +266,9 @@ app.get('/quizzes/:criteria', async (req, res) => {
       );
       res.send(getEasyQuizzes.rows);
     } else if (categories.indexOf(req.params.criteria) > 0) {
+      if (req.params.criteria === 'General%20Knowledge') {
+        req.params.criteria = 'General Knowledge';
+      }
       const getQuizzesByCategory = await pool.query (
         `SELECT * FROM quizzes WHERE category LIKE '${req.params.criteria}%'`
       );
