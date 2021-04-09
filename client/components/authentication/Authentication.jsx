@@ -19,31 +19,38 @@ const useStyles = makeStyles((theme = theme) => ({
   },
 }));
 
-function Authentication () {
+function Authentication (props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
   //default will be to render login
-  const [renderSignUp, setSignUp] = React.useState(false)
+  const [renderSignUp, setSignUp] = React.useState(false);
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = React.useState('');
 
   const handleOpen = () => {
-    setOpen(true);
+    props.setLoginOpen(true);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    props.setLoginOpen(false);
     setSignUp(false);
   };
 
   const handleLogin = () => {
-    console.log('login');
-    axios.get('/login')
-    .then((data) => {
-      console.log('data: ', data);
+    axios.get('/login', {
+      params: {
+        username: username,
+        password: password
+      }
+    })
+    .then((res) => {
+      let userId = res.data.rows[0].id;
+      props.setUserId(userId);
+      handleClose();
     })
     .catch((err) => {
-      console.log('error: ', err);
+      alert('Incorect username or password, please try again');
     });
-    handleClose();
   };
 
   const handleSignUp = () => {
@@ -59,6 +66,18 @@ function Authentication () {
     setSignUp(false);
   }
 
+  const getUsername = (e) => {
+    setUsername(e.target.value);
+  }
+
+  const getPassword = (e) => {
+    setPassword(e.target.value);
+  }
+
+  const getEmail = (e) => {
+    setEmail(e.target.value);
+  }
+
 
   const loginForm = (
     <Grid container className={classes.modal} direction="column" spacing={3}>
@@ -70,13 +89,15 @@ function Authentication () {
           autoFocus
           margin="dense"
           label="Username"
-          type="text"/>
+          type="text"
+          onChange={getUsername}/>
       </Grid>
       <Grid item>
         <TextField
           margin="dense"
           label="Password"
-          type="password"/>
+          type="password"
+          onChange={getPassword}/>
       </Grid>
       <Grid item>
         <Button
@@ -113,19 +134,22 @@ function Authentication () {
           autoFocus
           margin="dense"
           label="Email"
-          type="email"/>
+          type="email"
+          onChange={getEmail}/>
       </Grid>
       <Grid item>
         <TextField
           margin="dense"
           label="Username"
-          type="text"/>
+          type="text"
+          onChange={getUsername}/>
       </Grid>
       <Grid item>
         <TextField
           margin="dense"
           label="Password"
-          type="password"/>
+          type="password"
+          onChange={getPassword}/>
       </Grid>
       <Grid item>
         <Button
@@ -159,7 +183,7 @@ function Authentication () {
           Login/Sign-Up
         </Button>
         <Modal
-          open={open} onClose={handleClose}
+          open={props.loginOpen} onClose={handleClose}
         >
           {signUpForm}
         </Modal>
@@ -172,7 +196,7 @@ function Authentication () {
         Login/Sign-Up
       </Button>
       <Modal
-        open={open} onClose={handleClose}
+        open={props.loginOpen} onClose={handleClose}
       >
         {loginForm}
       </Modal>
