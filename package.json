@@ -25,6 +25,8 @@
     "@material-ui/lab": "^4.0.0-alpha.57",
     "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",
+    "bcrpyt": "^2.0.0",
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.0",
