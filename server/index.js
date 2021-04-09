@@ -6,7 +6,7 @@ const saltRounds = 10;
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
-const port = 80;
+const port = 3000;
 const app = express();
 
 app.use(express.json());
@@ -477,10 +477,6 @@ app.get("/users", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`You are listening on port${port}`);
-});
-
 // CHALLENGE FRIEND
 app.get("/email/:friend/:user/:friendEmail/:message", (req, res) => {
   let friend = req.params.friend;
@@ -510,4 +506,9 @@ app.get("/email/:friend/:user/:friendEmail/:message", (req, res) => {
       console.log("EMAIL SENT");
     }
   });
+});
+
+app.listen(port, () => {
+  console.log(`You are listening on port ${port}`);
+  console.log(process.env.DB_ENDPOINT);
 });
