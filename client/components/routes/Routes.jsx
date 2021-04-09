@@ -2,7 +2,7 @@ import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Navbar from "../homepage/Navbar.jsx";
 import React, { useState, useEffect } from 'react';
 import QuizCreator from '../quizcreator/QuizCreator.jsx';
-import QuizList from '../quizList/quizList';
+import QuizList from '../quizList/QuizList';
 import QuizSearch from '../quizSearch/QuizSearch';
 import UserProfile from "../users/UserProfile";
 import TakeQuiz from '../takeQuiz/TakeQuiz';

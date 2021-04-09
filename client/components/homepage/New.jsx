@@ -1,18 +1,34 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Grid, Card, CardContent, CardHeader } from "@material-ui/core";
-import React from "react";
+import { getSelectQuizzes } from "../../../api_master";
+import QuizListCard from '../quizList/QuizListCard';
 
-function New() {
+const  New = () => {
+
+  const [newQuizzes, setNewQuizzes] = useState([]);
+
+  const getNewQuizzes = () => {
+    getSelectQuizzes('new')
+      .then(quizzes => setNewQuizzes(quizzes.data.rows))
+      .catch(err => console.error(err))
+  };
+
+  useEffect(() => {
+    getNewQuizzes();
+  }, []);
+
   return (
-    <Grid item xs>
-      <Card style={{ height: "100%" }}>
-        <CardHeader
-          title="New and Fresh"
-          titleTypographyProps={{ variant: "body2" }}
-          style={{ padding: 10 }}
-        />
-        <CardContent></CardContent>
-      </Card>
+    <div>
+    <Grid
+      direction='column'
+      container
+      alignItems='center'
+      spacing={2}
+    >
+      { newQuizzes.map((quiz, index) =>  <QuizListCard quiz={ quiz } key={ index }/>) }
     </Grid>
+  </div>
   );
 }
 

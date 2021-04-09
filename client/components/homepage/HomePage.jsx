@@ -8,11 +8,13 @@ const HomePage = () => {
   return (
     <div>
       <Grid>
-      <Grid item xs={6}>
-      <Trending />
-      </Grid>
-      <Grid item xs ={6}>
-      <New/>
+      <Grid item xs={12}>
+        <div style={{width:'50%'}}>
+        <Trending />
+        </div>
+        {/* <div style={{width:'50%'}}>
+        <New/>
+        </div> */}
       </Grid>
       </Grid>
     </div>
