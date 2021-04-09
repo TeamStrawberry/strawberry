@@ -1,6 +1,10 @@
 const express = require("express");
 const path = require("path");
 const { pool } = require("../db/pool.js");
+const nodemailer = require('nodemailer');
+require('dotenv').config();
+
+
 
 const port = 3000;
 const app = express();
@@ -390,3 +394,35 @@ app.get("/users", async (req, res) => {
 app.listen(port, () => {
   console.log(`You are listening on port${port}`);
 });
+
+// CHALLENGE FRIEND
+app.get('/email/:friend/:user/:friendEmail/:message', (req, res) => {
+  let friend = req.params.friend;
+  let user = req.params.user;
+  let friendEmail = req.params.friendEmail;
+  let message = req.params.message;
+
+  let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASSWORD
+    }
+  });
+
+
+  let mailOptions = {
+    from: process.env.MAIL_USER,
+    to: `${friendEmail}`,
+    subject: `YOU RECEIVED A QUIZ CHALLENGE FROM ${user}!!!`,
+    text: `${message}`
+  };
+
+  transporter.sendMail(mailOptions, (err, data) => {
+    if (err) {
+      console.log('ERROR MAILING: ', err);
+    } else {
+      console.log('EMAIL SENT');
+    }
+  });
+})
