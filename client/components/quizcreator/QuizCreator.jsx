@@ -92,7 +92,7 @@ const QuizCreator = () => {
     let errors = false
 
     allQuizQuestions.forEach((question) => {
-      if (!question.corect_answer) {
+      if (!question.correct_answer) {
         errors = true
       }
       if (question.incorrect_answers.length === 2) {
