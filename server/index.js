@@ -73,7 +73,6 @@ app.get('/questions/:category', async (req, res) => {
 
 app.post("/createquiz", async (req, res) => {
   try {
-    console.log(req.body)
     const { name, category, difficulty, id_users } = req.body;
 
     const createQuiz = await pool.query(
