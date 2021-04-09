@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Grid, Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import SearchIcon from "@material-ui/icons/Search";
 
 import QuizNameSearch from './QuizNameSearch.jsx';
 import QuizCategorySearch from './QuizCategorySearch.jsx';
@@ -67,12 +68,10 @@ const QuizSearch = ({ setCriteria }) => {
 
   return(
     <Box>
-      <Button
+      <SearchIcon
         onClick={handleOpen}
-        size='medium'
-      >
-        &#x1F50D;
-      </Button>
+        style={{ cursor: 'pointer' }}
+      />
       <Modal open={open} onClose={handleClose}>
         { modalBody }
       </Modal>
