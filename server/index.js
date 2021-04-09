@@ -335,7 +335,8 @@ app.get("/friends/:userId", async (req, res) => {
       FROM user_friend_relationships f
       JOIN users u
       ON f.id_user_friend = u.id
-      WHERE f.id_user = ${req.params.userId};`
+      WHERE f.id_user = ${req.params.userId}
+      ORDER BY u.username ASC;`
     );
     res.status(200).send(getFriends);
   } catch (err) {
