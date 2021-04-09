@@ -439,9 +439,6 @@ app.get("/users", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`You are listening on port${port}`);
-});
 
 // CHALLENGE FRIEND
 app.get("/email/:friend/:user/:friendEmail/:message", (req, res) => {
@@ -472,4 +469,8 @@ app.get("/email/:friend/:user/:friendEmail/:message", (req, res) => {
       console.log("EMAIL SENT");
     }
   });
+});
+
+app.listen(port, () => {
+  console.log(`You are listening on port${port}`);
 });
