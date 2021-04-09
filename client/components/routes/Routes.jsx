@@ -13,6 +13,10 @@ function Routes() {
   const [criteria, setCriteria] = useState(false);
   const [userId, setUserId] = useState(null);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState({
+    id: 1,
+    username: 'admin',
+  });
 
   return (
     <div>
@@ -37,7 +41,7 @@ function Routes() {
 
           <Route path="/quizzes">
             <QuizSearch setCriteria={ setCriteria }/>
-            <QuizList criteria={ criteria }/>
+            <QuizList criteria={ criteria } loggedInUser={loggedInUser}/>
           </Route>
 
           <Route path="/create">
