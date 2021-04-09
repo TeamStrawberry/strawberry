@@ -3,6 +3,7 @@ import { Button } from '@material-ui/core';
 import DeleteButton from './DeleteButton.jsx';
 
 const QuizHistoryDisplay = ({ quizzes, getQuiz }) => {
+
   return quizzes.map((quiz) => {
     return (
         <li key={quiz.id}>

@@ -77,7 +77,6 @@ app.get('/questions/:category', async (req, res) => {
 
 app.post("/createquiz", async (req, res) => {
   try {
-    console.log(req.body)
     const { name, category, difficulty, id_users } = req.body;
 
     const createQuiz = await pool.query(
@@ -230,22 +229,23 @@ app.post('/submitquiz', async (req, res) => {
   } catch (err) {
     res.status(500).send(err);
   }
-})
+});
+
 app.get("/quizzes", async (req, res) => {
   try {
-    const getLastId = await pool.query(
-      'SELECT * FROM quizzes ORDER BY id DESC LIMIT 1'
+      const getLastId = await pool.query(
+        'SELECT quizzes.id FROM quizzes JOIN questions ON quizzes.id = questions.id_quiz GROUP BY quizzes.id'
       );
-      const finalId = getLastId.rows[0].id;
+      const quizIds = getLastId.rows;
       let randomQuizList;
       (() => {
         const randomQuizIds = {};
-        const max = 10;
         let iterator = 0;
-        while (iterator < max) {
-          let temp = Math.floor(Math.random() * (finalId + 1));
-          if (randomQuizIds[temp] === undefined) {
-            randomQuizIds[temp] = 1;
+        while (iterator < 10) {
+          let randomNumber = Math.floor(Math.random() * (quizIds.length + 1));
+          let id = quizIds[randomNumber].id;
+          if (randomQuizIds[id] === undefined) {
+            randomQuizIds[id] = 1;
             iterator++;
           }
         }
@@ -255,6 +255,46 @@ app.get("/quizzes", async (req, res) => {
       `SELECT * FROM quizzes WHERE id IN (${randomQuizList})`
     )
     res.send(getRandomQuizzes);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+app.get('/quizzes/:criteria', async (req, res) => {
+  try {
+    const categories = ['General%20Knowledge', 'Entertainment', 'Science', 'Mythology', 'Sports', 'Geography', 'History', 'Politics', 'Art', 'Celebrities', 'Animals', 'Vehicles'];
+    const difficulties = ['easy', 'medium', 'hard'];
+    if (req.params.criteria === 'new') {
+      const getNewQuizzes = await pool.query (
+        'SELECT * FROM quizzes ORDER BY date_created DESC'
+      );
+      res.send(getNewQuizzes);
+    } else if (req.params.criteria === 'hot') {
+      const getHotQuizzes = await pool.query (
+        `SELECT q.id, q.name, COUNT(c.id) AS taken_count
+        FROM user_completed_quizzes c
+        JOIN quizzes q ON c.id_quiz = q.id
+        GROUP BY q.id ORDER BY taken_count desc`
+      );
+    } else if (difficulties.indexOf(req.params.criteria) > 0) {
+      const getEasyQuizzes = await pool.query (
+        `SELECT * FROM quizzes WHERE difficulty = '${req.params.criteria}'`
+      );
+      res.send(getEasyQuizzes.rows);
+    } else if (categories.indexOf(req.params.criteria) > 0) {
+      if (req.params.criteria === 'General%20Knowledge') {
+        req.params.criteria = 'General Knowledge';
+      }
+      const getQuizzesByCategory = await pool.query (
+        `SELECT * FROM quizzes WHERE category LIKE '${req.params.criteria}%'`
+      );
+      res.send(getQuizzesByCategory.rows);
+    } else {
+      const getQuizzesByName = await pool.query (
+        `SELECT * FROM quizzes WHERE lower(name) LIKE '%${req.params.criteria}%'`
+      );
+      res.send(getQuizzesByName.rows)
+    }
   } catch (err) {
     res.status(500).send(err);
   }
@@ -280,49 +320,8 @@ app.get('/categories', async (req, res) => {
   } catch (err) {
     res.status(500).send(err);
   }
-})
-
-app.get('/quizzes/:criteria', async (req, res) => {
-  try {
-    if (req.params.criteria === 'new') {
-      const getNewQuizzes = await pool.query (
-        'SELECT * FROM quizzes ORDER BY date_created DESC'
-      );
-      res.send(getNewQuizzes);
-    } else if (req.params.criteria === 'hot') {
-      const getHotQuizzes = await pool.query (
-        'SELECT q.id, q.name, COUNT(c.id) as taken_count ' +
-        'from user_completed_quizzes c ' +
-        'join quizzes q on c.id_quiz = q.id ' +
-        /* This does Hot n' New, to make it just hot, remove the line below */
-        'where c.date_created > CURRENT_DATE - 1 ' +
-        'group by q.id order by taken_count desc limit 10'
-      );
-    } else if (req.params.criteria === 'easy') {
-      const getEasyQuizzes = await pool.query (
-        "SELECT * FROM quizzes WHERE difficulty = 'easy'"
-      );
-      res.send(getEasyQuizzes.rows);
-    } else if (req.params.criteria === 'medium') {
-      const getMediumQuizzes = await pool.query (
-        "SELECT * FROM quizzes WHERE difficulty = 'medium'"
-      );
-      res.send(getMediumQuizzes.rows);
-    } else if (req.params.criteria === 'hard') {
-      const getHardQuizzes = await pool.query (
-        "SELECT * FROM quizzes WHERE difficulty = 'hard'"
-      );
-      res.send(getHardQuizzes.rows);
-    } else {
-      const getQuizByCategory = await pool.query (
-        `SELECT * FROM quizzes WHERE category LIKE '${req.params.criteria}%'`
-      );
-      res.send(getQuizByCategory.rows);
-    }
-  } catch (err) {
-    res.status(500).send(err);
-  }
 });
+
 
 //creates both sides of a friend relationship
 app.post("/friends/:userId/:friendId", async (req, res) => {
