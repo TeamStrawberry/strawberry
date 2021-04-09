@@ -1,7 +1,6 @@
 import { Grid, Card, CardContent, CardHeader, Button, Modal } from "@material-ui/core";
 import React, { useState } from "react";
 import UserQuizModal from '../quizcreator/UserQuizModal.jsx';
-import { ConfirmProvider } from 'material-ui-confirm';
 
 function UserQuizHistoryCreated() {
 
@@ -27,7 +26,6 @@ function UserQuizHistoryCreated() {
         <CardContent></CardContent>
       </Card>
       <Button onClick = {handleOpen}>Click here to open modal</Button>
-      <ConfirmProvider>
        <Modal
         open={open}
         onClose={handleClose}
@@ -36,7 +34,6 @@ function UserQuizHistoryCreated() {
       >
         <UserQuizModal />
       </Modal>
-      </ConfirmProvider>
     </Grid>
   );
 }

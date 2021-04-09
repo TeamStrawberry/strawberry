@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { ConfirmProvider, useConfirm } from 'material-ui-confirm';
-const { getUserQuizHistory, removeQuiz } = require('../../../api_master.js');
+// import Table from '@material-ui/core/Table';
+// import TableBody from '@material-ui/core/TableBody';
+// import TableCell from '@material-ui/core/TableCell';
+// import TableContainer from '@material-ui/core/TableContainer';
+// import TableHead from '@material-ui/core/TableHead';
+// import TableRow from '@material-ui/core/TableRow';
+import CreatedQuizHistory from '../quizeditor/CreatedQuizHistory.jsx';
+
 
 function getModalStyle() {
   const top = 50;
@@ -34,50 +40,16 @@ const useStyles = makeStyles(theme => ({
 const UserQuizModal = ({userId}) => {
 
   const classes = useStyles();
-  const confirm = useConfirm();
 
   const [modalStyle] = useState(getModalStyle);
   const [createdQuizList, setCreatedQuizList] = useState([]);
 
   let tempUserId = 1;
 
-  useEffect(() => {
-    getUserQuizHistory(tempUserId)
-      .then(res => {
-        setCreatedQuizList(res.data.rows)
-      })
-      .catch(err => console.error(err))
-  },[userId])
-
-  const editQuizButton = (id) => {
-
-  };
-
-  const deleteAndRenderButton = (id) => {
-    confirm({ description: 'This action is permanent and will delete this '})
-      .then(() => {
-        return removeQuiz(id);
-      })
-      .then(() => {
-         return getUserQuizHistory(tempUserId)
-      })
-      .then(res => {
-        setCreatedQuizList(res.data.rows)
-      })
-      .catch(err => console.error(err))
-  };
-
   return(
     <div className = {classes.paper} style = {modalStyle}>
       <h1 className = 'quizzes-created-heading'>Quizzes Created</h1>
-      {createdQuizList.map(quizzes => (
-          <div className = 'created-project' key = {quizzes.id}>
-            <h2>{quizzes.name}</h2>
-            <h3>{quizzes.category}</h3>
-            <h4>{quizzes.date_created}</h4>
-            <Button onClick = {() => deleteAndRenderButton(quizzes.id)}>Delete Me</Button>
-          </div>
-      ))}
+      <CreatedQuizHistory />
     </div>
   )
 };
