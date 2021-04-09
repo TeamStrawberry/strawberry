@@ -37,8 +37,6 @@ const CreatedQuizHistory = ({ userId }) => {
       setQuestionsLoaded(true);
       setClassName('created-quiz-list hide')
       setEditorClassName('questions-container')
-
-      window.scrollTo(0,0)
     })
     .catch((err) => {
       console.error('Error', err)
