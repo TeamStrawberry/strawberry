@@ -13,7 +13,6 @@ import {
 function FriendGrid({ loggedInUser, friends, refreshFriends }) {
   const [friendGridItems, setFriendGrid] = useState([]);
   const [loading, setLoading] = useState(true);
-  var count = 0;
 
   var refreshGrid = () => {
     refreshFriends().then(() => {
@@ -29,9 +28,6 @@ function FriendGrid({ loggedInUser, friends, refreshFriends }) {
   };
 
   useEffect(() => {
-    // console.log(
-    //   `Count: ${count}, loggedInUser: ${loggedInUser}, friends: ${friends}`
-    // );
     if (!!loggedInUser && !!friends.length && loading) {
       setLoading(false);
     } else if (!loading) {

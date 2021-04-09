@@ -11,9 +11,7 @@ function UserListItem({ loggedInUser, user, variant, refreshList }) {
       return (
         <IconButton
           onClick={() =>
-            createFriendship(loggedInUser.id, user.id).then(() => {
-              console.log(refreshList);
-            })
+            createFriendship(loggedInUser.id, user.id).then(refreshList)
           }
         >
           <PersonAddIcon />
@@ -33,9 +31,7 @@ function UserListItem({ loggedInUser, user, variant, refreshList }) {
       return (
         <IconButton
           onClick={() =>
-            removeFriendship(loggedInUser.id, user.id).then(() => {
-              console.log(refreshList);
-            })
+            removeFriendship(loggedInUser.id, user.id).then(refreshList)
           }
         >
           <DeleteForeverIcon />
