@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const QuizDifficultySearch = ({setCriteria}) => {
+const QuizDifficultySearch = ({setCriteria, setOpen}) => {
 
   const classes = useStyles();
   const [difficulty, setDifficulty] = useState('');
@@ -21,6 +21,7 @@ const QuizDifficultySearch = ({setCriteria}) => {
   function handleChange(e) {
     e.preventDefault();
     setCriteria(e.target.value);
+    setOpen(false);
   }
 
   return (

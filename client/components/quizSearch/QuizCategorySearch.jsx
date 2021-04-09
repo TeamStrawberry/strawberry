@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const QuizCategorySearch = ({setCriteria}) => {
+const QuizCategorySearch = ({setCriteria, setOpen}) => {
 
   const classes = useStyles();
   const [categories, setCategories] = useState([]);
@@ -24,6 +24,7 @@ const QuizCategorySearch = ({setCriteria}) => {
   function handleChange(e) {
     e.preventDefault();
     setCriteria(e.target.value);
+    setOpen(false);
   }
 
   const axiosGetCategoryList = () => {
