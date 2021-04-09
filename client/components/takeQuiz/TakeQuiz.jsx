@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Grid, Button, Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { getSingleQuiz, submitQuizAnswers } from "../../../api_master";
+import { getSingleQuiz, submitQuizAnswers, getQuizGlobalRankings, getQuizFriendRankings } from "../../../api_master";
 import { useHistory, useParams } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TakeQuiz = (userId) => {
+const TakeQuiz = ({ userId }) => {
   const [quizQuestions, setQuizQuestions] = useState([]);
   const [quizAnswers, setQuizAnswers] = useState({});
   const [userAnswers, setUserAnswers] = useState({});
@@ -37,6 +37,11 @@ const TakeQuiz = (userId) => {
   const [show, setShow] = useState(false);
   const [showError, setShowError] = useState(false);
   const [validated, setValidated] = useState(false);
+  const [globalScores, setGlobalScores] = useState([]);
+  const [friendScores, setFriendScores] = useState([]);
+  const [percentile, setPercentile] = useState(0);
+  const [rank, setRank] = useState('');
+  const [submitted, setSubmitted] = useState(false);
 
   const classes = useStyles();
   let { quizId } = useParams();
@@ -45,7 +50,7 @@ const TakeQuiz = (userId) => {
   const randomizeAnswers = (correct, incorrect) => {
     let currentIndex, temporaryValue, randomIndex;
     let cleanedAnswers = [];
-    let allAnswers = [correct].concat(incorrect);
+    let allAnswers = [correct].concat(incorrect.slice(0, 3));
     currentIndex = allAnswers.length;
     while (currentIndex) {
       randomIndex = Math.floor(Math.random() * currentIndex);
@@ -71,7 +76,8 @@ const TakeQuiz = (userId) => {
       .replace(/&ldquo;/g, '"')
       .replace(/&rdquo;/g, '"')
       .replace(/&#039;/g, "'")
-      .replace(/&eacute;/g, "é");
+      .replace(/&eacute;/g, "é")
+      .replace(/&ouml;/g, "Ö");
   };
 
   const calculateScore = () => {
@@ -100,8 +106,10 @@ const TakeQuiz = (userId) => {
       await setScore(currentScore);
       return currentScore;
     })()
-    .then(response => {
-      submitAnswers(response);
+    .then(userScore => {
+      getFriendRankings(userScore);
+      getGlobalRankings(userScore);
+      submitAnswers(userScore);
     })
     .catch(err => {
       console.error('Error: cannot submit answers to the database', err);
@@ -117,13 +125,13 @@ const TakeQuiz = (userId) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (Object.keys(userAnswers).length === quizQuestions.length) {
+    if (Object.keys(userAnswers).length === quizQuestions.length && !submitted) {
       setValidated(true);
+      setSubmitted(true);
       calculateScore();
       handleOpen();
     } else {
       setValidated(false);
-      calculateScore();
       handleOpen();
     }
   };
@@ -147,12 +155,12 @@ const TakeQuiz = (userId) => {
   const retrieveQuiz = () => {
     let allAnswers = {}, cleanedQuestions = [], allQuestions;
     getSingleQuiz(quizId)
-      .then(response => {
-        setQuizQuestions(response.data.rows);
-        return response.data.rows;
+      .then(quiz => {
+        setQuizQuestions(quiz.data.rows);
+        return quiz.data.rows;
       })
-      .then(response => {
-        allQuestions = response;
+      .then(quiz => {
+        allQuestions = quiz;
         if (allQuestions.length) {
           for (var i = 0; i < allQuestions.length; i++) {
             const questionBody = cleanText(allQuestions[i].question);
@@ -164,9 +172,9 @@ const TakeQuiz = (userId) => {
           return cleanedQuestions;
         }
       })
-      .then(response => {
-        for (var i = 0; i < response.length; i++) {
-          const answer = response[i].correct_answer;
+      .then(cleanedQuestions => {
+        for (var i = 0; i < cleanedQuestions.length; i++) {
+          const answer = cleanedQuestions[i].correct_answer;
           allAnswers[answer] = true;
         }
         setQuizAnswers(allAnswers);
@@ -177,10 +185,101 @@ const TakeQuiz = (userId) => {
   }
 
   const submitAnswers = (userScore) => {
-    submitQuizAnswers(14, 1, userScore) // later change to: submitQuizAnswers(quizId, userId, userScore);
+    submitQuizAnswers({
+      correct_answer_count: userScore.correct,
+      incorrect_answer_count: userScore.incorrect,
+      id_quiz: quizId,
+      id_users: userId
+    })
     .catch(err => {
       console.error('Error: cannot submit quiz answers to database', err);
     })
+  };
+
+  const getGlobalRankings = (userScore) => {
+    let rankings = [], allScores;
+    let percentage = (userScore.correct / userScore.total * 100).toFixed(0);
+    getQuizGlobalRankings(quizId)
+      .then(scores => {
+        allScores = scores.data.rows;
+        if (!allScores.length) {
+          setPercentile(100);
+          return [];
+        } else {
+          return allScores;
+        }
+      })
+      .then(allScores => {
+        if (allScores.length) {
+          for (let i = 0; i < allScores.length; i++) {
+            const correct = Number(allScores[i].correct_answer_count);
+            const incorrect = Number(allScores[i].incorrect_answer_count);
+            const total = correct + incorrect;
+            rankings.push((correct/total * 100).toFixed(0));
+          }
+          setGlobalScores(rankings);
+          return rankings;
+        } else {
+          return [];
+        }
+      })
+      .then(rankings => {
+        if (rankings.length) {
+          let sorted = rankings.sort();
+          let below = 0;
+          let equal = 0;
+          for (let i = 0; i < sorted.length; i++) {
+            if (sorted[i] < percentage) {
+              below++;
+            } else if (sorted[i] === percentage) {
+              equal++;
+            }
+          }
+          let userPercentile = ((below + (0.5 * equal)) / sorted.length) * 100;
+          setPercentile(userPercentile);
+        }
+      })
+      .catch(err => {
+        console.error('Error: cannot retrieve global rankings for quiz', err);
+      })
+  }
+
+  const getFriendRankings = (userScore) => {
+    let percentage = (userScore.correct / userScore.total * 100).toFixed(0);
+    let allScores, rankings = [];
+    getQuizFriendRankings(quizId, userId)
+      .then(scores => {
+        allScores = scores.data.rows;
+        if (allScores.length) {
+          return allScores;
+        } else {
+          return [];
+        }
+      })
+      .then(allScores => {
+        if (allScores.length) {
+          for (let i = 0; i < allScores.length; i++) {
+            const correct = Number(allScores[i].correct_answer_count);
+            const incorrect = Number(allScores[i].incorrect_answer_count);
+            const total = correct + incorrect;
+            rankings.push((correct/total * 100).toFixed(0));
+          }
+          rankings.push(percentage);
+          let sorted = rankings.sort((a, b) => (b - a));
+          return sorted;
+        }
+      })
+      .then(sortedRankings => {
+        if (sortedRankings) {
+          setFriendScores(sortedRankings);
+          let index = sortedRankings.indexOf(percentage) + 1;
+          let individualRank = index.toString() + '/' + sortedRankings.length.toString();
+          setRank(individualRank);
+        }
+      })
+      .catch(err => {
+        console.error('Error: cannot retrieve friends\' scores for quiz', err);
+      })
   };
 
   useEffect(() => {
@@ -191,17 +290,21 @@ const TakeQuiz = (userId) => {
     validated
       ? <Grid className={ classes.modal }>
         <Grid item>
-          <h1>You scored...</h1>
+          <h1>Your score is...</h1>
           <h1>{ (Number(score.correct)/Number(score.total) * 100).toFixed(0) }%</h1>
-          <h2>{ score.correct }/{ score.total } questions</h2>
-          <h4>{ score.correct } correct out of a total of { score.total }!</h4>
+          <h2>You answered { score.correct } out of { score.total } correct!</h2>
         </Grid>
         <Grid item>
+          {rank.length
+            ? <Grid>
+              <h1>You rank { rank } of your friends!</h1>
+            </Grid>
+            : <Grid>
+              <h1>None of your friends have taken this quiz.</h1>
+            </Grid>
+          }
           <Grid>
-            <h1>insert score out of friends</h1>
-          </Grid>
-          <Grid>
-            <h1>insert global percentile</h1>
+            <h1>You've scored in the { percentile.toFixed(0) } percentile globally!</h1>
           </Grid>
         </Grid>
         <Grid item>
@@ -276,7 +379,10 @@ const TakeQuiz = (userId) => {
         ))
         : null
       }
-      <Button type='submit' onClick={ handleSubmit }>Submit</Button>
+      {submitted
+        ? <Button onClick={ handleOpen }>View Score</Button>
+        : <Button type='submit' onClick={ handleSubmit }>Submit</Button>
+      }
       <Modal open={ show } onClose={ handleClose }>
         { body }
       </Modal>

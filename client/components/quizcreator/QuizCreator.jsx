@@ -3,7 +3,7 @@ import QuizOptions from './QuizOptions.jsx';
 import QuizQuestionsAndAnswers from './QuizQuestionsAndAnswers.jsx';
 import QuizSubmit from './QuizSubmit.jsx';
 import QuizBank from './QuizBank.jsx';
-import CreatedQuizHistory from '../quizeditor/CreatedQuizHistory.jsx';
+// import CreatedQuizHistory from '../quizeditor/CreatedQuizHistory.jsx';
 const { createQuiz, createQuestion, getUserQuizHistory } = require('../../../api_master.js');
 import axios from 'axios';
 import { Grid, Paper } from '@material-ui/core';
@@ -31,7 +31,7 @@ const QuizCreator = () => {
   const [quizOptionsLoaded, setQuizOptionsLoaded] = useState(false);
   const [quizTrackerCount, setQuizTrackerCount] = useState(0);
 
-  let tempUserId = 1;
+  let tempUserId = 1; //this will be removed when the user_id is passed down
   var dailyQuizCount = 0;
 
   //will trigger when track counter changes
@@ -136,10 +136,10 @@ const QuizCreator = () => {
             .then (res => {
               console.log('Quiz question saved!')
             })
-            .catch(err => console.error('Error', err))
+            .catch(err => console.error('Error. Cannot create questions', err))
           })
       })
-      .catch(err => console.log(err))
+      .catch(err => console.error('Error. Cannot create quiz', err))
   }
 
   let errorMessage = null;
@@ -180,7 +180,7 @@ const QuizCreator = () => {
       <h2 className = 'quiz-count'>Total Quizzes Created Today: {quizTrackerCount}</h2>
       {errorMessage}
       {quizCreator}
-        <CreatedQuizHistory />
+        {/* <CreatedQuizHistory /> */}
     </div>
   )
 }
