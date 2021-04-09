@@ -151,6 +151,7 @@ const QuizCreator = () => {
     ? errorMessage = <h2 style = {{color: 'red'}}>DAILY LIMIT REACHED. CANNOT CREATE ANYMORE QUIZZES </h2>
     : quizCreator =
       <div className = 'quiz-creator'>
+        <h2>Quiz Creator</h2>
         <Grid
         container
         spacing={4}
@@ -183,6 +184,7 @@ const QuizCreator = () => {
               handleQuestionBankClick = {handleQuestionBankClick}
               />
             </Paper>
+            <h4 className = 'quiz-count'>Total Quizzes Created Today: {quizTrackerCount}</h4>
           </Grid>
           <Grid
           item
@@ -200,7 +202,6 @@ const QuizCreator = () => {
 
   return (
     <div className = 'quiz-creator-container'>
-      <h2 className = 'quiz-count'>Total Quizzes Created Today: {quizTrackerCount}</h2>
       {errorMessage}
       {quizCreator}
     </div>
