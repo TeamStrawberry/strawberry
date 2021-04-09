@@ -1,24 +1,43 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import FriendGridItem from "./FriendGridItem";
 import AddFriend from "../friends/AddFriend";
+import SeeAllFriends from "../friends/SeeAllFriends";
 import {
   Grid,
-  Link,
   Card,
   CardHeader,
   CardContent,
   CardActions,
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 
-function FriendGrid({ loggedInUser, friends }) {
-  let friendGridItems = friends.map((friend) => {
-    return (
-      <Grid item>
-        <FriendGridItem friendName={friend.username} />
-      </Grid>
-    );
-  });
+function FriendGrid({ loggedInUser, friends, refreshFriends }) {
+  const [friendGridItems, setFriendGrid] = useState([]);
+  const [loading, setLoading] = useState(true);
+  var count = 0;
+
+  var refreshGrid = () => {
+    refreshFriends().then(() => {
+      var newFriendGrid = friends.map((friend) => {
+        return (
+          <Grid item>
+            <FriendGridItem friendName={friend.username} />
+          </Grid>
+        );
+      });
+      setFriendGrid(newFriendGrid);
+    });
+  };
+
+  useEffect(() => {
+    // console.log(
+    //   `Count: ${count}, loggedInUser: ${loggedInUser}, friends: ${friends}`
+    // );
+    if (!!loggedInUser && !!friends.length && loading) {
+      setLoading(false);
+    } else if (!loading) {
+      refreshGrid();
+    }
+  }, [loggedInUser, friends, loading]);
 
   return (
     <Grid item container direction="column">
@@ -59,10 +78,14 @@ function FriendGrid({ loggedInUser, friends }) {
         <CardActions>
           <Grid container direction="column" align="center" spacing={1}>
             <Grid item>
-              <Link src="#">See all</Link>
+              <SeeAllFriends
+                loggedInUser={loggedInUser}
+                friends={friends}
+                refresh={refreshGrid}
+              />
             </Grid>
             <Grid item>
-              <AddFriend loggedInUser={loggedInUser} friends={friends} />
+              <AddFriend loggedInUser={loggedInUser} refresh={refreshGrid} />
             </Grid>
           </Grid>
         </CardActions>

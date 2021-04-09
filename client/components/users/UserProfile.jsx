@@ -13,7 +13,7 @@ function UserProfile({ loggedInUser = { id: 1, username: "admin" } }) {
   const [friends, setFriends] = useState([]);
 
   var refreshFriends = () => {
-    getFriends(loggedInUser.id).then((res) => {
+    return getFriends(loggedInUser.id).then((res) => {
       setFriends(res.data.rows);
     });
   };
@@ -39,7 +39,11 @@ function UserProfile({ loggedInUser = { id: 1, username: "admin" } }) {
       <Grid item container direction="row" spacing={2} justify="center">
         <Grid item xs={2} container direction="column" spacing={2}>
           <UserAvatar />
-          <FriendGrid loggedInUser={loggedInUser} friends={friends} />
+          <FriendGrid
+            loggedInUser={loggedInUser}
+            friends={friends}
+            refreshFriends={refreshFriends}
+          />
         </Grid>
         <Grid
           item

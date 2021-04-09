@@ -17,7 +17,7 @@ app.use(
 
 app.get("/getcreatedquizzes/:id", async (req, res) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
 
     const getCreatedQuizzes = await pool.query(
       `SELECT * from quizzes
@@ -31,7 +31,7 @@ app.get("/getcreatedquizzes/:id", async (req, res) => {
 
 app.get("/getcreatedquizquestions/:id", async (req, res) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
 
     const getCreatedQuizQuestions = await pool.query(
       `SELECT * from questions
@@ -43,24 +43,23 @@ app.get("/getcreatedquizquestions/:id", async (req, res) => {
   }
 });
 
-app.get('/questions/:category', async (req, res) => {
+app.get("/questions/:category", async (req, res) => {
   try {
-    const {category} = req.params;
-    
+    const { category } = req.params;
+
     const getQuestionsByCategory = await pool.query(
       `SELECT * from questions
         WHERE category LIKE '${category}%'`
-    )
+    );
     res.send(getQuestionsByCategory);
+  } catch (err) {
+    res.status(500).send(err);
   }
-  catch(err) {
-    res.status(500).send(err)
-  }
-})
+});
 
 app.post("/createquiz", async (req, res) => {
   try {
-    console.log(req.body)
+    console.log(req.body);
     const { name, category, difficulty, id_users } = req.body;
 
     const createQuiz = await pool.query(
@@ -111,20 +110,20 @@ app.post("/createquestion", async (req, res) => {
   }
 });
 
-app.put('/revisequestion/:id', async (req, res) => {
-  try{
-      const {id} = req.params;
-      const {
-          category,
-          type,
-          difficulty,
-          question,
-          correct_answer,
-          incorrect_answers
-      } = req.body;
+app.put("/revisequestion/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      category,
+      type,
+      difficulty,
+      question,
+      correct_answer,
+      incorrect_answers,
+    } = req.body;
 
-      const reviseQuestion = await pool.query(
-          `UPDATE questions
+    const reviseQuestion = await pool.query(
+      `UPDATE questions
               SET
                   category = $1,
                   type = $2,
@@ -133,45 +132,43 @@ app.put('/revisequestion/:id', async (req, res) => {
                   correct_answer = $5,
                   incorrect_answers = $6
               WHERE ID = ${id}`,
-          [category, type, difficulty, question, correct_answer, incorrect_answers]
-      );
-      res.json([reviseQuestion, id, question, correct_answer, incorrect_answers]);
+      [category, type, difficulty, question, correct_answer, incorrect_answers]
+    );
+    res.json([reviseQuestion, id, question, correct_answer, incorrect_answers]);
   } catch (err) {
-      console.log(err);
+    console.log(err);
   }
 });
 
-app.delete('/deletequiz/:id', async (req, res) => {
-  try{
-      const {id} = req.params;
+app.delete("/deletequiz/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
 
-      const deleteQuestions = await pool.query(
-          `DELETE FROM questions WHERE id_quiz = ${id}`
-      )
+    const deleteQuestions = await pool.query(
+      `DELETE FROM questions WHERE id_quiz = ${id}`
+    );
 
-      const deleteQuiz = await pool.query(
-          `DELETE FROM quizzes WHERE id = ${id}`
-      )
-      res.json(deleteQuiz);
+    const deleteQuiz = await pool.query(`DELETE FROM quizzes WHERE id = ${id}`);
+    res.json(deleteQuiz);
   } catch (err) {
-      res.status(500).send(err);
+    res.status(500).send(err);
   }
 });
 
 /* End of Dan and Alex's section */
 
-app.get('/quiz/:id', async (req, res) => {
+app.get("/quiz/:id", async (req, res) => {
   try {
     const quizId = req.params.id;
     const retrieveQuiz = await pool.query(
       `SELECT * FROM questions
       WHERE id_quiz = ${quizId}`
-    )
+    );
     res.status(200).send(retrieveQuiz);
   } catch (err) {
     res.status(500).send(err);
   }
-})
+});
 
 app.get(`/quiz/history/taken/:userId`, async (req, res) => {
   try {
@@ -182,80 +179,73 @@ app.get(`/quiz/history/taken/:userId`, async (req, res) => {
       INNER JOIN user_completed_quizzes
       ON (quizzes.id = user_completed_quizzes.id_quiz
       AND user_completed_quizzes.id_users = ${userId})`
-    )
+    );
     res.status(200).send(retrieveQuizHistory);
   } catch (err) {
     res.status(500).send(err);
   }
-})
+});
 
-app.post('/submitquiz', async (req, res) => {
+app.post("/submitquiz", async (req, res) => {
   try {
     const {
       correct_answer_count,
       incorrect_answer_count,
       id_quiz,
-      id_users
+      id_users,
     } = req.body;
 
     const submitQuiz = await pool.query(
       `INSERT INTO user_completed_quizzes (correct_answer_count, incorrect_answer_count, id_quiz, id_users)
       VALUES ($1, $2, $3, $4)
       RETURNING *`,
-      [
-        correct_answer_count,
-        incorrect_answer_count,
-        id_quiz,
-        id_users
-      ]
-    )
+      [correct_answer_count, incorrect_answer_count, id_quiz, id_users]
+    );
     res.status(201).send(submitQuiz);
   } catch (err) {
     res.status(500).send(err);
   }
-})
+});
 app.get("/quizzes", async (req, res) => {
   try {
     const getLastId = await pool.query(
-      'SELECT * FROM quizzes ORDER BY id DESC LIMIT 1'
-      );
-      const finalId = getLastId.rows[0].id;
-      let randomQuizList;
-      (() => {
-        const randomQuizIds = {};
-        const max = 10;
-        let iterator = 0;
-        while (iterator < max) {
-          let temp = Math.floor(Math.random() * (finalId + 1));
-          if (randomQuizIds[temp] === undefined) {
-            randomQuizIds[temp] = 1;
-            iterator++;
-          }
+      "SELECT * FROM quizzes ORDER BY id DESC LIMIT 1"
+    );
+    const finalId = getLastId.rows[0].id;
+    let randomQuizList;
+    (() => {
+      const randomQuizIds = {};
+      const max = 10;
+      let iterator = 0;
+      while (iterator < max) {
+        let temp = Math.floor(Math.random() * (finalId + 1));
+        if (randomQuizIds[temp] === undefined) {
+          randomQuizIds[temp] = 1;
+          iterator++;
         }
-        randomQuizList = Object.keys(randomQuizIds);
-      })();
+      }
+      randomQuizList = Object.keys(randomQuizIds);
+    })();
     const getRandomQuizzes = await pool.query(
       `SELECT * FROM quizzes WHERE id IN (${randomQuizList})`
-    )
+    );
     res.send(getRandomQuizzes);
   } catch (err) {
     res.status(500).send(err);
   }
 });
 
-app.get('/categories', async (req, res) => {
-  try{
-    const getCategories = await pool.query (
-      'SELECT category FROM quizzes'
-    )
+app.get("/categories", async (req, res) => {
+  try {
+    const getCategories = await pool.query("SELECT category FROM quizzes");
     const categoryMaster = {};
     for (let i = 0; i < getCategories.rows.length; i++) {
       let current = getCategories.rows[i].category;
-      if (current.includes(':')) {
-        let temp = current.split(':');
+      if (current.includes(":")) {
+        let temp = current.split(":");
         current = temp[0];
       }
-      if (categoryMaster[current] === undefined){
+      if (categoryMaster[current] === undefined) {
         categoryMaster[current] = 1;
       }
     }
@@ -263,42 +253,42 @@ app.get('/categories', async (req, res) => {
   } catch (err) {
     res.status(500).send(err);
   }
-})
+});
 
-app.get('/quizzes/:criteria', async (req, res) => {
+app.get("/quizzes/:criteria", async (req, res) => {
   try {
-    if (req.params.criteria === 'new') {
-      const getNewQuizzes = await pool.query (
-        'SELECT * FROM quizzes ORDER BY date_created DESC LIMIT 10'
+    if (req.params.criteria === "new") {
+      const getNewQuizzes = await pool.query(
+        "SELECT * FROM quizzes ORDER BY date_created DESC LIMIT 10"
       );
       res.send(getNewQuizzes);
-    } else if (req.params.criteria === 'hot') {
-      const getHotQuizzes = await pool.query (
+    } else if (req.params.criteria === "hot") {
+      const getHotQuizzes = await pool.query(
         /* FILL_ME_IN */
-        'SELECT q.id, q.name, COUNT(c.id) as taken_count ' +
-        'from user_completed_quizzes c ' +
-        'join quizzes q on c.id_quiz = q.id ' +
-        /* This does Hot n' New, to make it just hot, remove the line below */
-        'where c.date_created > CURRENT_DATE - 1 ' +
-        'group by q.id order by taken_count desc limit 10'
+        "SELECT q.id, q.name, COUNT(c.id) as taken_count " +
+          "from user_completed_quizzes c " +
+          "join quizzes q on c.id_quiz = q.id " +
+          /* This does Hot n' New, to make it just hot, remove the line below */
+          "where c.date_created > CURRENT_DATE - 1 " +
+          "group by q.id order by taken_count desc limit 10"
       );
-    } else if (req.params.criteria === 'easy') {
-      const getEasyQuizzes = await pool.query (
+    } else if (req.params.criteria === "easy") {
+      const getEasyQuizzes = await pool.query(
         "SELECT * FROM quizzes WHERE difficulty = 'easy'"
       );
       res.send(getEasyQuizzes);
-    } else if (req.params.criteria === 'medium') {
-      const getMediumQuizzes = await pool.query (
+    } else if (req.params.criteria === "medium") {
+      const getMediumQuizzes = await pool.query(
         "SELECT * FROM quizzes WHERE difficulty = 'medium'"
       );
       res.send(getMediumQuizzes);
-    } else if (req.params.criteria === 'hard') {
-      const getHardQuizzes = await pool.query (
+    } else if (req.params.criteria === "hard") {
+      const getHardQuizzes = await pool.query(
         "SELECT * FROM quizzes WHERE difficulty = 'hard'"
       );
       res.send(getHardQuizzes);
     } else {
-      const getQuizByCategory = await pool.query (
+      const getQuizByCategory = await pool.query(
         `SELECT * FROM quizzes WHERE category LIKE '${req.params.criteria}%'`
       );
       res.send(getQuizByCategory.rows);
@@ -323,6 +313,19 @@ app.post("/friends/:userId/:friendId", async (req, res) => {
   }
 });
 
+//deletes friendship
+app.delete("/friends/:userId/:friendId", async (req, res) => {
+  try {
+    const deleteFriend = await pool.query(
+      `DELETE FROM user_friend_relationships
+          WHERE (id_user = ${req.params.userId} AND id_user_friend = ${req.params.friendId})
+          OR (id_user = ${req.params.friendId} AND id_user_friend = ${req.params.userId})`
+    );
+    res.json(deleteFriend);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
 
 //gets a list of friends for a user
 app.get("/friends/:userId", async (req, res) => {
@@ -342,6 +345,7 @@ app.get("/friends/:userId", async (req, res) => {
 
 //get all users who are strangers to a user
 app.get("/strangers/:userId", async (req, res) => {
+  console.log("getStrangers");
   try {
     const getUsers = await pool.query(
       `SELECT u.*

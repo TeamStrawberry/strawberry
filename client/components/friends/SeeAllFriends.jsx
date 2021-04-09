@@ -3,7 +3,6 @@ import { Modal, Grid, Button, Box, Link } from "@material-ui/core";
 import UserList from "../users/UserList";
 import UserSearch from "../users/UserSearch";
 import { makeStyles } from "@material-ui/core/styles";
-import { getStrangers } from "../../../api_master";
 
 const useStyles = makeStyles((theme = theme) => ({
   modal: {
@@ -21,34 +20,17 @@ const useStyles = makeStyles((theme = theme) => ({
   },
 }));
 
-function AddFriend({ loggedInUser, refreshFriends }) {
+function SeeAllFriends({ loggedInUser, friends, refresh }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [strangers, setStrangers] = useState([]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  var refreshStrangers = () => {
-    getStrangers(loggedInUser.id)
-      .then((res) => {
-        setStrangers(res.data.rows);
-      })
-      .then(refreshFriends);
-  };
-  refreshStrangers = refreshStrangers.bind(this);
-
-  useEffect(() => {
-    refreshStrangers();
-    return () => {
-      setStrangers([]);
-    };
-  }, []);
 
   const body = (
     <Grid container className={classes.modal} direction="column" spacing={3}>
       <Grid item>
         <h3 id="add-friend-modal-title" style={{ margin: 0 }}>
-          Add Friends
+          My friends
         </h3>
       </Grid>
       <Grid item>
@@ -57,9 +39,9 @@ function AddFriend({ loggedInUser, refreshFriends }) {
       <Grid item>
         <UserList
           loggedInUser={loggedInUser}
-          variant="add_friend"
-          list={strangers}
-          refreshList={refreshStrangers}
+          variant="show_friends"
+          list={friends}
+          refreshList={refresh}
         />
       </Grid>
       <Grid item container justify="center">
@@ -78,7 +60,7 @@ function AddFriend({ loggedInUser, refreshFriends }) {
   return (
     <Box>
       <Link href="#" onClick={handleOpen}>
-        Add a friend
+        See all
       </Link>
       <Modal open={open} onClose={handleClose}>
         {body}
@@ -87,4 +69,4 @@ function AddFriend({ loggedInUser, refreshFriends }) {
   );
 }
 
-export default AddFriend;
+export default SeeAllFriends;
