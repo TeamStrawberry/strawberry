@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Grid, Button, Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { getSingleQuiz, submitQuizAnswers, getQuizGlobalRankings } from "../../../api_master";
+import { getSingleQuiz, submitQuizAnswers, getQuizGlobalRankings, getQuizFriendRankings } from "../../../api_master";
 import { useHistory, useParams } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
@@ -38,7 +38,9 @@ const TakeQuiz = (userId) => {
   const [showError, setShowError] = useState(false);
   const [validated, setValidated] = useState(false);
   const [globalScores, setGlobalScores] = useState([]);
+  const [friendScores, setFriendScores] = useState([]);
   const [percentile, setPercentile] = useState(0);
+  const [rank, setRank] = useState('');
 
   const classes = useStyles();
   let { quizId } = useParams();
@@ -73,7 +75,8 @@ const TakeQuiz = (userId) => {
       .replace(/&ldquo;/g, '"')
       .replace(/&rdquo;/g, '"')
       .replace(/&#039;/g, "'")
-      .replace(/&eacute;/g, "é");
+      .replace(/&eacute;/g, "é")
+      .replace(/&ouml;/g, "Ö");
   };
 
   const calculateScore = () => {
@@ -103,6 +106,7 @@ const TakeQuiz = (userId) => {
       return currentScore;
     })()
     .then(response => {
+      getFriendRankings(response);
       getGlobalRankings(response);
       submitAnswers(response);
     })
@@ -191,9 +195,8 @@ const TakeQuiz = (userId) => {
   };
 
   const getGlobalRankings = (userScore) => {
-    let rankings = [];
+    let rankings = [], allScores;
     let percentage = (userScore.correct / userScore.total * 100).toFixed(0);
-    let allScores;
     getQuizGlobalRankings(quizId)
       .then(response => {
         allScores = response.data.rows;
@@ -207,8 +210,8 @@ const TakeQuiz = (userId) => {
       .then(response => {
         if (response.length) {
           for (let i = 0; i < response.length; i++) {
-            const correct = Number(response[i].correct_answer_count)
-            const incorrect = Number(response[i].incorrect_answer_count)
+            const correct = Number(response[i].correct_answer_count);
+            const incorrect = Number(response[i].incorrect_answer_count);
             const total = correct + incorrect;
             rankings.push((correct/total * 100).toFixed(0));
           }
@@ -222,7 +225,7 @@ const TakeQuiz = (userId) => {
         if (response.length) {
           let sorted = response.sort();
           let below = 0;
-          let equal = 1;
+          let equal = 0;
           for (let i = 0; i < sorted.length; i++) {
             if (sorted[i] < percentage) {
               below++;
@@ -230,9 +233,7 @@ const TakeQuiz = (userId) => {
               equal++;
             }
           }
-          console.log('sorted', sorted)
-          console.log('below', below, 'equal', equal)
-          let userPercentile = (below + (0.5 * equal) / sorted.length) * 100;
+          let userPercentile = ((below + (0.5 * equal)) / sorted.length) * 100;
           setPercentile(userPercentile);
         }
       })
@@ -240,6 +241,44 @@ const TakeQuiz = (userId) => {
         console.error('Error: cannot retrieve global rankings for quiz', err);
       })
   }
+
+  const getFriendRankings = (userScore) => {
+    let percentage = (userScore.correct / userScore.total * 100).toFixed(0);
+    let allScores, rankings = [];
+    getQuizFriendRankings(quizId, 9) // later change to: getQuizFriendRankings(quizId, userId)
+      .then(response => {
+        allScores = response.data.rows;
+        if (allScores.length) {
+          return allScores;
+        } else {
+          return [];
+        }
+      })
+      .then(response => {
+        if (response.length) {
+          for (let i = 0; i < response.length; i++) {
+            const correct = Number(response[i].correct_answer_count);
+            const incorrect = Number(response[i].incorrect_answer_count);
+            const total = correct + incorrect;
+            rankings.push((correct/total * 100).toFixed(0));
+          }
+          rankings.push(percentage);
+          let sorted = rankings.sort((a, b) => (b - a));
+          return sorted;
+        }
+      })
+      .then(response => {
+        if (response) {
+          setFriendScores(response);
+          let index = response.indexOf(percentage) + 1;
+          let individualRank = index.toString() + '/' + response.length.toString();
+          setRank(individualRank);
+        }
+      })
+      .catch(err => {
+        console.error('Error: cannot retrieve friends\' scores for quiz', err);
+      })
+  };
 
   useEffect(() => {
     retrieveQuiz();
@@ -249,17 +288,21 @@ const TakeQuiz = (userId) => {
     validated
       ? <Grid className={ classes.modal }>
         <Grid item>
-          <h1>You scored...</h1>
+          <h1>Your score is...</h1>
           <h1>{ (Number(score.correct)/Number(score.total) * 100).toFixed(0) }%</h1>
-          <h2>{ score.correct }/{ score.total } questions</h2>
-          <h4>{ score.correct } correct out of a total of { score.total }!</h4>
+          <h2>You answered { score.correct } out of { score.total } correct!</h2>
         </Grid>
         <Grid item>
+          {rank.length
+            ? <Grid>
+              <h1>You rank { rank } of your friends!</h1>
+            </Grid>
+            : <Grid>
+              <h1>None of your friends have taken this quiz.</h1>
+            </Grid>
+          }
           <Grid>
-            <h1>insert score out of friends</h1>
-          </Grid>
-          <Grid>
-            <h1>You are in the { percentile.toFixed(0) } percentile!</h1>
+            <h1>You've scored in the { percentile.toFixed(0) } percentile globally!</h1>
           </Grid>
         </Grid>
         <Grid item>
