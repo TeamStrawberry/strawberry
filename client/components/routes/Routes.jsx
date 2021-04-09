@@ -6,14 +6,17 @@ import QuizList from '../quizList/quizList';
 import QuizSearch from '../quizSearch/QuizSearch';
 import UserProfile from "../users/UserProfile";
 import TakeQuiz from '../takeQuiz/TakeQuiz';
-
+import Authentication from "../authentication/Authentication.jsx";
 
 function Routes() {
 
   const [criteria, setCriteria] = useState(false);
+  const [userId, setUserId] = useState(null);
+  const [loginOpen, setLoginOpen] = useState(false);
 
   return (
     <div>
+      <Authentication loginOpen={loginOpen} setLoginOpen={setLoginOpen} setUserId={setUserId} />
       <Router>
         <Navbar />
           <ul>

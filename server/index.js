@@ -17,6 +17,19 @@ app.use(
   })
 );
 
+/* authentication */
+app.get('/login', async (req, res) => {
+  console.log(req.query);
+  try {
+    let userId = await pool.query(
+      `select id from users where username='${req.query.username}' and password='${req.query.password}'`
+    );
+    res.status(200).send(userId);
+  } catch {
+    res.sendStatus(500);
+  }
+})
+
 /* Dan and Alex's section */
 
 app.get("/getcreatedquizzes/:id", async (req, res) => {
@@ -50,7 +63,7 @@ app.get("/getcreatedquizquestions/:id", async (req, res) => {
 app.get('/questions/:category', async (req, res) => {
   try {
     const {category} = req.params;
-    
+
     const getQuestionsByCategory = await pool.query(
       `SELECT * from questions
         WHERE category LIKE '${category}%'`
@@ -273,12 +286,11 @@ app.get('/quizzes/:criteria', async (req, res) => {
   try {
     if (req.params.criteria === 'new') {
       const getNewQuizzes = await pool.query (
-        'SELECT * FROM quizzes ORDER BY date_created DESC LIMIT 10'
+        'SELECT * FROM quizzes ORDER BY date_created DESC'
       );
       res.send(getNewQuizzes);
     } else if (req.params.criteria === 'hot') {
       const getHotQuizzes = await pool.query (
-        /* FILL_ME_IN */
         'SELECT q.id, q.name, COUNT(c.id) as taken_count ' +
         'from user_completed_quizzes c ' +
         'join quizzes q on c.id_quiz = q.id ' +
@@ -290,17 +302,17 @@ app.get('/quizzes/:criteria', async (req, res) => {
       const getEasyQuizzes = await pool.query (
         "SELECT * FROM quizzes WHERE difficulty = 'easy'"
       );
-      res.send(getEasyQuizzes);
+      res.send(getEasyQuizzes.rows);
     } else if (req.params.criteria === 'medium') {
       const getMediumQuizzes = await pool.query (
         "SELECT * FROM quizzes WHERE difficulty = 'medium'"
       );
-      res.send(getMediumQuizzes);
+      res.send(getMediumQuizzes.rows);
     } else if (req.params.criteria === 'hard') {
       const getHardQuizzes = await pool.query (
         "SELECT * FROM quizzes WHERE difficulty = 'hard'"
       );
-      res.send(getHardQuizzes);
+      res.send(getHardQuizzes.rows);
     } else {
       const getQuizByCategory = await pool.query (
         `SELECT * FROM quizzes WHERE category LIKE '${req.params.criteria}%'`

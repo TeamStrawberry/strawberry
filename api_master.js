@@ -33,6 +33,18 @@ function getFriends(userId) {
   return handleGetRequests(`/friends/${userId}`);
 }
 
+function getRandomQuizzes() {
+  return handleGetRequests(`/quizzes`);
+}
+
+function getSelectQuizzes(criteria) {
+  return handleGetRequests(`/quizzes/${criteria}`);
+}
+
+function getCategories() {
+  return handleGetRequests(`/categories`);
+}
+
 function getSingleQuiz(quizId) {
   return handleGetRequests(`/quiz/${quizId}`);
 }
@@ -109,19 +121,22 @@ function removeQuiz(quizId) {
 }
 
 export {
+  getCategories,
+  getCreatedQuizQuestions,
+  getFriends,
+  getQuestionsByCategory,
+  getQuizHistory,
+  getRandomQuizzes,
+  getSelectQuizzes,
+  getSingleQuiz,
   getStrangers,
   getUserQuizHistory,
-  getCreatedQuizQuestions,
-  getQuestionsByCategory,
-  getFriends,
-  getSingleQuiz,
-  getQuizHistory,
   createFriendship,
-  submitQuizAnswers,
-  createQuiz,
   createQuestion,
-  reviseQuizQuestion,
+  createQuiz,
   removeQuiz,
-  sendFriendEmail
+  sendFriendEmail,
+  reviseQuizQuestion,
+  submitQuizAnswers
 };
 

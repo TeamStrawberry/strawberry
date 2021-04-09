@@ -6,9 +6,9 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 const QuizNameSearch = () => {
 
 /* This will need to be implemented when I have access to real data */
-  // const handleFocus = (event) => {
-  //   event.preventDefault();
-  //   const { target } = event;
+  // const handleFocus = (e) => {
+  //   e.preventDefault();
+  //   const { target } = e;
   //   target.setSelectionRange(0, target.value.length);
   // };
   // this.handleFocus = this.handleFocus.bind(this);
