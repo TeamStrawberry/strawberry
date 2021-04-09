@@ -10,11 +10,13 @@ const HomePage = () => {
       <Grid>
       <Grid item xs={12}>
         <div style={{width:'50%'}}>
+          <h3> TRENDING</h3>
         <Trending />
         </div>
-        {/* <div style={{width:'50%'}}>
+        <div style={{width:'50%'}}>
+          <h3>NEW</h3>
         <New/>
-        </div> */}
+        </div>
       </Grid>
       </Grid>
     </div>
