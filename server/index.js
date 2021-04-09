@@ -1,13 +1,10 @@
 const express = require("express");
 const path = require("path");
 const { pool } = require("../db/pool.js");
-<<<<<<< HEAD
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-=======
 const nodemailer = require("nodemailer");
 require("dotenv").config();
->>>>>>> stage
 
 const port = 3000;
 const app = express();
@@ -41,7 +38,6 @@ app.get('/login', async (req, res) => {
     res.sendStatus(500);
   }
 });
-<<<<<<< HEAD
 
 app.post('/signup', async (req, res) => {
   try {
@@ -70,8 +66,6 @@ app.post('/signup', async (req, res) => {
     res.sendStatus(500);
   }
 });
-=======
->>>>>>> stage
 
 /* Dan and Alex's section */
 
