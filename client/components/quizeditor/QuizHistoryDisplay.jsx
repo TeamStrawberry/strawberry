@@ -9,25 +9,25 @@ import TableRow from '@material-ui/core/TableRow';
 import DeleteButton from './DeleteButton.jsx';
 import { makeStyles } from '@material-ui/core/styles';
 
+
+const useStyles = makeStyles(theme => ({
+  table: {
+      width: '100%'
+  }
+}));
+
 const QuizHistoryDisplay = ({ quizzes, getQuiz}) => {
-
-
-  const useStyles = makeStyles({
-    table: {
-      width: 'auto'
-    },
-  });
 
   const classes = useStyles();
 
   return (
-    <TableContainer className = 'quiz-table'>
+    <TableContainer>
       <Table className = {classes.table} stickyHeader = {true} aria-label = 'quizzes'>
         <TableHead>
           <TableRow>
             <TableCell align="center" style ={{fontSize: 22}}>Name</TableCell>
             <TableCell align="center" style ={{fontSize: 22}}>Category</TableCell>
-            <TableCell align="center" style ={{fontSize: 22}}>Date-Created</TableCell>
+            <TableCell align="center" style ={{fontSize: 22}}>Date Created</TableCell>
             <TableCell align="center" style ={{fontSize: 22}}>Actions</TableCell>
           </TableRow>
         </TableHead>
@@ -36,9 +36,17 @@ const QuizHistoryDisplay = ({ quizzes, getQuiz}) => {
             <TableRow>
               <TableCell align="center" style ={{fontSize: 16}}>{quiz.name}</TableCell>
               <TableCell align="center" style ={{fontSize: 16}}>{quiz.category}</TableCell>
-              <TableCell align="center" style ={{fontSize: 16}}>{quiz.date_created.slice(0,10)}</TableCell>
-              <TableCell align="center" style ={{fontSize: 16}}>
-                <Button variant = 'contained' color = 'primary' onClick={()=>{getQuiz(quiz.id, quiz.name)}}>Start Edits</Button>
+              <TableCell align="center" style ={{fontSize: 16, width: '100%'}}>{quiz.date_created.slice(0,10)}</TableCell>
+              <TableCell
+                align="center"
+                style ={{
+                  fontSize: 16,
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Button variant = 'contained' color = 'primary' onClick={()=>{getQuiz(quiz.id, quiz.name)}}>Edit</Button>
                 <DeleteButton quizId={quiz.id} />
               </TableCell>
             </TableRow>
