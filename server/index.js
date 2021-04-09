@@ -1,12 +1,12 @@
 const express = require("express");
 const path = require("path");
 const { pool } = require("../db/pool.js");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
-const port = 3000;
+const port = 80;
 const app = express();
 
 app.use(express.json());
@@ -18,7 +18,7 @@ app.use(
 );
 
 /* authentication */
-app.get('/login', async (req, res) => {
+app.get("/login", async (req, res) => {
   try {
     let idRes = await pool.query(
       `select * from users where username='${req.query.username}'`
@@ -29,22 +29,22 @@ app.get('/login', async (req, res) => {
         res.sendStatus(500);
       }
       if (result) {
-        res.status(200).send({user: user});
+        res.status(200).send({ user: user });
       } else {
         res.sendStatus(500);
       }
-    })
+    });
   } catch {
     res.sendStatus(500);
   }
 });
 
-app.post('/signup', async (req, res) => {
+app.post("/signup", async (req, res) => {
   try {
     let result = await pool.query(
       `select count (*) from users where username='${req.body.username}' or email='${req.body.email}'`
     );
-    if (result.rows[0].count === '0') {
+    if (result.rows[0].count === "0") {
       bcrypt.hash(req.body.password, saltRounds, async (err, hash) => {
         if (err) {
           res.sendStatus(500);
@@ -56,13 +56,12 @@ app.post('/signup', async (req, res) => {
           `select * from users where username='${req.body.username}'`
         );
         let user = idRes.rows[0];
-        res.send({user: user});
-      })
+        res.send({ user: user });
+      });
     } else {
       res.sendStatus(400);
     }
-  }
-  catch {
+  } catch {
     res.sendStatus(500);
   }
 });
