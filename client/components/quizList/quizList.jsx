@@ -6,7 +6,7 @@ import QuizSearch from '../quizSearch/QuizSearch';
 import QuizListCard from './QuizListCard';
 import { getRandomQuizzes, getSelectQuizzes } from "../../../api_master";
 
-const QuizList = ({ criteria }) => {
+const QuizList = ({ criteria, loggedInUser }) => {
 
   const [quizzesBySelection, updateSelection] = useState([]);
   const [initialLoad, refreshPage] = useState(true);
@@ -38,8 +38,9 @@ const QuizList = ({ criteria }) => {
         container
         alignItems='center'
         spacing={2}
+        width='90%'
       >
-        { quizzesBySelection.map((quiz, index) =>  <QuizListCard quiz={ quiz } key={ index }/>) }
+        { quizzesBySelection.map((quiz, index) =>  <QuizListCard quiz={ quiz } key={ index } loggedInUser={ loggedInUser } />) }
       </Grid>
     </div>
   )

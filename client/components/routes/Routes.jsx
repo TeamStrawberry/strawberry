@@ -33,9 +33,8 @@ function Routes() {
       <Switch>
         <Route path="/quizzes">
           <QuizSearch setCriteria={setCriteria} />
-          <QuizList criteria={criteria} />
+          <QuizList criteria={criteria} loggedInUser={{ id: user.id, username: user.username }} />
         </Route>
-
           <Route path="/create">
             <QuizCreator userId = {user.id}/>
           </Route>
