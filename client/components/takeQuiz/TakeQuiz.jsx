@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Grid, Button, Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { getSingleQuiz, submitQuizAnswers, getQuizGlobalRankings, getQuizFriendRankings } from "../../../api_master";
+import { getSingleQuiz, submitQuizAnswers, getQuizGlobalRankings, getQuizFriendRankings, getFriends } from "../../../api_master";
 import { useHistory, useParams } from "react-router-dom";
+import ChallengeFriend from '../friends/ChallengeFriend';
 
 const useStyles = makeStyles(theme => ({
   quiz: {
@@ -25,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TakeQuiz = ({ userId }) => {
+const TakeQuiz = ({ userId = 12, loggedInUser }) => {
   const [quizQuestions, setQuizQuestions] = useState([]);
   const [quizAnswers, setQuizAnswers] = useState({});
   const [userAnswers, setUserAnswers] = useState({});
@@ -42,6 +43,7 @@ const TakeQuiz = ({ userId }) => {
   const [percentile, setPercentile] = useState(0);
   const [rank, setRank] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [friends, setFriends] = useState([]);
 
   const classes = useStyles();
   let { quizId } = useParams();
@@ -151,6 +153,12 @@ const TakeQuiz = ({ userId }) => {
       history.goBack();
     }
   }
+
+  const refreshFriends = () => {
+    getFriends(loggedInUser.id).then((res) => {
+      setFriends(res.data.rows);
+    });
+  };
 
   const retrieveQuiz = () => {
     let allAnswers = {}, cleanedQuestions = [], allQuestions;
@@ -284,6 +292,10 @@ const TakeQuiz = ({ userId }) => {
 
   useEffect(() => {
     retrieveQuiz();
+    refreshFriends();
+    return () => {
+      setFriends([]);
+    };
   }, [])
 
   const body = (
@@ -308,20 +320,7 @@ const TakeQuiz = ({ userId }) => {
           </Grid>
         </Grid>
         <Grid item>
-          <Button
-            variant="contained"
-            variant="outlined"
-            color="primary"
-          >
-            Share Score
-          </Button>
-          <Button
-            variant="contained"
-            variant="outlined"
-            color="primary"
-          >
-            Challenge a Friend
-          </Button>
+          <ChallengeFriend loggedInUser={ loggedInUser } friends={ friends } link={ `localhost:3000/quiz/${quizId}` } />
           <Button
             variant="contained"
             variant="outlined"
@@ -352,41 +351,67 @@ const TakeQuiz = ({ userId }) => {
   );
 
   return (
-    <Box>
-      <Button onClick={ handleBack }>Go Back</Button>
-      <Button>placeholder for timer: 0:00</Button>
-      {quizQuestions.length
-        ? quizQuestions.map((question, index) => (
-          <FormControl key={ index } className={ classes.quiz }>
-            <FormLabel>{ question.question }</FormLabel>
-            <RadioGroup
-              aria-label={ question.question }
-              name={ question.question }
-              onChange={ handleChange }
-            >
-              {question.randomizedAnswers
-                ? question.randomizedAnswers.map((answer, index) => (
-                <FormControlLabel
-                  key={ index }
-                  value={ answer }
-                  control={ <Radio /> }
-                  label={ answer } />
-                ))
-                : null
-              }
-            </RadioGroup>
-          </FormControl>
-        ))
-        : null
-      }
-      {submitted
-        ? <Button onClick={ handleOpen }>View Score</Button>
-        : <Button type='submit' onClick={ handleSubmit }>Submit</Button>
-      }
+    <Grid container direction="column" alignItems="center" spacing={2}>
+
+      <Grid item container direction="row" spacing={3} justify="left">
+        <Button onClick={ handleBack }>Go Back</Button>
+      </Grid>
+
+
+      <Grid item container direction="row" spacing={3} justify="center">
+        <Grid
+          item
+          xs={10}
+          container
+          direction="column"
+          display="flex"
+          spacing={2}
+        >
+          {quizQuestions.length
+            ? <Grid>
+              <h1>{ quizQuestions[0].name }</h1>
+              <h4>Category: { quizQuestions[0].category }</h4>
+              <h4>Difficulty: { quizQuestions[0].difficulty }</h4>
+            </Grid>
+            : null
+          }
+
+
+          {quizQuestions.length
+            ? quizQuestions.map((question, index) => (
+              <FormControl key={ index } className={ classes.quiz }>
+                <FormLabel>{ question.question }</FormLabel>
+                <RadioGroup
+                  aria-label={ question.question }
+                  name={ question.question }
+                  onChange={ handleChange }
+                >
+                  {question.randomizedAnswers
+                    ? question.randomizedAnswers.map((answer, index) => (
+                    <FormControlLabel
+                      key={ index }
+                      value={ answer }
+                      control={ <Radio /> }
+                      label={ answer } />
+                    ))
+                    : null
+                  }
+                </RadioGroup>
+              </FormControl>
+            ))
+            : null
+          }
+          {submitted
+            ? <Button onClick={ handleOpen }>View Score</Button>
+            : <Button type='submit' onClick={ handleSubmit }>Submit</Button>
+          }
+        </Grid>
+      </Grid>
+
       <Modal open={ show } onClose={ handleClose }>
         { body }
       </Modal>
-    </Box>
+    </Grid>
   );
 };
 
