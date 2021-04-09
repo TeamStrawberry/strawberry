@@ -14,46 +14,41 @@ function Routes() {
   const [loginOpen, setLoginOpen] = useState(false);
 
   return (
-    <div>
-      <Authentication
-        loginOpen={loginOpen}
-        setLoginOpen={setLoginOpen}
-        setUser={setUser}
-      />
-      <Router>
-        <Navbar />
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/quizzes">Quizzes/Categories</Link>
-          </li>
-          <li>
-            <Link to="/create">Create A Quiz</Link>
-          </li>
-          <li>
-            <Link to="/profile">Profile</Link>
-          </li>
-        </ul>
-        <Switch>
-          <Route path="/quizzes">
-            <QuizSearch setCriteria={setCriteria} />
-            <QuizList criteria={criteria} />
-          </Route>
+    <Router>
+      <Navbar user={user} setUser={setUser} loginOpen={loginOpen} setLoginOpen={setLoginOpen}/>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/quizzes">Quizzes/Categories</Link>
+        </li>
+        <li>
+          <Link to="/create">Create A Quiz</Link>
+        </li>
+        <li>
+          <Link to="/profile">Profile</Link>
+        </li>
+      </ul>
+      <Switch>
+        <Route path="/quizzes">
+          <QuizSearch setCriteria={setCriteria} />
+          <QuizList criteria={criteria} />
+        </Route>
 
-          <Route path="/create">
-            <QuizCreator />
-          </Route>
-          <Route path="/profile">
-            <UserProfile loggedInUser={{ id: user.id, username: user.username }} />
-          </Route>
-          <Route path="/quiz/:quizId">
-            <TakeQuiz user={user.id} />
-          </Route>
-        </Switch>
-      </Router>
-    </div>
+        <Route path="/create">
+          <QuizCreator />
+        </Route>
+
+        <Route path="/profile">
+          <UserProfile loggedInUser={user} />
+        </Route>
+
+        <Route path="/quiz/:quizId">
+          <TakeQuiz user={user.id} />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
