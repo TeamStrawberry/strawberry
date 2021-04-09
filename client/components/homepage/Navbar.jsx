@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -28,6 +30,13 @@ const useStyles = makeStyles((theme) => ({
       display: 'block',
     },
     paddingRight: theme.spacing(20),
+  },
+  intro: {
+    display: 'none',
+    [theme.breakpoints.up('sm')]: {
+      display: 'block',
+    },
+    paddingLeft: theme.spacing(20),
   },
   inputRoot: {
     color: 'inherit',
@@ -54,6 +63,7 @@ export default function Navbar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [login, setLogin] = React.useState(1);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -86,7 +96,7 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem component={Link} to={'/profile'} onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>Log Out</MenuItem>
     </Menu>
   );
@@ -94,36 +104,49 @@ export default function Navbar() {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <Typography className={classes.title} variant="h6" noWrap>
+          <Button component={Link} to={'/'} className={classes.title} variant="h6" style={{ textDecoration: 'none', color: 'unset' }} noWrap>
             InterMingle
-          </Typography>
+          </Button>
 
-          <Typography className={classes.title} variant="h6" noWrap>
+          <Button component={Link} to={'/quizzes'} className={classes.title} variant="h6" style={{ textDecoration: 'none', color: 'unset' }} noWrap>
             Quizzes/Categories
-          </Typography>
-          <Typography className={classes.title} variant="h6" noWrap>
+
+          </Button>
+          <Button component={Link} to={'/create'} className={classes.title} variant="h6" style={{ textDecoration: 'none', color: 'unset' }} noWrap>
             Create A Quiz
-          </Typography>
-          <Typography className={classes.title} variant="h6" noWrap>
-            Hello, username
-          </Typography>
+          </Button>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            {login ?
+            <div>
+              <Typography
+              className={classes.intro}
+              variant="h6"
+              style={{ textDecoration: 'none', color: 'unset' }}
+              noWrap
+              >
+            Hello, username
+          </Typography>
+
+             <IconButton
+             edge="end"
+             aria-label="account of current user"
+             aria-controls={menuId}
+             aria-haspopup="true"
+             onClick={handleProfileMenuOpen}
+             color="inherit"
+           >
+             <AccountCircle  />
+           </IconButton>
+           </div>
+           :
+           <div>
+             <Button  className={classes.title} variant="h6" style={{ textDecoration: 'none', color: 'unset' }} noWrap>
+            Login/Signup
+          </Button>
+           </div>
+             }
+
           </div>
         </Toolbar>
       </AppBar>
