@@ -22,11 +22,13 @@ function getCreatedQuizQuestions(quizId) {
 }
 
 function sendFriendEmail(user, friend, friendEmail, message) {
-  return handleGetRequests(`/email/${user}/${friend}/${friendEmail}/${message}`);
+  return handleGetRequests(
+    `/email/${user}/${friend}/${friendEmail}/${message}`
+  );
 }
 
 function getQuestionsByCategory(category) {
-  return handleGetRequests(`/questions/${category}`)
+  return handleGetRequests(`/questions/${category}`);
 }
 
 function getFriends(userId) {
@@ -58,7 +60,7 @@ function getQuizGlobalRankings(quizId) {
 }
 
 function getQuizFriendRankings(quizId, userId) {
-  return handleGetRequests(`/quiz/rankings/friends/${quizId}/${userId}`)
+  return handleGetRequests(`/quiz/rankings/friends/${quizId}/${userId}`);
 }
 
 // Handles all POST requests, takes a route, params, and data object
@@ -80,7 +82,7 @@ function createFriendship(userId, friendUserId) {
 }
 
 function submitQuizAnswers(quizAnswers) {
-  return handlePostRequests('/submitquiz', quizAnswers);
+  return handlePostRequests("/submitquiz", quizAnswers);
 }
 
 function createQuiz(quizData) {
@@ -123,6 +125,10 @@ function removeQuiz(quizId) {
   return handleDeleteRequests(`/deletequiz/${quizId}`);
 }
 
+function removeFriendship(userId, friendUserId) {
+  return handleDeleteRequests(`/friends/${userId}/${friendUserId}`);
+}
+
 export {
   getCategories,
   getCreatedQuizQuestions,
@@ -140,8 +146,8 @@ export {
   createQuestion,
   createQuiz,
   removeQuiz,
+  removeFriendship,
   sendFriendEmail,
   reviseQuizQuestion,
-  submitQuizAnswers
+  submitQuizAnswers,
 };
-
