@@ -1,12 +1,19 @@
 import React from "react";
 import { Typography, Grid, Avatar, IconButton } from "@material-ui/core";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import AddIcon from "@material-ui/icons/Add";
-import CheckIcon from '@material-ui/icons/Check';
-import { createFriendship } from "../../../api_master";
+import { createFriendship, removeFriendship } from "../../../api_master";
+import CheckIcon from "@material-ui/icons/Check";
 
-function UserListItem({ loggedInUser, user, variant, refreshList, addChallenger, challengers }) {
-
+function UserListItem({
+  loggedInUser,
+  user,
+  variant,
+  refreshList,
+  addChallenger,
+  challengers,
+}) {
   const icon = () => {
     if (variant === "add_friend") {
       return (
@@ -22,8 +29,20 @@ function UserListItem({ loggedInUser, user, variant, refreshList, addChallenger,
 
     if (variant === "challenge") {
       return (
-        <IconButton onClick={e => addChallenger(user)}>
+        <IconButton onClick={(e) => addChallenger(user)}>
           {challengers[user.id] ? <CheckIcon /> : <AddIcon />}
+        </IconButton>
+      );
+    }
+
+    if (variant === "show_friends") {
+      return (
+        <IconButton
+          onClick={() =>
+            removeFriendship(loggedInUser.id, user.id).then(refreshList)
+          }
+        >
+          <DeleteForeverIcon />
         </IconButton>
       );
     }
