@@ -44,20 +44,20 @@ const CreatedQuizHistory = ({ userId }) => {
   }
 
   const handleRenderingQuestions = (updateResponse) => {
-      let updatedQuestion = {
-        id: parseInt(updateResponse[1]),
-        question: updateResponse[2],
-        correct_answer: updateResponse[3],
-        incorrect_answers: updateResponse[4],
+    let updatedQuestion = {
+      id: parseInt(updateResponse[1]),
+      question: updateResponse[2],
+      correct_answer: updateResponse[3],
+      incorrect_answers: updateResponse[4],
+    }
+    let questionsCopy = questionsToEdit.slice();
+    for (let i = 0; i < questionsCopy.length; i++) {
+      if (questionsCopy[i].id === updatedQuestion.id) {
+        questionsCopy[i] = updatedQuestion;
+        break;
       }
-      let questionsCopy = questionsToEdit.slice();
-      for (let i = 0; i < questionsCopy.length; i++) {
-        if (questionsCopy[i].id === updatedQuestion.id) {
-          questionsCopy[i] = updatedQuestion;
-          break;
-        }
-      }
-      setQuestionsToEdit(questionsCopy);
+    }
+    setQuestionsToEdit(questionsCopy);
   };
 
   const returnQuizList = (classText) => {
