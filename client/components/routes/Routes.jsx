@@ -18,33 +18,28 @@ function Routes() {
   });
 
   return (
-    <div>
-      <Authentication
-        loginOpen={loginOpen}
-        setLoginOpen={setLoginOpen}
-        setUserId={setUserId}
-      />
-      <Router>
-        <Navbar />
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/quizzes">Quizzes/Categories</Link>
-          </li>
-          <li>
-            <Link to="/create">Create A Quiz</Link>
-          </li>
-          <li>
-            <Link to="/profile">Profile</Link>
-          </li>
-        </ul>
-        <Switch>
-          <Route path="/quizzes">
-            <QuizSearch setCriteria={setCriteria} />
-            <QuizList criteria={criteria} loggedInUser={loggedInUser} />
-          </Route>
+    <Router>
+      <Navbar user={user} setUser={setUser} loginOpen={loginOpen} setLoginOpen={setLoginOpen}/>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/quizzes">Quizzes/Categories</Link>
+        </li>
+        <li>
+          <Link to="/create">Create A Quiz</Link>
+        </li>
+        <li>
+          <Link to="/profile">Profile</Link>
+        </li>
+      </ul>
+      <Switch>
+        <Route path="/quizzes">
+          <QuizSearch setCriteria={setCriteria} />
+          <QuizList criteria={criteria} />
+        </Route>
+
           <Route path="/create">
             <QuizCreator />
           </Route>
