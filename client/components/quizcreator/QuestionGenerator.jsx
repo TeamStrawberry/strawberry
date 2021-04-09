@@ -20,30 +20,30 @@ const QuestionGenerator = ({ number }) => {
       className={classes.questionGroup}
       >
       <TextField
-      id={`question-${number}`}
-      label={`Question ${number}`}
-      variant="outlined"
-      className={classes.singleForm}
+        id={`question-${number}`}
+        label={`Question ${number}`}
+        variant="outlined"
+        className={classes.singleForm}
       />
       <TextField
-      id={`correct-answer-${number}`}
-      label="Correct Answer"
-      className={classes.singleForm}
+        id={`correct-answer-${number}`}
+        label="Correct Answer"
+        className={classes.singleForm}
       />
       <TextField
-      id={`incorrect-answer-a-${number}`}
-      label="Incorrect Answer"
-      className={classes.singleForm}
+        id={`incorrect-answer-a-${number}`}
+        label="Incorrect Answer"
+        className={classes.singleForm}
       />
       <TextField
-      id={`incorrect-answer-b-${number}`}
-      label="Incorrect Answer"
-      className={classes.singleForm}
+        id={`incorrect-answer-b-${number}`}
+        label="Incorrect Answer"
+        className={classes.singleForm}
       />
       <TextField
-      id={`incorrect-answer-c-${number}`}
-      label="Incorrect Answer"
-      className={classes.singleForm}
+        id={`incorrect-answer-c-${number}`}
+        label="Incorrect Answer"
+        className={classes.singleForm}
       />
       </FormGroup>
     </div>
