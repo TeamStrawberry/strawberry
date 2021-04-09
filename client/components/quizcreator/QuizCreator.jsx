@@ -11,7 +11,7 @@ import axios from 'axios';
 // TIER 3 - ALLOW USERS TO SUBMIT PHOTOS AND VIDEOS
 // TIER 2 - ENTERED DATA SHOULD PERSIST IF USER LEAVES CREATE QUIZ PAGE
 //pass in userid as prop in here
-const QuizCreator = () => {
+const QuizCreator = ({userId}) => {
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
   const [difficulty, setDifficulty] = useState('');
@@ -21,6 +21,7 @@ const QuizCreator = () => {
   let tempUserId = 1; //this will be removed when the user_id is passed down
   var dailyQuizCount = 0;
 
+  console.log('userid in quizcreator', userId)
   //will trigger when track counter changes
   useEffect(() => {
     getUserQuizHistory(tempUserId)

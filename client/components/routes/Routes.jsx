@@ -43,7 +43,7 @@ function Routes() {
           </Route>
 
           <Route path="/create">
-            <QuizCreator />
+            <QuizCreator userId = {userId}/>
           </Route>
           <Route path="/profile">
             <UserProfile loggedInUser={{ id: user.id, username: user.username }} />
