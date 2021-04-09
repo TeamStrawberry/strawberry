@@ -43,8 +43,24 @@ app.get("/getcreatedquizquestions/:id", async (req, res) => {
   }
 });
 
+app.get('/questions/:category', async (req, res) => {
+  try {
+    const {category} = req.params;
+    
+    const getQuestionsByCategory = await pool.query(
+      `SELECT * from questions
+        WHERE category LIKE '${category}%'`
+    )
+    res.send(getQuestionsByCategory);
+  }
+  catch(err) {
+    res.status(500).send(err)
+  }
+})
+
 app.post("/createquiz", async (req, res) => {
   try {
+    console.log(req.body)
     const { name, category, difficulty, id_users } = req.body;
 
     const createQuiz = await pool.query(
@@ -152,6 +168,22 @@ app.get('/quiz/:id', async (req, res) => {
       WHERE id_quiz = ${quizId}`
     )
     res.status(200).send(retrieveQuiz);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+})
+
+app.get(`/quiz/history/taken/:userId`, async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const retrieveQuizHistory = await pool.query(
+      `SELECT *
+      FROM quizzes
+      INNER JOIN user_completed_quizzes
+      ON (quizzes.id = user_completed_quizzes.id_quiz
+      AND user_completed_quizzes.id_users = ${userId})`
+    )
+    res.status(200).send(retrieveQuizHistory);
   } catch (err) {
     res.status(500).send(err);
   }
@@ -267,9 +299,9 @@ app.get('/quizzes/:criteria', async (req, res) => {
       res.send(getHardQuizzes);
     } else {
       const getQuizByCategory = await pool.query (
-        `SELECT * FROM quizzes WHERE category = '${req.params.criteria}'`
+        `SELECT * FROM quizzes WHERE category LIKE '${req.params.criteria}%'`
       );
-      res.send(getQuizByCategory);
+      res.send(getQuizByCategory.rows);
     }
   } catch (err) {
     res.status(500).send(err);

@@ -21,6 +21,22 @@ function getCreatedQuizQuestions(quizId) {
   return handleGetRequests(`/getcreatedquizquestions/${quizId}`);
 }
 
+function getQuestionsByCategory(category) {
+  return handleGetRequests(`/questions/${category}`)
+}
+
+function getFriends(userId) {
+  return handleGetRequests(`/friends/${userId}`);
+}
+
+function getSingleQuiz(quizId) {
+  return handleGetRequests(`/quiz/${quizId}`);
+}
+
+function getQuizHistory(userId) {
+  return handleGetRequests(`/quiz/history/taken/${userId}`);
+}
+
 // Handles all POST requests, takes a route, params, and data object
 function handlePostRequests(route, data = {}, params = {}) {
   let options = {
@@ -35,12 +51,17 @@ function handlePostRequests(route, data = {}, params = {}) {
   return axios(options);
 }
 
-function getFriends(userId) {
-  return handleGetRequests(`/friends/${userId}`);
-}
-
 function createFriendship(userId, friendUserId) {
   return handlePostRequests(`/friends/${userId}/${friendUserId}`);
+}
+
+function submitQuizAnswers(quizId, userId, userScore) {
+  return handlePostRequests('/submitquiz', {}, {
+    correct_answer_count: userScore.correct,
+    incorrect_answer_count: userScore.incorrect,
+    id_quiz: quizId,
+    id_users: userId
+  });
 }
 
 function createQuiz(quizData) {
@@ -85,12 +106,17 @@ function removeQuiz(quizId) {
 
 export {
   getStrangers,
+  getUserQuizHistory,
+  getCreatedQuizQuestions,
+  getQuestionsByCategory,
   getFriends,
+  getSingleQuiz,
+  getQuizHistory,
   createFriendship,
+  submitQuizAnswers,
   createQuiz,
   createQuestion,
   reviseQuizQuestion,
-  getUserQuizHistory,
-  getCreatedQuizQuestions,
   removeQuiz,
 };
+

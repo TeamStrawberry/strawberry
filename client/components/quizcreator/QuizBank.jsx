@@ -1,12 +1,32 @@
-import React from 'react';
+import React, {useState} from 'react';
+const { getQuestionsByCategory } = require('../../../api_master.js');
 
-const QuizBank = () => {
+const QuizBank = ({ category, handleQuestionBankClick }) => {
+  const [questionBank, setQuestionBank] = useState([])
+
+  getQuestionsByCategory(category)
+  .then((res) => {
+    let questions = res.data.rows;
+    setQuestionBank(questions);
+  })
+  .catch((err) => {
+    console.error('Error: ', err)
+  })
 
   return (
-    <div>
-      <h3>
-        Question Bank in Development...
-      </h3>
+    <div id="question-bank">
+      {questionBank.length
+      ?
+        questionBank.map((question) => {
+          return (
+            <div key={question.id} onClick={() => {handleQuestionBankClick(question)}}>
+              {question.question}
+            </div>
+          )
+        })
+      :
+        null
+      }
     </div>
   )
 }
