@@ -74,7 +74,6 @@ function ChallengeFriend({ loggedInUser, friends, link = "http://test.com" }) {
 
   const updateUserMessage = (e) => {
     updateMessage(e);
-    console.log(challengeMessage);
   }
 
   const body = (

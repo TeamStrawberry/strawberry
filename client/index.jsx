@@ -17,7 +17,6 @@ function AppRoot() {
         <CssBaseline />
         <Grid container direction="row" spacing={3} align="center">
           <Grid item xs={12}>
-            <Navbar />
             <Authentication />
           </Grid>
           <Grid item xs={12}>
