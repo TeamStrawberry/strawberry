@@ -41,6 +41,7 @@ const TakeQuiz = (userId) => {
   const [friendScores, setFriendScores] = useState([]);
   const [percentile, setPercentile] = useState(0);
   const [rank, setRank] = useState('');
+  const [submitted, setSubmitted] = useState(false);
 
   const classes = useStyles();
   let { quizId } = useParams();
@@ -124,8 +125,9 @@ const TakeQuiz = (userId) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (Object.keys(userAnswers).length === quizQuestions.length) {
+    if (Object.keys(userAnswers).length === quizQuestions.length && !submitted) {
       setValidated(true);
+      setSubmitted(true);
       calculateScore();
       handleOpen();
     } else {
@@ -377,7 +379,10 @@ const TakeQuiz = (userId) => {
         ))
         : null
       }
-      <Button type='submit' onClick={ handleSubmit }>Submit</Button>
+      {submitted
+        ? <Button onClick={ handleOpen }>View Score</Button>
+        : <Button type='submit' onClick={ handleSubmit }>Submit</Button>
+      }
       <Modal open={ show } onClose={ handleClose }>
         { body }
       </Modal>
