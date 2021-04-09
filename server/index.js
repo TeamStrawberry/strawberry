@@ -46,7 +46,7 @@ app.get("/getcreatedquizquestions/:id", async (req, res) => {
 app.get('/questions/:category', async (req, res) => {
   try {
     const {category} = req.params;
-    
+
     const getQuestionsByCategory = await pool.query(
       `SELECT * from questions
         WHERE category LIKE '${category}%'`
@@ -243,30 +243,9 @@ app.get("/quizzes", async (req, res) => {
   }
 });
 
-app.get('/categories', async (req, res) => {
-  try{
-    const getCategories = await pool.query (
-      'SELECT category FROM quizzes'
-    )
-    const categoryMaster = {};
-    for (let i = 0; i < getCategories.rows.length; i++) {
-      let current = getCategories.rows[i].category;
-      if (current.includes(':')) {
-        let temp = current.split(':');
-        current = temp[0];
-      }
-      if (categoryMaster[current] === undefined){
-        categoryMaster[current] = 1;
-      }
-    }
-    res.send(Object.keys(categoryMaster));
-  } catch (err) {
-    res.status(500).send(err);
-  }
-})
-
 app.get('/quizzes/:criteria', async (req, res) => {
   try {
+    const categories = ['General Knowledge', 'Entertainment', 'Science', 'Mythology', 'Sports', 'Geography', 'History', 'Politics', 'Art', 'Celebrities', 'Animals', 'Vehicles'];
     if (req.params.criteria === 'new') {
       const getNewQuizzes = await pool.query (
         'SELECT * FROM quizzes ORDER BY date_created DESC'
@@ -296,16 +275,44 @@ app.get('/quizzes/:criteria', async (req, res) => {
         "SELECT * FROM quizzes WHERE difficulty = 'hard'"
       );
       res.send(getHardQuizzes.rows);
-    } else {
-      const getQuizByCategory = await pool.query (
+    } else if (categories.indexOf(req.params.criteria) > 0) {
+      const getQuizzesByCategory = await pool.query (
         `SELECT * FROM quizzes WHERE category LIKE '${req.params.criteria}%'`
       );
-      res.send(getQuizByCategory.rows);
+      res.send(getQuizzesByCategory.rows);
+    } else {
+      const getQuizzesByName = await pool.query (
+        `SELECT * FROM quizzes WHERE name LIKE '%${req.params.criteria}%'`
+      );
+      res.send(getQuizzesByName.rows)
     }
   } catch (err) {
     res.status(500).send(err);
   }
 });
+
+app.get('/categories', async (req, res) => {
+  try{
+    const getCategories = await pool.query (
+      'SELECT category FROM quizzes'
+    )
+    const categoryMaster = {};
+    for (let i = 0; i < getCategories.rows.length; i++) {
+      let current = getCategories.rows[i].category;
+      if (current.includes(':')) {
+        let temp = current.split(':');
+        current = temp[0];
+      }
+      if (categoryMaster[current] === undefined){
+        categoryMaster[current] = 1;
+      }
+    }
+    res.send(Object.keys(categoryMaster));
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 
 //creates both sides of a friend relationship
 app.post("/friends/:userId/:friendId", async (req, res) => {
