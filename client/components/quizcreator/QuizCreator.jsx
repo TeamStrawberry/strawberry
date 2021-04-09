@@ -177,6 +177,7 @@ const QuizCreator = () => {
             className={classes.paper}
             style={{ maxHeight: "37.225vh", overflowX: "auto", overflowY: "scroll" }}
             >
+              <h4>Questions Bank</h4>
               <QuizBank
               category = {category}
               handleQuestionBankClick = {handleQuestionBankClick}
