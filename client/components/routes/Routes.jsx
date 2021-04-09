@@ -11,12 +11,12 @@ import Authentication from "../authentication/Authentication.jsx";
 function Routes() {
 
   const [criteria, setCriteria] = useState(false);
-  const [userId, setUserId] = useState(null);
+  const [user, setUser] = useState(null);
   const [loginOpen, setLoginOpen] = useState(false);
 
   return (
     <div>
-      <Authentication loginOpen={loginOpen} setLoginOpen={setLoginOpen} setUserId={setUserId} />
+      <Authentication loginOpen={loginOpen} setLoginOpen={setLoginOpen} setUser={setUser} />
       <Router>
         <Navbar />
           <ul>

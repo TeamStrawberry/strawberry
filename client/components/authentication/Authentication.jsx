@@ -44,8 +44,7 @@ function Authentication (props) {
       }
     })
     .then((res) => {
-      let userId = res.data.rows[0].id;
-      props.setUserId(userId);
+      props.setUser(res.data.user);
       handleClose();
     })
     .catch((err) => {
@@ -54,8 +53,18 @@ function Authentication (props) {
   };
 
   const handleSignUp = () => {
-    console.log('signup');
-    handleClose();
+    axios.post('/signup', {
+      username: username,
+      password: password,
+      email: email
+    })
+    .then((res) => {
+      props.setUser(res.data.user);
+      handleClose();
+    })
+    .catch((err) => {
+      alert('Username or email already exists, please try again!');
+    });
   }
 
   const goToSignup = () => {
@@ -204,13 +213,3 @@ function Authentication (props) {
   );
 };
 export default Authentication;
-
-/*
-Contents and actions need to include:
-1 - username text field
-2 - password text field
-3 - login button that takes user to the
-4 - "Don't have an account?" text
-5 - "Sign up here" link that either opens another model over this one, or closes the login modal and opens a new one"
-EXTRAS: if possible add Forgot password? Reset here, and login with socials
-*/
