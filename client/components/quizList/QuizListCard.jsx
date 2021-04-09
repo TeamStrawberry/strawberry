@@ -29,9 +29,9 @@ const  QuizListCard = ({ quiz, loggedInUser }) => {
 
   useEffect(() => {
     axiosRefreshFriends();
-    return () => {
-      setFriends([]);
-    };
+    // return () => {
+    //   setFriends([]);
+    // };
   }, []);
 
   return (
