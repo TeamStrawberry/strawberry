@@ -21,6 +21,10 @@ function getCreatedQuizQuestions(quizId) {
   return handleGetRequests(`/getcreatedquizquestions/${quizId}`);
 }
 
+function sendFriendEmail(user, friend, friendEmail, message) {
+  return handleGetRequests(`/email/${user}/${friend}/${friendEmail}/${message}`);
+}
+
 // Handles all POST requests, takes a route, params, and data object
 function handlePostRequests(route, data = {}, params = {}) {
   let options = {
@@ -93,4 +97,5 @@ export {
   getUserQuizHistory,
   getCreatedQuizQuestions,
   removeQuiz,
+  sendFriendEmail
 };

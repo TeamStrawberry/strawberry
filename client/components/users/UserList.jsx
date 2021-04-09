@@ -19,7 +19,7 @@ function UserList({ loggedInUser, variant, list, refreshList, addChallengers }) 
   }
 
   useEffect(() => {
-    addChallengers(challengers);
+    if (addChallengers) addChallengers(challengers);
   }, [challengers])
 
   list = list.map((user) => {

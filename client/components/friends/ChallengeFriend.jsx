@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Box,
@@ -12,6 +12,7 @@ import {
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 import UserList from "../users/UserList";
 import UserSearch from "../users/UserSearch";
+import { sendFriendEmail } from "../../../api_master";
 
 const useStyles = makeStyles((theme = theme) => ({
   modal: {
@@ -34,6 +35,7 @@ function ChallengeFriend({ loggedInUser, friends, link = "http://test.com" }) {
   const [open, setOpen] = useState(false);
   const [challengees, setChallengees] = useState([]);
   const [toChallenge, updateToChallenge] = useState([]);
+  const [challengeMessage, updateMessage] = useState('');
 
   const handleOpen = () => {
     setOpen(true);
@@ -59,7 +61,20 @@ function ChallengeFriend({ loggedInUser, friends, link = "http://test.com" }) {
 
   const addChallengers = (friend) => {
     updateToChallenge([friend]);
-    console.log('USERS TO CHALLENGE: ', toChallenge);
+  }
+
+  const challengeFriends = (friends) => {
+    for (let userId in friends[0]) {
+      let friend = friends[0][userId].username;
+      let friendEmail = friends[0][userId].email;
+      let user = loggedInUser.username;
+      sendFriendEmail(friend, user, friendEmail, challengeMessage);
+    }
+  }
+
+  const updateUserMessage = (e) => {
+    updateMessage(e);
+    console.log(challengeMessage);
   }
 
   const body = (
@@ -89,6 +104,7 @@ function ChallengeFriend({ loggedInUser, friends, link = "http://test.com" }) {
           placeholder="Talk some trash..."
           variant="outlined"
           fullWidth
+          onChange={e => updateUserMessage(e.target.value)}
         />
       </Grid>
       <Grid item container direction="column" justify="center" spacing={5}>
@@ -97,7 +113,7 @@ function ChallengeFriend({ loggedInUser, friends, link = "http://test.com" }) {
             {challengeGroup}
           </Grid>
           <Grid container item xs={8} justify="flex-end">
-            <Button variant="contained" color="primary" onClick={handleClose}>
+            <Button variant="contained" color="primary" onClick={e => {challengeFriends(toChallenge), handleClose()}}>
               Send Challenge Email
             </Button>
           </Grid>
