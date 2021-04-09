@@ -1,7 +1,21 @@
 import React, {useState} from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 const { getQuestionsByCategory } = require('../../../api_master.js');
 
+const useStyles = makeStyles((theme) => ({
+  question: {
+    border: '1px solid',
+    borderColor: theme.palette.text,
+    draggable: 'draggable',
+    padding: '2px',
+    marginBottom: '2px',
+    borderRadius: '10px'
+  }
+}))
+
 const QuizBank = ({ category, handleQuestionBankClick }) => {
+  const classes = useStyles();
+
   const [questionBank, setQuestionBank] = useState([])
 
   getQuestionsByCategory(category)
@@ -28,8 +42,7 @@ const QuizBank = ({ category, handleQuestionBankClick }) => {
             key={question.id}
             onDragStart={(e) => {onDragStart(e, question)}}
             draggable
-            className='draggable'
-            style={{border: '2px solid black'}}
+            className={classes.question}
             onClick={() => {handleQuestionBankClick(question)}}
             >
               {question.question}

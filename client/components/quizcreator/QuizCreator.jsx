@@ -3,27 +3,24 @@ import QuizOptions from './QuizOptions.jsx';
 import QuizQuestionsAndAnswers from './QuizQuestionsAndAnswers.jsx';
 import QuizSubmit from './QuizSubmit.jsx';
 import QuizBank from './QuizBank.jsx';
-// import CreatedQuizHistory from '../quizeditor/CreatedQuizHistory.jsx';
-const { createQuiz, createQuestion, getUserQuizHistory } = require('../../../api_master.js');
 import axios from 'axios';
 import { Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import theme from '../../theme.js';
+const { createQuiz, createQuestion, getUserQuizHistory } = require('../../../api_master.js');
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
   paper: {
-    padding: theme.spacing(2),
     textAlign: 'center',
-    color: theme.palette.text
+    color: theme.palette.text,
+    backgroundColor: theme.palette.background.paper,
+    border: '3px solid',
+    borderColor: theme.palette.text,
+    padding: '5px',
+    marginBottom: '16px'
   }
 }))
 
-
-// TIER 3 - ALLOW USERS TO SUBMIT PHOTOS AND VIDEOS
-// TIER 2 - ENTERED DATA SHOULD PERSIST IF USER LEAVES CREATE QUIZ PAGE
 //pass in userid as prop in here
 const QuizCreator = () => {
   const classes = useStyles();
@@ -53,15 +50,17 @@ const QuizCreator = () => {
 
   const handleNameChange = (name) => {
     setName(name);
+
   }
 
   const handleCategoryChange = (categoryName) => {
     setCategory(categoryName);
+
   }
 
   const handleDifficultyChange = (difficulty) => {
     setDifficulty(difficulty);
-    setQuizOptionsLoaded(true);
+
   }
 
   const handleQuestionBankClick = (question) => {
@@ -108,7 +107,7 @@ const QuizCreator = () => {
     let errors = false
 
     allQuizQuestions.forEach((question) => {
-      if (!question.corect_answer) {
+      if (!question.correct_answer.length) {
         errors = true
       }
       if (question.incorrect_answers.length === 2) {
@@ -152,9 +151,18 @@ const QuizCreator = () => {
     ? errorMessage = <h2 style = {{color: 'red'}}>DAILY LIMIT REACHED. CANNOT CREATE ANYMORE QUIZZES </h2>
     : quizCreator =
       <div className = 'quiz-creator'>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <Paper className={classes.paper}>
+        <Grid
+        container
+        spacing={4}
+        justify='center'
+        alignItems='flex-start'
+        >
+          <Grid
+          item
+          xs={4}
+          >
+            <Paper className={classes.paper} >
+              <h3>Select Quiz Options</h3>
               <QuizOptions
                 handleCategoryChange={handleCategoryChange}
                 handleDifficultyChange={handleDifficultyChange}
@@ -163,34 +171,37 @@ const QuizCreator = () => {
                 difficulty={difficulty}
                 name={name}
               />
+              <QuizSubmit handleSubmit={handleSubmit}/>
+            </Paper>
+            <Paper
+            className={classes.paper}
+            style={{ maxHeight: "37.225vh", overflowX: "auto", overflowY: "scroll" }}
+            >
+              <QuizBank
+              category = {category}
+              handleQuestionBankClick = {handleQuestionBankClick}
+              />
             </Paper>
           </Grid>
-          {quizOptionsLoaded ?
-            <div>
-              <QuizSubmit handleSubmit={handleSubmit}/>
-                <p>
-                  Insert Directions Here
-                </p>
-              <QuizBank
-                category = {category}
-                handleQuestionBankClick = {handleQuestionBankClick}
-              />
+          <Grid
+          item
+          xs={8}
+          >
+            <Paper
+            className={classes.paper}
+            style={{ maxHeight: "70vh", overflowX: "auto", overflowY: "scroll" }}
+            >
               <QuizQuestionsAndAnswers />
-            </div> :
-            <div>
-              Please Select Quiz Options
-            </div>
-          }
+            </Paper>
+          </Grid>
         </Grid>
       </div>
-
 
   return (
     <div className = 'quiz-creator-container'>
       <h2 className = 'quiz-count'>Total Quizzes Created Today: {quizTrackerCount}</h2>
       {errorMessage}
       {quizCreator}
-        {/* <CreatedQuizHistory /> */}
     </div>
   )
 }
