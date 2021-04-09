@@ -21,6 +21,10 @@ function getCreatedQuizQuestions(quizId) {
   return handleGetRequests(`/getcreatedquizquestions/${quizId}`);
 }
 
+function sendFriendEmail(user, friend, friendEmail, message) {
+  return handleGetRequests(`/email/${user}/${friend}/${friendEmail}/${message}`);
+}
+
 function getQuestionsByCategory(category) {
   return handleGetRequests(`/questions/${category}`)
 }
@@ -29,12 +33,32 @@ function getFriends(userId) {
   return handleGetRequests(`/friends/${userId}`);
 }
 
+function getRandomQuizzes() {
+  return handleGetRequests(`/quizzes`);
+}
+
+function getSelectQuizzes(criteria) {
+  return handleGetRequests(`/quizzes/${criteria}`);
+}
+
+function getCategories() {
+  return handleGetRequests(`/categories`);
+}
+
 function getSingleQuiz(quizId) {
   return handleGetRequests(`/quiz/${quizId}`);
 }
 
 function getQuizHistory(userId) {
   return handleGetRequests(`/quiz/history/taken/${userId}`);
+}
+
+function getQuizGlobalRankings(quizId) {
+  return handleGetRequests(`/quiz/rankings/global/${quizId}`);
+}
+
+function getQuizFriendRankings(quizId, userId) {
+  return handleGetRequests(`/quiz/rankings/friends/${quizId}/${userId}`)
 }
 
 // Handles all POST requests, takes a route, params, and data object
@@ -55,13 +79,8 @@ function createFriendship(userId, friendUserId) {
   return handlePostRequests(`/friends/${userId}/${friendUserId}`);
 }
 
-function submitQuizAnswers(quizId, userId, userScore) {
-  return handlePostRequests('/submitquiz', {}, {
-    correct_answer_count: userScore.correct,
-    incorrect_answer_count: userScore.incorrect,
-    id_quiz: quizId,
-    id_users: userId
-  });
+function submitQuizAnswers(quizAnswers) {
+  return handlePostRequests('/submitquiz', quizAnswers);
 }
 
 function createQuiz(quizData) {
@@ -105,18 +124,24 @@ function removeQuiz(quizId) {
 }
 
 export {
+  getCategories,
+  getCreatedQuizQuestions,
+  getFriends,
+  getQuestionsByCategory,
+  getQuizHistory,
+  getQuizGlobalRankings,
+  getQuizFriendRankings,
+  getRandomQuizzes,
+  getSelectQuizzes,
+  getSingleQuiz,
   getStrangers,
   getUserQuizHistory,
-  getCreatedQuizQuestions,
-  getQuestionsByCategory,
-  getFriends,
-  getSingleQuiz,
-  getQuizHistory,
   createFriendship,
-  submitQuizAnswers,
-  createQuiz,
   createQuestion,
-  reviseQuizQuestion,
+  createQuiz,
   removeQuiz,
+  sendFriendEmail,
+  reviseQuizQuestion,
+  submitQuizAnswers
 };
 
