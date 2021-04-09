@@ -53,8 +53,6 @@ const UserQuizModal = ({userId}) => {
 
   };
 
-
-
   const deleteAndRenderButton = (id) => {
     confirm({ description: 'This action is permanent and will delete this '})
       .then(() => {
