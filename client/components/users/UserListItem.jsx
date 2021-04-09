@@ -2,9 +2,11 @@ import React from "react";
 import { Typography, Grid, Avatar, IconButton } from "@material-ui/core";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import AddIcon from "@material-ui/icons/Add";
+import CheckIcon from '@material-ui/icons/Check';
 import { createFriendship } from "../../../api_master";
 
-function UserListItem({ loggedInUser, user, variant, refreshList }) {
+function UserListItem({ loggedInUser, user, variant, refreshList, addChallenger, challengers }) {
+
   const icon = () => {
     if (variant === "add_friend") {
       return (
@@ -20,8 +22,8 @@ function UserListItem({ loggedInUser, user, variant, refreshList }) {
 
     if (variant === "challenge") {
       return (
-        <IconButton>
-          <AddIcon />
+        <IconButton onClick={e => addChallenger(user)}>
+          {challengers[user.id] ? <CheckIcon /> : <AddIcon />}
         </IconButton>
       );
     }
