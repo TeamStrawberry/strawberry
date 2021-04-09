@@ -8,6 +8,7 @@ const { createQuiz, createQuestion, getUserQuizHistory } = require('../../../api
 import axios from 'axios';
 import { Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import theme from '../../theme.js';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
-    color: theme.pallete.text.secondary
+    color: theme.palette.text
   }
 }))
 
@@ -25,6 +26,8 @@ const useStyles = makeStyles((theme) => ({
 // TIER 2 - ENTERED DATA SHOULD PERSIST IF USER LEAVES CREATE QUIZ PAGE
 //pass in userid as prop in here
 const QuizCreator = () => {
+  const classes = useStyles();
+
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
   const [difficulty, setDifficulty] = useState('');
@@ -149,31 +152,38 @@ const QuizCreator = () => {
     ? errorMessage = <h2 style = {{color: 'red'}}>DAILY LIMIT REACHED. CANNOT CREATE ANYMORE QUIZZES </h2>
     : quizCreator =
       <div className = 'quiz-creator'>
-        <QuizOptions
-          handleCategoryChange={handleCategoryChange}
-          handleDifficultyChange={handleDifficultyChange}
-          handleNameChange={handleNameChange}
-          category={category}
-          difficulty={difficulty}
-          name={name}
-        />
-        {quizOptionsLoaded ?
-          <div>
-            <QuizSubmit handleSubmit={handleSubmit}/>
-              <p>
-                Insert Directions Here
-              </p>
-            <QuizBank
-              category = {category}
-              handleQuestionBankClick = {handleQuestionBankClick}
-            />
-            <QuizQuestionsAndAnswers />
-          </div> :
-          <div>
-            Please Select Quiz Options
-          </div>
-        }
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Paper className={classes.paper}>
+              <QuizOptions
+                handleCategoryChange={handleCategoryChange}
+                handleDifficultyChange={handleDifficultyChange}
+                handleNameChange={handleNameChange}
+                category={category}
+                difficulty={difficulty}
+                name={name}
+              />
+            </Paper>
+          </Grid>
+          {quizOptionsLoaded ?
+            <div>
+              <QuizSubmit handleSubmit={handleSubmit}/>
+                <p>
+                  Insert Directions Here
+                </p>
+              <QuizBank
+                category = {category}
+                handleQuestionBankClick = {handleQuestionBankClick}
+              />
+              <QuizQuestionsAndAnswers />
+            </div> :
+            <div>
+              Please Select Quiz Options
+            </div>
+          }
+        </Grid>
       </div>
+
 
   return (
     <div className = 'quiz-creator-container'>
