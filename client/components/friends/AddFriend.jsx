@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme = theme) => ({
   },
 }));
 
-function AddFriend({ loggedInUser, refreshFriends }) {
+function AddFriend({ loggedInUser, refresh }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [strangers, setStrangers] = useState([]);
@@ -33,7 +33,7 @@ function AddFriend({ loggedInUser, refreshFriends }) {
       .then((res) => {
         setStrangers(res.data.rows);
       })
-      .then(refreshFriends);
+      .then(refresh);
   };
   refreshStrangers = refreshStrangers.bind(this);
 
@@ -77,9 +77,7 @@ function AddFriend({ loggedInUser, refreshFriends }) {
 
   return (
     <Box>
-      <Link href="#" onClick={handleOpen}>
-        Add a friend
-      </Link>
+      <Link onClick={handleOpen}>Add a friend</Link>
       <Modal open={open} onClose={handleClose}>
         {body}
       </Modal>

@@ -14,7 +14,9 @@ function UserProfile({ loggedInUser = { id: 1, username: "admin" } }) {
 
   var refreshFriends = () => {
     return getFriends(loggedInUser.id).then((res) => {
-      setFriends(res.data.rows);
+      if (JSON.stringify(friends) !== JSON.stringify(res.data.rows)) {
+        setFriends(res.data.rows);
+      }
     });
   };
   refreshFriends = refreshFriends.bind(this);

@@ -59,9 +59,7 @@ function SeeAllFriends({ loggedInUser, friends, refresh }) {
 
   return (
     <Box>
-      <Link href="#" onClick={handleOpen}>
-        See all
-      </Link>
+      <Link onClick={handleOpen}>See all</Link>
       <Modal open={open} onClose={handleClose}>
         {body}
       </Modal>

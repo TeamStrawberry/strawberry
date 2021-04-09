@@ -28,18 +28,18 @@ function FriendGrid({ loggedInUser, friends, refreshFriends }) {
   };
 
   useEffect(() => {
-    if (!!loggedInUser && !!friends.length && loading) {
+    if (!!loggedInUser && loading) {
       setLoading(false);
     } else if (!loading) {
       refreshGrid();
     }
-  }, [loggedInUser, friends, loading]);
+  }, [friends, loading]);
 
   return (
     <Grid item container direction="column">
       <Card>
         <CardHeader
-          title="Friends"
+          title={`Friends (${friends.length})`}
           titleTypographyProps={{ variant: "body2" }}
           style={{ padding: 10 }}
         />
