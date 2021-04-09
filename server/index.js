@@ -1,6 +1,8 @@
 const express = require("express");
 const path = require("path");
 const { pool } = require("../db/pool.js");
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
@@ -16,14 +18,51 @@ app.use(
 );
 
 /* authentication */
-app.get("/login", async (req, res) => {
-  console.log(req.query);
+app.get('/login', async (req, res) => {
   try {
-    let userId = await pool.query(
-      `select id from users where username='${req.query.username}' and password='${req.query.password}'`
+    let idRes = await pool.query(
+      `select * from users where username='${req.query.username}'`
     );
-    res.status(200).send(userId);
+    let user = idRes.rows[0];
+    bcrypt.compare(req.query.password, user.password, (err, result) => {
+      if (err) {
+        res.sendStatus(500);
+      }
+      if (result) {
+        res.status(200).send({user: user});
+      } else {
+        res.sendStatus(500);
+      }
+    })
   } catch {
+    res.sendStatus(500);
+  }
+});
+
+app.post('/signup', async (req, res) => {
+  try {
+    let result = await pool.query(
+      `select count (*) from users where username='${req.body.username}' or email='${req.body.email}'`
+    );
+    if (result.rows[0].count === '0') {
+      bcrypt.hash(req.body.password, saltRounds, async (err, hash) => {
+        if (err) {
+          res.sendStatus(500);
+        }
+        await pool.query(
+          `insert into users (username, password, email, date_created) values ('${req.body.username}', '${hash}', '${req.body.email}', CURRENT_DATE)`
+        );
+        let idRes = await pool.query(
+          `select * from users where username='${req.body.username}'`
+        );
+        let user = idRes.rows[0];
+        res.send({user: user});
+      })
+    } else {
+      res.sendStatus(400);
+    }
+  }
+  catch {
     res.sendStatus(500);
   }
 });
@@ -439,9 +478,6 @@ app.get("/users", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`You are listening on port${port}`);
-});
 
 // CHALLENGE FRIEND
 app.get("/email/:friend/:user/:friendEmail/:message", (req, res) => {
@@ -472,4 +508,8 @@ app.get("/email/:friend/:user/:friendEmail/:message", (req, res) => {
       console.log("EMAIL SENT");
     }
   });
+});
+
+app.listen(port, () => {
+  console.log(`You are listening on port${port}`);
 });

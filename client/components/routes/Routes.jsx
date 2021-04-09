@@ -43,7 +43,7 @@ function Routes() {
         <Switch>
           <Route path="/quizzes">
             <QuizSearch setCriteria={setCriteria} />
-            <QuizList criteria={criteria} />
+            <QuizList criteria={criteria} loggedInUser={loggedInUser} />
           </Route>
           <Route path="/create">
             <QuizCreator />

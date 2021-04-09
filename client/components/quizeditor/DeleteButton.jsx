@@ -52,7 +52,7 @@ const DeleteButton = ({ quizId }) => {
 
     return (
         <div>
-            <Button variant="contained" color="primary" onClick={handleOpen}>
+            <Button variant="contained" color="secondary" onClick={handleOpen}>
                 Delete Quiz
             </Button>
 
@@ -67,7 +67,8 @@ const DeleteButton = ({ quizId }) => {
                     <p>
                       Deleting a quiz cannot be undone.
                     </p>
-                    <Button onClick={()=>{handleQuizDelete(quizId)}}>Delete Anyway</Button>
+                    <Button onClick = {()=>{handleQuizDelete(quizId)}}>Delete Anyway</Button>
+                    <Button onClick = {() => handleClose()}>Back</Button>
                 </div>
             </Modal>
         </div>
