@@ -47,7 +47,7 @@ function Routes() {
             <UserProfile />
           </Route>
           <Route path='/quiz/:quizId'>
-            <TakeQuiz/>
+            <TakeQuiz userId={ userId }/>
           </Route>
         </Switch>
       </Router>

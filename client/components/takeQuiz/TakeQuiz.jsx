@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TakeQuiz = (userId) => {
+const TakeQuiz = ({ userId }) => {
   const [quizQuestions, setQuizQuestions] = useState([]);
   const [quizAnswers, setQuizAnswers] = useState({});
   const [userAnswers, setUserAnswers] = useState({});
@@ -50,7 +50,7 @@ const TakeQuiz = (userId) => {
   const randomizeAnswers = (correct, incorrect) => {
     let currentIndex, temporaryValue, randomIndex;
     let cleanedAnswers = [];
-    let allAnswers = [correct].concat(incorrect);
+    let allAnswers = [correct].concat(incorrect.slice(0, 3));
     currentIndex = allAnswers.length;
     while (currentIndex) {
       randomIndex = Math.floor(Math.random() * currentIndex);
@@ -106,10 +106,10 @@ const TakeQuiz = (userId) => {
       await setScore(currentScore);
       return currentScore;
     })()
-    .then(response => {
-      getFriendRankings(response);
-      getGlobalRankings(response);
-      submitAnswers(response);
+    .then(userScore => {
+      getFriendRankings(userScore);
+      getGlobalRankings(userScore);
+      submitAnswers(userScore);
     })
     .catch(err => {
       console.error('Error: cannot submit answers to the database', err);
@@ -155,12 +155,12 @@ const TakeQuiz = (userId) => {
   const retrieveQuiz = () => {
     let allAnswers = {}, cleanedQuestions = [], allQuestions;
     getSingleQuiz(quizId)
-      .then(response => {
-        setQuizQuestions(response.data.rows);
-        return response.data.rows;
+      .then(quiz => {
+        setQuizQuestions(quiz.data.rows);
+        return quiz.data.rows;
       })
-      .then(response => {
-        allQuestions = response;
+      .then(quiz => {
+        allQuestions = quiz;
         if (allQuestions.length) {
           for (var i = 0; i < allQuestions.length; i++) {
             const questionBody = cleanText(allQuestions[i].question);
@@ -172,9 +172,9 @@ const TakeQuiz = (userId) => {
           return cleanedQuestions;
         }
       })
-      .then(response => {
-        for (var i = 0; i < response.length; i++) {
-          const answer = response[i].correct_answer;
+      .then(cleanedQuestions => {
+        for (var i = 0; i < cleanedQuestions.length; i++) {
+          const answer = cleanedQuestions[i].correct_answer;
           allAnswers[answer] = true;
         }
         setQuizAnswers(allAnswers);
@@ -189,7 +189,7 @@ const TakeQuiz = (userId) => {
       correct_answer_count: userScore.correct,
       incorrect_answer_count: userScore.incorrect,
       id_quiz: quizId,
-      id_users: 11 // later change to: userId
+      id_users: userId
     })
     .catch(err => {
       console.error('Error: cannot submit quiz answers to database', err);
@@ -200,8 +200,8 @@ const TakeQuiz = (userId) => {
     let rankings = [], allScores;
     let percentage = (userScore.correct / userScore.total * 100).toFixed(0);
     getQuizGlobalRankings(quizId)
-      .then(response => {
-        allScores = response.data.rows;
+      .then(scores => {
+        allScores = scores.data.rows;
         if (!allScores.length) {
           setPercentile(100);
           return [];
@@ -209,11 +209,11 @@ const TakeQuiz = (userId) => {
           return allScores;
         }
       })
-      .then(response => {
-        if (response.length) {
-          for (let i = 0; i < response.length; i++) {
-            const correct = Number(response[i].correct_answer_count);
-            const incorrect = Number(response[i].incorrect_answer_count);
+      .then(allScores => {
+        if (allScores.length) {
+          for (let i = 0; i < allScores.length; i++) {
+            const correct = Number(allScores[i].correct_answer_count);
+            const incorrect = Number(allScores[i].incorrect_answer_count);
             const total = correct + incorrect;
             rankings.push((correct/total * 100).toFixed(0));
           }
@@ -223,9 +223,9 @@ const TakeQuiz = (userId) => {
           return [];
         }
       })
-      .then(response => {
-        if (response.length) {
-          let sorted = response.sort();
+      .then(rankings => {
+        if (rankings.length) {
+          let sorted = rankings.sort();
           let below = 0;
           let equal = 0;
           for (let i = 0; i < sorted.length; i++) {
@@ -247,20 +247,20 @@ const TakeQuiz = (userId) => {
   const getFriendRankings = (userScore) => {
     let percentage = (userScore.correct / userScore.total * 100).toFixed(0);
     let allScores, rankings = [];
-    getQuizFriendRankings(quizId, 9) // later change to: getQuizFriendRankings(quizId, userId)
-      .then(response => {
-        allScores = response.data.rows;
+    getQuizFriendRankings(quizId, userId)
+      .then(scores => {
+        allScores = scores.data.rows;
         if (allScores.length) {
           return allScores;
         } else {
           return [];
         }
       })
-      .then(response => {
-        if (response.length) {
-          for (let i = 0; i < response.length; i++) {
-            const correct = Number(response[i].correct_answer_count);
-            const incorrect = Number(response[i].incorrect_answer_count);
+      .then(allScores => {
+        if (allScores.length) {
+          for (let i = 0; i < allScores.length; i++) {
+            const correct = Number(allScores[i].correct_answer_count);
+            const incorrect = Number(allScores[i].incorrect_answer_count);
             const total = correct + incorrect;
             rankings.push((correct/total * 100).toFixed(0));
           }
@@ -269,11 +269,11 @@ const TakeQuiz = (userId) => {
           return sorted;
         }
       })
-      .then(response => {
-        if (response) {
-          setFriendScores(response);
-          let index = response.indexOf(percentage) + 1;
-          let individualRank = index.toString() + '/' + response.length.toString();
+      .then(sortedRankings => {
+        if (sortedRankings) {
+          setFriendScores(sortedRankings);
+          let index = sortedRankings.indexOf(percentage) + 1;
+          let individualRank = index.toString() + '/' + sortedRankings.length.toString();
           setRank(individualRank);
         }
       })

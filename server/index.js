@@ -183,7 +183,7 @@ app.get('/quiz/:id', async (req, res) => {
       `SELECT * FROM questions
       WHERE id_quiz = ${quizId}`
     )
-    res.status(200).send(retrieveQuiz);
+    res.send(retrieveQuiz);
   } catch (err) {
     res.status(500).send(err);
   }
@@ -199,7 +199,7 @@ app.get(`/quiz/history/taken/:userId`, async (req, res) => {
       ON (quizzes.id = user_completed_quizzes.id_quiz
       AND user_completed_quizzes.id_users = ${userId})`
     )
-    res.status(200).send(retrieveQuizHistory);
+    res.send(retrieveQuizHistory);
   } catch (err) {
     res.status(500).send(err);
   }
@@ -212,7 +212,7 @@ app.get(`/quiz/rankings/global/:quizId`, async (req, res) => {
       `SELECT * FROM user_completed_quizzes
       WHERE id_quiz = ${quizId}`
     )
-    res.status(200).send(retrieveQuizGlobalRankings);
+    res.send(retrieveQuizGlobalRankings);
   } catch (err) {
     res.status(500).send(err);
   }
@@ -232,7 +232,7 @@ app.get(`/quiz/rankings/friends/:quizId/:userId`, async (req, res) => {
         FROM user_friend_relationships
         WHERE id_user = ${userId})`
     )
-    res.status(200).send(retrieveQuizFriendRankings);
+    res.send(retrieveQuizFriendRankings);
   } catch (err) {
     res.status(500).send(err);
   }
@@ -262,11 +262,7 @@ app.post('/submitquiz', async (req, res) => {
   } catch (err) {
     res.status(500).send(err);
   }
-<<<<<<< HEAD
-})
-=======
 });
->>>>>>> stage
 
 app.get("/quizzes", async (req, res) => {
   try {
