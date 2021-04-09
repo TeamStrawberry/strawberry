@@ -10,12 +10,8 @@ import Authentication from "../authentication/Authentication.jsx";
 
 function Routes() {
   const [criteria, setCriteria] = useState(false);
-  const [userId, setUserId] = useState(null);
+  const [user, setUser] = useState({});
   const [loginOpen, setLoginOpen] = useState(false);
-  const [loggedInUser, setLoggedInUser] = useState({
-    id: 1,
-    username: 'admin',
-  });
 
   return (
     <Router>
@@ -37,21 +33,19 @@ function Routes() {
       <Switch>
         <Route path="/quizzes">
           <QuizSearch setCriteria={setCriteria} />
-          <QuizList criteria={criteria} />
+          <QuizList criteria={criteria} loggedInUser={{ id: user.id, username: user.username }} />
         </Route>
-
           <Route path="/create">
-            <QuizCreator />
+            <QuizCreator userId = {user.id}/>
           </Route>
           <Route path="/profile">
-            <UserProfile loggedInUser={{ id: userId, username: "test" }} />
+            <UserProfile loggedInUser={{ id: user.id, username: user.username }} />
           </Route>
           <Route path="/quiz/:quizId">
-            <TakeQuiz userId={userId} />
+            <TakeQuiz user={user.id} />
           </Route>
         </Switch>
       </Router>
-    </div>
   );
 }
 
