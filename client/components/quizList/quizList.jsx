@@ -4,31 +4,30 @@ import axios from 'axios';
 
 import QuizSearch from '../quizSearch/QuizSearch';
 import QuizListCard from './QuizListCard';
+import { getRandomQuizzes, getSelectQuizzes } from "../../../api_master";
 
 const QuizList = ({ criteria }) => {
 
   const [quizzesBySelection, updateSelection] = useState([]);
   const [initialLoad, refreshPage] = useState(true);
 
-  const axiosGetQuizzesByRandomSelection = () => {
+  const axiosGetQuizzesBySelection = () => {
     if (initialLoad) {
-      axios
-        .get('/quizzes')
+      getRandomQuizzes()
         .then(quizzes => {
           refreshPage(false)
           updateSelection(quizzes.data.rows)
         })
         .catch(err => console.error(err))
     } else if (criteria) {
-      axios
-        .get(`/quizzes/${criteria}`)
+      getSelectQuizzes(criteria)
         .then(quizzes => updateSelection(quizzes.data))
         .catch(err => console.error(err))
     }
   };
 
   useEffect(() => {
-    axiosGetQuizzesByRandomSelection();
+    axiosGetQuizzesBySelection();
   }, [criteria]);
 
 
