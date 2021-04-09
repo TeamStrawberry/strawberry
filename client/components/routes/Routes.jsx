@@ -47,7 +47,6 @@ function Routes() {
           </Route>
         </Switch>
       </Router>
-    </div>
   );
 }
 
