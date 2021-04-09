@@ -13,6 +13,19 @@ app.use(
   })
 );
 
+/* authentication */
+app.get('/login', async (req, res) => {
+  console.log(req.query);
+  try {
+    let userId = await pool.query(
+      `select id from users where username='${req.query.username}' and password='${req.query.password}'`
+    );
+    res.status(200).send(userId);
+  } catch {
+    res.sendStatus(500);
+  }
+})
+
 /* Dan and Alex's section */
 
 app.get("/getcreatedquizzes/:id", async (req, res) => {
