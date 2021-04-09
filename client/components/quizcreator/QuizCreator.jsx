@@ -34,6 +34,7 @@ const QuizCreator = () => {
   let tempUserId = 1; //this will be removed when the user_id is passed down
   var dailyQuizCount = 0;
 
+  console.log('userid in quizcreator', userId)
   //will trigger when track counter changes
   useEffect(() => {
     getUserQuizHistory(tempUserId)
