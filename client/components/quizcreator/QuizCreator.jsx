@@ -3,7 +3,7 @@ import QuizOptions from './QuizOptions.jsx';
 import QuizQuestionsAndAnswers from './QuizQuestionsAndAnswers.jsx';
 import QuizSubmit from './QuizSubmit.jsx';
 import QuizBank from './QuizBank.jsx';
-import CreatedQuizHistory from '../quizeditor/CreatedQuizHistory.jsx';
+// import CreatedQuizHistory from '../quizeditor/CreatedQuizHistory.jsx';
 const { createQuiz, createQuestion, getUserQuizHistory } = require('../../../api_master.js');
 import axios from 'axios';
 
@@ -148,7 +148,7 @@ const QuizCreator = () => {
       <h2 className = 'quiz-count'>Total Quizzes Created Today: {quizTrackerCount}</h2>
       {errorMessage}
       {quizCreator}
-        <CreatedQuizHistory />
+        {/* <CreatedQuizHistory /> */}
     </div>
   )
 }
