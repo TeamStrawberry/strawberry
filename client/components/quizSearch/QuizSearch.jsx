@@ -42,14 +42,26 @@ const QuizSearch = ({ setCriteria }) => {
         </h3>
       </Grid>
       <Grid item>
-        <QuizNameSearch setCriteria={setCriteria}/>
+        <QuizNameSearch setCriteria={setCriteria} setOpen={setOpen}/>
       </Grid>
       <Grid item>
-        <QuizCategorySearch setCriteria={setCriteria}/>
+        -OR-
       </Grid>
       <Grid item>
-        <QuizDifficultySearch setCriteria={setCriteria}/>
+        <QuizCategorySearch setCriteria={setCriteria} setOpen={setOpen}/>
       </Grid>
+      <Grid item>
+        -OR-
+      </Grid>
+      <Grid item>
+        <QuizDifficultySearch setCriteria={setCriteria} setOpen={setOpen}/>
+      </Grid>
+      <Button
+        onClick={handleClose}
+        size='medium'
+      >
+        Close
+      </Button>
     </Grid>
   )
 
