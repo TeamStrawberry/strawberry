@@ -4,8 +4,16 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import AddIcon from "@material-ui/icons/Add";
 import { createFriendship, removeFriendship } from "../../../api_master";
+import CheckIcon from "@material-ui/icons/Check";
 
-function UserListItem({ loggedInUser, user, variant, refreshList }) {
+function UserListItem({
+  loggedInUser,
+  user,
+  variant,
+  refreshList,
+  addChallenger,
+  challengers,
+}) {
   const icon = () => {
     if (variant === "add_friend") {
       return (
@@ -21,8 +29,8 @@ function UserListItem({ loggedInUser, user, variant, refreshList }) {
 
     if (variant === "challenge") {
       return (
-        <IconButton>
-          <AddIcon />
+        <IconButton onClick={(e) => addChallenger(user)}>
+          {challengers[user.id] ? <CheckIcon /> : <AddIcon />}
         </IconButton>
       );
     }

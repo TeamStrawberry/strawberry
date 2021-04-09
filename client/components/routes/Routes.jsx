@@ -1,20 +1,24 @@
+import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Navbar from "../homepage/Navbar.jsx";
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import QuizCreator from '../quizcreator/QuizCreator.jsx';
 import QuizList from '../quizList/quizList';
 import QuizSearch from '../quizSearch/QuizSearch';
 import UserProfile from "../users/UserProfile";
 import TakeQuiz from '../takeQuiz/TakeQuiz';
-
+import Authentication from "../authentication/Authentication.jsx";
 
 function Routes() {
 
   const [criteria, setCriteria] = useState(false);
+  const [userId, setUserId] = useState(null);
+  const [loginOpen, setLoginOpen] = useState(false);
 
   return (
     <div>
+      <Authentication loginOpen={loginOpen} setLoginOpen={setLoginOpen} setUserId={setUserId} />
       <Router>
-        <nav>
+        <Navbar />
           <ul>
             <li>
               <Link to="/">Home</Link>
@@ -29,12 +33,13 @@ function Routes() {
               <Link to="/profile">Profile</Link>
             </li>
           </ul>
-        </nav>
         <Switch>
+
           <Route path="/quizzes">
             <QuizSearch setCriteria={ setCriteria }/>
             <QuizList criteria={ criteria }/>
           </Route>
+
           <Route path="/create">
             <QuizCreator />
           </Route>
@@ -42,7 +47,7 @@ function Routes() {
             <UserProfile />
           </Route>
           <Route path='/quiz/:quizId'>
-            <TakeQuiz/>
+            <TakeQuiz userId={ userId }/>
           </Route>
         </Switch>
       </Router>
