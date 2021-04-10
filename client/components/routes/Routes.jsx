@@ -12,6 +12,7 @@ function Routes() {
   const [criteria, setCriteria] = useState(false);
   const [user, setUser] = useState({});
   const [loginOpen, setLoginOpen] = useState(false);
+  console.log(user);
 
   return (
     <Router>
