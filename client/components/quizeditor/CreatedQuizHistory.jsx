@@ -81,7 +81,13 @@ const CreatedQuizHistory = ({ loggedInUser, friends }) => {
         />
       </ul>
       {questionsLoaded
-        ? <QuizEditor questions={questionsToEdit} quizName={quizName} handleRenderingQuestions={handleRenderingQuestions} returnQuizList = {returnQuizList} editorClassName = {editorClassName} userId={loggedInUser.id}/>
+        ? <QuizEditor 
+            questions={questionsToEdit} 
+            quizName={quizName} 
+            handleRenderingQuestions={handleRenderingQuestions} 
+            returnQuizList={returnQuizList} 
+            editorClassName={editorClassName} 
+            userId={loggedInUser.id}/>
         : null
       }
     </div>
