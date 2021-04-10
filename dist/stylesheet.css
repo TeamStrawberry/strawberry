@@ -8,10 +8,11 @@ body{
   background: linear-gradient(143.78deg, #FBE8A6 50.95%, #F4976C 51.37%) !important;
   background-size: cover !important;
   background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
 }
 
 .hide{
-  display:none;
+  display: none;
 }
 
 span :hover{
