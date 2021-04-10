@@ -15,8 +15,8 @@ const QuizList = ({ criteria, loggedInUser }) => {
     if (initialLoad) {
       getRandomQuizzes()
         .then(quizzes => {
-          refreshPage(false)
-          updateSelection(quizzes.data.rows)
+          refreshPage(false);
+          updateSelection(quizzes.data.rows);
         })
         .catch(err => console.error(err))
     } else if (criteria) {
@@ -37,9 +37,10 @@ const QuizList = ({ criteria, loggedInUser }) => {
         container
         alignItems='center'
         spacing={2}
-        width='90%'
+        xs={12}
       >
-        { quizzesBySelection.map((quiz, index) =>  <QuizListCard quiz={ quiz } key={ index } loggedInUser={ loggedInUser } />) }
+        { quizzesBySelection.map((quiz, index) => <QuizListCard quiz={ quiz } key={ index } loggedInUser={ loggedInUser } />)
+        }
       </Grid>
     </div>
   )
