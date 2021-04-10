@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   },
 });
 
-function UserAvatar() {
+function UserAvatar({ loggedInUser }) {
   const classes = useStyles();
 
   return (
@@ -37,7 +37,7 @@ function UserAvatar() {
           </Grid>
           <CardContent style={{ padding: 0, margin: 10 }}>
             <Typography variant="h5" component="h2">
-              User Name
+              {loggedInUser.username}
             </Typography>
           </CardContent>
         </Grid>
