@@ -10,6 +10,8 @@ import {
   Avatar,
 } from "@material-ui/core";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
+import ClearIcon from '@material-ui/icons/Clear';
+import IconButton from '@material-ui/core/IconButton'
 import UserList from "../users/UserList";
 import UserSearch from "../users/UserSearch";
 import { sendFriendEmail } from "../../../api_master";
@@ -27,6 +29,14 @@ const useStyles = makeStyles((theme = theme) => ({
     top: `50%`,
     left: `50%`,
     transform: `translate(-50%, -50%)`,
+  },
+  iconClose: {
+    "&:hover $icon": {
+      color: 'red',
+    }
+  },
+  icon: {
+    color: 'black',
   },
 }));
 
@@ -81,9 +91,19 @@ function ChallengeFriend({ loggedInUser, friends, link = "https://www.youtube.co
   const body = (
     <Grid container className={classes.modal} direction="column" spacing={3}>
       <Grid item>
-        <h3 id="challenge-modal-title" style={{ margin: 0 }}>
+        <IconButton
+            classes={{
+              root: classes.iconClose
+          }}
+        >
+          <ClearIcon onClick={e => handleClose()} className={classes.icon}/>
+        </IconButton>
+
+      </Grid>
+      <Grid item>
+        <h2 id="challenge-modal-title" style={{ margin: 0 }}>
           Challenge Your Friends
-        </h3>
+        </h2>
       </Grid>
       <Grid item>
         <UserSearch />
