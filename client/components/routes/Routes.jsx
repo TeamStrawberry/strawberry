@@ -43,13 +43,13 @@ function Routes() {
           </Route>
 
           <Route path="/create">
-            <QuizCreator userId = {userId}/>
+            <QuizCreator userId={user.id}/>
           </Route>
           <Route path="/profile">
             <UserProfile loggedInUser={{ id: user.id, username: user.username }} />
           </Route>
           <Route path="/quiz/:quizId">
-            <TakeQuiz user={user.id} />
+            <TakeQuiz user={user.id} loggedInUser={{ id: user.id, username: user.username }} />
           </Route>
         </Switch>
       </Router>
