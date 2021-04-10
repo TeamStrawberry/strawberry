@@ -68,27 +68,25 @@ const QuizSearch = ({ setCriteria }) => {
 
   return(
     <Box>
-      <Box
+      <Grid container
+        direction='row'
         style={{
           marginBottom: '15px'
         }}
       >
-        <Typography
-          variant='h2'
-          style={{
-            position: 'relative',
-            right: '35%',
-          }}>
-          Quizzes
-        </Typography>
-        <SearchIcon
-          onClick={handleOpen}
-          style={{
-            cursor: 'pointer',
-            position: 'relative',
-            left: '35%',
-          }} />
-      </Box>
+        <Grid item xs={10} style={{ textAlign: 'left', marginLeft: '5%' }}>
+          <Typography
+            variant='h2'
+          >
+            Quizzes
+          </Typography>
+        </Grid>
+        <Grid item xs={1} style={{ marginTop: '20px', marginLeft: '5px' }} >
+          <SearchIcon
+            onClick={handleOpen}
+          />
+        </Grid>
+      </Grid>
       <Modal open={open} onClose={handleClose}>
         { modalBody }
       </Modal>

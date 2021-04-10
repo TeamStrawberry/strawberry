@@ -45,16 +45,27 @@ const  QuizListCard = ({ quiz, loggedInUser }) => {
       <CardHeader
         onClick={handleClick}
         title={ quiz.name }
+        fullWidth={false}
         style={{
           position: 'relative',
-          right: '40%',
+          textAlign: 'left',
         }}
       />
         <CardContent onClick={handleClick} >
-          <Typography color='textSecondary'>
+          <Typography
+            color='textSecondary'
+            style={{
+              textAlign: 'left',
+            }}
+          >
             { quiz.category }
           </Typography>
-          <Typography color='textSecondary'>
+          <Typography
+            color='textSecondary'
+            style={{
+              textAlign: 'right',
+            }}
+          >
             { quiz.difficulty }
           </Typography>
         </CardContent>
@@ -64,6 +75,9 @@ const  QuizListCard = ({ quiz, loggedInUser }) => {
             loggedInUser={loggedInUser}
             friends={friends}
             link={`localhost:3000/quiz/${quiz.id}`}
+            style={{
+              textAlign: 'right',
+            }}
           />
         :
           <div></div>
