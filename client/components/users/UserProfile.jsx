@@ -55,7 +55,7 @@ function UserProfile({ loggedInUser = { id: 1, username: "admin" } }) {
           display="flex"
           spacing={2}
         >
-          <UserStats />
+          <UserStats loggedInUser={loggedInUser} />
           <UserRankings loggedInUser={loggedInUser} />
         </Grid>
         <Grid
