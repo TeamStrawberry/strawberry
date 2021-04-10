@@ -166,7 +166,6 @@ app.post("/createquestion", async (req, res) => {
 
 app.put("/revisequestion/:id", async (req, res) => {
   try {
-    console.log(req.body);
     const { id } = req.params;
     const {
       category,
@@ -175,8 +174,7 @@ app.put("/revisequestion/:id", async (req, res) => {
       question,
       correct_answer,
       incorrect_answers,
-      //id_users
-      //id_quiz
+      //Reminder: quizId and userId in req body if needed
     } = req.body;
 
     const reviseQuestion = await pool.query(
