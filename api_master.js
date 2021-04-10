@@ -21,9 +21,9 @@ function getCreatedQuizQuestions(quizId) {
   return handleGetRequests(`/getcreatedquizquestions/${quizId}`);
 }
 
-function sendFriendEmail(user, friend, friendEmail, message) {
+function sendFriendEmail(user, friend, friendEmail, message = 'I challenge you', score, link) {
   return handleGetRequests(
-    `/email/${user}/${friend}/${friendEmail}/${message}`
+    `/email/${user}/${friend}/${friendEmail}/${message}/${score}/${link}`
   );
 }
 
