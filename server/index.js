@@ -593,11 +593,10 @@ app.get("/email/:friend/:user/:friendEmail/:message/:score/:link", (req, res) =>
   let mailOptions = {
     from: process.env.MAIL_USER,
     to: `${friendEmail}`,
-    subject: `YOU RECEIVED A QUIZ CHALLENGE FROM ${user}!!!`,
-    text: `${message} ${score}`,
-    html: `<h1>${message}</h1>
-           <h2>SCORE: ${score}</h2>
-           <a href="${link}"><button>Go to quiz</button></a>`
+    subject: `${friend}!!! YOU RECEIVED A QUIZ CHALLENGE FROM ${user}!!!`,
+    html: `<h2>${message}</h2>
+           <h2>${user} SCORED: ${score}</h2>
+           <a href="${link}"><button>GO TO QUIZ</button></a>`
   };
 
   transporter.sendMail(mailOptions, (err, data) => {
