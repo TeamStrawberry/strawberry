@@ -53,7 +53,7 @@ const DeleteButton = ({ quizId }) => {
     return (
         <div>
             <Button variant="contained" color="secondary" onClick={handleOpen}>
-                Delete Quiz
+               Delete
             </Button>
 
             <Modal
