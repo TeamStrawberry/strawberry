@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 const { getQuestionsByCategory } = require('../../../api_master.js');
+import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap';
 
 const useStyles = makeStyles((theme) => ({
   question: {
-    border: '1px solid',
+    border: '1px dashed',
     borderColor: theme.palette.text,
     draggable: 'draggable',
     padding: '2px',
@@ -13,6 +14,11 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       cursor: 'grab'
     }
+  },
+  icon: {
+    fontSize: 'small',
+    color: theme.palette.text,
+    transform: 'rotate(45deg)'
   }
 }))
 
@@ -49,6 +55,8 @@ const QuizBank = ({ category, handleQuestionGrab }) => {
               onClick={() => {handleQuestionBankClick(question)}}
             >
               {question.question}
+              <br></br>
+              <ZoomOutMapIcon className={classes.icon}/>
             </div>
           )
         })

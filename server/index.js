@@ -140,7 +140,7 @@ app.post("/createquestion", async (req, res) => {
       id_quiz,
       id_users,
     } = req.body;
-
+    
     const createQuestion = await pool.query(
       `INSERT INTO questions
         (category, type, difficulty, question, correct_answer, incorrect_answers, id_quiz, id_users)

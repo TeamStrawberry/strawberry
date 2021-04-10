@@ -36,7 +36,7 @@ function Routes() {
           <QuizList criteria={criteria} loggedInUser={{ id: user.id, username: user.username }} />
         </Route>
           <Route path="/create">
-            <QuizCreator userId = {user.id}/>
+            <QuizCreator user={user}/>
           </Route>
           <Route path="/profile">
             <UserProfile loggedInUser={{ id: user.id, username: user.username }} />

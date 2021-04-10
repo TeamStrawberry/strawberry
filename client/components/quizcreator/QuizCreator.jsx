@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.text,
     backgroundColor: theme.palette.background.paper,
-    border: '5px solid',
+    border: '3px solid',
     borderColor: theme.palette.text,
     padding: '5px',
     marginBottom: '16px'
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 //pass in userid as prop in here
-const QuizCreator = () => {
+const QuizCreator = ({ user }) => {
   const classes = useStyles();
 
   const [name, setName] = useState('');
@@ -32,12 +32,12 @@ const QuizCreator = () => {
   const [quizTrackerCount, setQuizTrackerCount] = useState(0);
   const [questionGrabbed, setQuestionGrabbed] = useState({});
 
-  let tempUserId = 1; //this will be removed when the user_id is passed down
+  let id_users = user.id; //this will be removed when the user_id is passed down
   var dailyQuizCount = 0;
 
   //will trigger when track counter changes
   useEffect(() => {
-    getUserQuizHistory(tempUserId)
+    getUserQuizHistory(id_users)
       .then(res => {
         let today = new Date().toISOString().slice(0, 10);
         for (let i  = 0; i < res.data.rows.length; i++) {
@@ -81,6 +81,7 @@ const QuizCreator = () => {
       singleQnA.category = category;
       singleQnA.difficulty = difficulty;
       singleQnA.question = question;
+      singleQnA.id_users = id_users;
       singleQnA.correct_answer = correctAnswer;
       singleQnA.incorrect_answers = [incorrectAnswerA, incorrectAnswerB, incorrectAnswerC];
       let filteredAnswers = singleQnA.incorrect_answers.filter((answer) => {
@@ -94,7 +95,6 @@ const QuizCreator = () => {
         singleQnA.type = 'multiple';
       }
       singleQnA.incorrect_answers = filteredAnswers;
-      // user id <-- AWAITING
       if (singleQnA.question.length) {
         allQuizQuestions.push(singleQnA);
       }
@@ -119,7 +119,7 @@ const QuizCreator = () => {
       return
     }
 
-    createQuiz({name, category, difficulty, id_users: 1})
+    createQuiz({ name, category, difficulty, id_users })
       .then(res => {
         let quizId = res.data.rows[0].id;
         setQuizTrackerCount(quizTrackerCount + 1)
@@ -128,7 +128,7 @@ const QuizCreator = () => {
       .then(quizId => {
         allQuizQuestions.forEach(quizQuestion => {
           quizQuestion.id_quiz = quizId;
-          quizQuestion.id_users = 1;
+          //quizQuestion.id_users = 1;
           createQuestion(quizQuestion)
             .then (res => {
               console.log('Quiz question saved!')
@@ -149,6 +149,7 @@ const QuizCreator = () => {
     : quizCreator =
       <div className = 'quiz-creator'>
         <h2>Quiz Creator</h2>
+        <h4 className = 'quiz-count'>Total Quizzes Created Today: {quizTrackerCount}</h4>
         <Grid
           container
           spacing={4}
@@ -178,7 +179,7 @@ const QuizCreator = () => {
             </Paper>
             <Paper
               className={classes.paper}
-              style={{ maxHeight: "37.225vh", overflowX: "auto", overflowY: "scroll" }}
+              style={{ maxHeight: "34.90vh", overflowX: "auto", overflowY: "scroll" }}
             >
               <h4>Questions Bank</h4>
               <QuizBank
@@ -186,7 +187,6 @@ const QuizCreator = () => {
                 handleQuestionGrab={handleQuestionGrab}
               />
             </Paper>
-            <h4 className = 'quiz-count'>Total Quizzes Created Today: {quizTrackerCount}</h4>
           </Grid>
           <Grid
             item

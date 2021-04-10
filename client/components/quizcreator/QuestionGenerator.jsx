@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   questionGroup: {
     padding: '5px',
-    border: '3px solid',
+    border: '2px solid',
     borderColor: theme.palette.secondary.main,
     marginBottom: '10px'
   },
