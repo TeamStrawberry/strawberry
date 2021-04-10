@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   },
   page: {
     '& Button': {
-      border: "1px solid black",
+      border: "2px solid #303c6c",
       backgroundColor: "#d2fdff"
     }
   },
@@ -37,13 +37,13 @@ const useStyles = makeStyles(theme => ({
     left: `50%`,
     transform: `translate(-50%, -50%)`,
     '& Button': {
-      border: "1px solid black",
+      border: "2px solid #303c6c",
       backgroundColor: "#d2fdff",
     },
   },
   header: {
     position: "fixed",
-    top: 90,
+    top: 100,
     left: 10,
     marginTop: 0,
     marginBottom: 0,
@@ -60,7 +60,7 @@ const useStyles = makeStyles(theme => ({
   },
   body: {
     position: "fixed",
-    top: 210,
+    top: 220,
     left: 10,
     bottom: 5,
     maxHeight: '100%',
@@ -82,27 +82,27 @@ const useStyles = makeStyles(theme => ({
   question: {
     marginTop: 0,
     marginBottom: 5,
-    paddingTop: "20px !important",
-    paddingBottom: "20px !important",
+    paddingTop: "30px !important",
+    paddingBottom: "30px !important",
     backgroundColor: "#fdf5f5",
     border: '1px solid #303c6c',
     borderRadius: "5px",
   },
   answers: {
     marginTop: 0,
-    marginBottom: 20,
+    marginBottom: 40,
   },
   answer: {
     border: '1px solid #303c6c',
     borderRadius: "5px",
-    margin: '3px',
+    margin: '2px',
     paddingTop: 10,
     paddingBottom: 10,
     backgroundColor: "#fdf5f5",
   },
 }));
 
-const TakeQuiz = ({ userId = 13, loggedInUser }) => {
+const TakeQuiz = ({ loggedInUser }) => {
   const [quizQuestions, setQuizQuestions] = useState([]);
   const [quizAnswers, setQuizAnswers] = useState({});
   const [userAnswers, setUserAnswers] = useState({});
@@ -275,7 +275,7 @@ const TakeQuiz = ({ userId = 13, loggedInUser }) => {
       correct_answer_count: userScore.correct,
       incorrect_answer_count: userScore.incorrect,
       id_quiz: quizId,
-      id_users: userId
+      id_users: loggedInUser.id
     })
     .catch(err => {
       console.error('Error: cannot submit quiz answers to database', err);
@@ -333,7 +333,7 @@ const TakeQuiz = ({ userId = 13, loggedInUser }) => {
   const getFriendRankings = (userScore) => {
     let percentage = (userScore.correct / userScore.total * 100).toFixed(0);
     let allScores, rankings = [];
-    getQuizFriendRankings(quizId, userId)
+    getQuizFriendRankings(quizId, loggedInUser.id)
       .then(scores => {
         allScores = scores.data.rows;
         if (allScores.length) {
@@ -392,18 +392,18 @@ const TakeQuiz = ({ userId = 13, loggedInUser }) => {
         </Grid>
         <Grid item container spacing={2} xs={12} direction="row" justify="space-evenly" alignItems="center" width="auto" >
           {rank.length
-            ? <Grid item container spacing={2} xs={6} direction="column" justify="center" alignItems="center" width="100%" className={ classes.item }>
+            ? <Grid item container spacing={2} xs={6} direction="column" justify="center" alignItems="center" width="100%" >
               <Grid item={true} width="auto" className={ classes.item } >
-                <h1 style={{ fontSize: '30px', margin: 0 }}>You rank</h1>
+                <h1 style={{ fontSize: '30px', margin: 0, textAlign: "center" }}>You rank</h1>
               </Grid>
               <Grid item={true} width="auto" className={ classes.item } >
-                <h1 style={{ fontSize: '70px', margin: 0 }}>{ rank }</h1>
+                <h1 style={{ fontSize: '70px', margin: 0, textAlign: "center" }}>{ rank }</h1>
               </Grid>
               <Grid item={true} width="auto" className={ classes.item } >
-                <h1 style={{ fontSize: '30px', margin: 0 }}>of your friends!</h1>
+                <h1 style={{ fontSize: '30px', margin: "0 0 10", textAlign: "center" }}>of your friends!</h1>
               </Grid>
             </Grid>
-            : <Grid item container spacing={2} xs={6} direction="column" justify="center" alignItems="center"  width="100%" className={ classes.item }>
+            : <Grid item container spacing={2} xs={6} direction="column" justify="center" alignItems="center" width="100%" className={ classes.item }>
               <Grid item={true} width="auto" className={ classes.item } >
                 <h1 style={{ fontSize: '30px', margin: 0, textAlign: "center" }}>None of your friends</h1>
               </Grid>
@@ -457,7 +457,7 @@ const TakeQuiz = ({ userId = 13, loggedInUser }) => {
             color="primary"
             onClick={ handleClose }
           >
-            Go Back
+            Return to Quiz
           </Button>
         </Grid>
       </Grid>
@@ -477,10 +477,10 @@ const TakeQuiz = ({ userId = 13, loggedInUser }) => {
                 </Grid>
                 <Grid item container spacing={2} direction="row" justify='space-evenly' >
                   <Grid item display="flex">
-                    <h4 style={{ marginTop: 0, marginBottom: 0 }}>Category: { quizQuestions[0].category }</h4>
+                    <h3 style={{ marginTop: 0, marginBottom: 0 }}>Category: { quizQuestions[0].category }</h3>
                   </Grid>
                   <Grid item display="flex" >
-                    <h4 style={{ marginTop: 0, marginBottom: 0 }}>Difficulty: { quizQuestions[0].difficulty }</h4>
+                    <h3 style={{ marginTop: 0, marginBottom: 0 }}>Difficulty: { quizQuestions[0].difficulty }</h3>
                   </Grid>
                 </Grid>
             </Grid>
