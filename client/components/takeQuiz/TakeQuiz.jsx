@@ -419,54 +419,56 @@ const TakeQuiz = ({ userId = 12, loggedInUser }) => {
                   <Grid item className={ classes.question }>
                     <FormLabel>{ question.question }</FormLabel>
                   </Grid>
-                  <Grid item container direction="row" justify='space-evenly' className={ classes.answers }>
-                    <Grid item xs={8} style={{ paddingLeft: "20%" }}>
-                      <RadioGroup
-                        aria-label={ question.question }
-                        name={ question.question }
-                        onChange={ handleChange }
-                      >
+                  <RadioGroup
+                    aria-label={ question.question }
+                    name={ question.question }
+                    onChange={ handleChange }
+                  >
+                    <Grid item container direction="row" justify='space-evenly' className={ classes.answers }>
+                      <Grid item xs={6} direction="column">
                         {question.randomizedAnswers
                           ? question.type === 'multiple'
                             ? question.randomizedAnswers.slice(0, 2).map((answer, index) => (
-                            <FormControlLabel
-                              key={ index }
-                              value={ answer }
-                              control={ <Radio /> }
-                              label={ answer } />
+                              <Grid item>
+                                <FormControlLabel
+                                key={ index }
+                                value={ answer }
+                                control={ <Radio /> }
+                                label={ answer } />
+                              </Grid>
                             ))
-                            : <FormControlLabel
-                              value={ question.randomizedAnswers[0] }
-                              control={ <Radio /> }
-                              label={ question.randomizedAnswers[0] } />
+                            : <Grid item>
+                              <FormControlLabel
+                                value={ question.randomizedAnswers[0] }
+                                control={ <Radio /> }
+                                label={ question.randomizedAnswers[0] } />
+                            </Grid>
                           : null
                         }
-                      </RadioGroup>
-                    </Grid>
-                    <Grid item xs={4} >
-                      <RadioGroup
-                        aria-label={ question.question }
-                        name={ question.question }
-                        onChange={ handleChange }
-                      >
+                      </Grid>
+                      <Grid item xs={6} direction="column">
                         {question.randomizedAnswers
-                          ? question.type === 'multiple'
-                            ? question.randomizedAnswers.slice(2, 4).map((answer, index) => (
-                            <FormControlLabel
-                              key={ index }
-                              value={ answer }
-                              control={ <Radio /> }
-                              label={ answer } />
-                            ))
-                            : <FormControlLabel
-                              value={ question.randomizedAnswers[1] }
-                              control={ <Radio /> }
-                              label={ question.randomizedAnswers[1] } />
-                          : null
-                        }
-                      </RadioGroup>
+                            ? question.type === 'multiple'
+                              ? question.randomizedAnswers.slice(2, 4).map((answer, index) => (
+                                <Grid item>
+                                  <FormControlLabel
+                                  key={ index }
+                                  value={ answer }
+                                  control={ <Radio /> }
+                                  label={ answer } />
+                                </Grid>
+                              ))
+                              : <Grid item>
+                                <FormControlLabel
+                                  value={ question.randomizedAnswers[1] }
+                                  control={ <Radio /> }
+                                  label={ question.randomizedAnswers[1] } />
+                              </Grid>
+                            : null
+                          }
+                      </Grid>
                     </Grid>
-                  </Grid>
+                  </RadioGroup>
                 </Grid>
               </FormControl>
             ))
