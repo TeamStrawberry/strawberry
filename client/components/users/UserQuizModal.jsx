@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import CreatedQuizHistory from '../quizeditor/CreatedQuizHistory.jsx';
+import { theme } from '../../theme.js';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -50,7 +51,9 @@ function getModalStyle() {
       left: `${left}%`,
       transform: `translate(-${top}%, -${left}%)`,
       maxHeight: '50%',
-      overflowY: 'auto'
+      overflowY: 'auto',
+      border: '3px solid',
+      borderColor: theme.palette.secondary.main
   };
 }
 

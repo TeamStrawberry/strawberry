@@ -1,14 +1,7 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import {Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@material-ui/core';
 import DeleteButton from './DeleteButton.jsx';
 import { makeStyles } from '@material-ui/core/styles';
-
 
 const useStyles = makeStyles(theme => ({
   table: {
@@ -36,18 +29,24 @@ const QuizHistoryDisplay = ({ quizzes, getQuiz}) => {
             <TableRow>
               <TableCell align="center" style ={{fontSize: 16}}>{quiz.name}</TableCell>
               <TableCell align="center" style ={{fontSize: 16}}>{quiz.category}</TableCell>
-              <TableCell align="center" style ={{fontSize: 16, width: '100%'}}>{quiz.date_created.slice(0,10)}</TableCell>
+              <TableCell align="center" style ={{fontSize: 16, width:'100%'}}>{quiz.date_created.slice(0,10)}</TableCell>
               <TableCell
                 align="center"
                 style ={{
-                  fontSize: 16,
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between'
+                  fontSize: 16
                 }}
               >
-                <Button variant = 'contained' color = 'primary' onClick={()=>{getQuiz(quiz.id, quiz.name)}}>Edit</Button>
-                <DeleteButton quizId={quiz.id} />
+                <div
+                  className = 'buttons'
+                  style = {{
+                    display: 'flex',
+                    flexDirection: 'row'
+                  }}
+                >
+                  <Button variant = 'contained' color = 'primary' onClick={()=>{getQuiz(quiz.id, quiz.name)}}>Edit</Button>
+                  <Button variant = 'contained' color = 'primary'>Share</Button>
+                  <DeleteButton quizId={quiz.id} />
+                </div>
               </TableCell>
             </TableRow>
           ))}
@@ -58,20 +57,3 @@ const QuizHistoryDisplay = ({ quizzes, getQuiz}) => {
 }
 
 export default QuizHistoryDisplay;
-
-{/* // const QuizHistoryDisplay = ({ quizzes, getQuiz}) => {
-
-//   return quizzes.map((quiz) => {
-//     return (
-//         <li key={quiz.id}>
-//           <h3 className = 'quiz-name'>{quiz.name}</h3>
-//           <h3 className = 'quiz-category'>{quiz.category}</h3>
-//           <h3 className = 'quiz-date-created'>{quiz.date_created.slice(0,10)}</h3>
-//           <Button variant = 'contained' color = 'primary' onClick={()=>{getQuiz(quiz.id, quiz.name)}}>Start Edits</Button>
-//           <DeleteButton quizId={quiz.id}/>
-//         </li>
-//     )
-//   })
-// }
-
-// export default QuizHistoryDisplay; */}

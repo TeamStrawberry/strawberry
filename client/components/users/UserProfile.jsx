@@ -58,7 +58,7 @@ function UserProfile({ loggedInUser = { id: 1, username: "admin" } }) {
           <UserStats />
           <UserRankings />
         </Grid>
-        <Grid
+        {/* <Grid
           item
           xs={5}
           container
@@ -66,9 +66,10 @@ function UserProfile({ loggedInUser = { id: 1, username: "admin" } }) {
           display="flex"
           spacing={2}
         >
-          <UserQuizHistoryTaken />
+
+        </Grid> */}
+         {/* <UserQuizHistoryTaken /> */}
           <UserQuizHistoryCreated />
-        </Grid>
       </Grid>
     </Grid>
   );
