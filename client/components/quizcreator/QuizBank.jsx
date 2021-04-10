@@ -49,13 +49,13 @@ const QuizBank = ({ category, handleQuestionGrab }) => {
           return (
             <div
               key={question.id}
-              onDragStart={(e) => {onDragStart(e, question)}}
+              onDragStart={(e) => onDragStart(e, question)}
               draggable
               className={classes.question}
-              onClick={() => {handleQuestionBankClick(question)}}
+              onClick={() => handleQuestionBankClick(question)}
             >
               {question.question}
-              <br></br>
+              <br />
               <ZoomOutMapIcon className={classes.icon}/>
             </div>
           )
