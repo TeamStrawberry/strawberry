@@ -30,11 +30,11 @@ const QuizCreator = () => {
   const [difficulty, setDifficulty] = useState('');
   const [quizOptionsLoaded, setQuizOptionsLoaded] = useState(false);
   const [quizTrackerCount, setQuizTrackerCount] = useState(0);
+  const [questionGrabbed, setQuestionGrabbed] = useState({});
 
   let tempUserId = 1; //this will be removed when the user_id is passed down
   var dailyQuizCount = 0;
 
-  //console.log('userid in quizcreator', userId)
   //will trigger when track counter changes
   useEffect(() => {
     getUserQuizHistory(tempUserId)
@@ -51,27 +51,21 @@ const QuizCreator = () => {
 
   const handleNameChange = (name) => {
     setName(name);
-
   }
 
   const handleCategoryChange = (categoryName) => {
     setCategory(categoryName);
-
   }
 
   const handleDifficultyChange = (difficulty) => {
     setDifficulty(difficulty);
-
   }
 
-  const handleQuestionBankClick = (question) => {
-    // take question and prefill form
+  const handleQuestionGrab = (question) => {
     console.log(question);
+    setQuestionGrabbed(question);
   }
 
-  // rerender page on submit or go to another page
-  // form validators only have either 2 or 4 answers no 3
-  // Quiz submit becomes clickable 'enabled' once all 3 options are entered
   const handleSubmit = () => {
     let allQuizQuestions = [];
 
@@ -138,11 +132,11 @@ const QuizCreator = () => {
           createQuestion(quizQuestion)
             .then (res => {
               console.log('Quiz question saved!')
-              location.reload();
-              alert('Quiz Submitted!');
             })
             .catch(err => console.error('Error. Cannot create questions', err))
           })
+        location.reload();
+        alert('Quiz Submitted!');
       })
       .catch(err => console.error('Error. Cannot create quiz', err))
   }
@@ -189,7 +183,7 @@ const QuizCreator = () => {
               <h4>Questions Bank</h4>
               <QuizBank
                 category = {category}
-                handleQuestionBankClick = {handleQuestionBankClick}
+                handleQuestionGrab={handleQuestionGrab}
               />
             </Paper>
             <h4 className = 'quiz-count'>Total Quizzes Created Today: {quizTrackerCount}</h4>

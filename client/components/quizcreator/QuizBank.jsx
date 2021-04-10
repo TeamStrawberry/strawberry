@@ -20,10 +20,12 @@ const useStyles = makeStyles((theme) => ({
 set state in quiz creator for current object being dragged
 on drag set state
 pass down to function that will handle drop and render it to the page
-drop and hover functions should be universal so they can be dynamically rendered and 
+drop and hover functions should be universal so they can be dynamically rendered and
+
+move getQuestionsByCategory out to higher component
 */
 
-const QuizBank = ({ category, handleQuestionBankClick }) => {
+const QuizBank = ({ category, handleQuestionGrab }) => {
   const classes = useStyles();
 
   const [questionBank, setQuestionBank] = useState([])
@@ -38,8 +40,8 @@ const QuizBank = ({ category, handleQuestionBankClick }) => {
   })
 
   const onDragStart = (e, question) => {
-    console.log('dragstart: ', question);
-    e.dataTransfer.setData('id', question);
+    e.dataTransfer.setData('question', JSON.stringify(question));
+    handleQuestionGrab(question);
   }
 
   return (
