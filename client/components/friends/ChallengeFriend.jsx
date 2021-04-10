@@ -33,7 +33,10 @@ const useStyles = makeStyles((theme = theme) => ({
   iconClose: {
     "&:hover $icon": {
       color: 'red',
-    }
+    },
+    position: "absolute",
+    top: '1%',
+    left: '1%'
   },
   icon: {
     color: 'black',
@@ -95,8 +98,9 @@ function ChallengeFriend({ loggedInUser, friends, link = "https://www.youtube.co
             classes={{
               root: classes.iconClose
           }}
+          onClick={e => handleClose()} className={classes.icon}
         >
-          <ClearIcon onClick={e => handleClose()} className={classes.icon}/>
+          <ClearIcon />
         </IconButton>
 
       </Grid>
