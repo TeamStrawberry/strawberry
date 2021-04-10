@@ -12,7 +12,7 @@ import { getFriends } from '../../../api_master';
 
 import ChallengeFriend from '../friends/ChallengeFriend';
 
-const  QuizListCard = ({ quiz, loggedInUser }) => {
+const  QuizListCard = ({ quiz, loggedInUser, setLoginOpen }) => {
 
   const [friends, setFriends] = useState([]);
 
@@ -25,11 +25,15 @@ const  QuizListCard = ({ quiz, loggedInUser }) => {
   let history = useHistory();
 
   const handleClick = () => {
-    history.push(`/quiz/${quiz.id}`);
+    if (loggedInUser.id) {
+      history.push(`/quiz/${quiz.id}`);
+    } else {
+      setLoginOpen(true);
+    }
   };
 
   useEffect(() => {
-    if (loggedInUser.userName) {
+    if (loggedInUser.id) {
       axiosRefreshFriends();
     }
   }, []);
