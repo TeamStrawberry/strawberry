@@ -19,8 +19,6 @@ function AppRoot() {
           <Grid item xs={12}>
             <Routes />
           </Grid>
-          <Grid item xs={12}>
-          </Grid>
         </Grid>
       </ThemeProvider>
     </Box>

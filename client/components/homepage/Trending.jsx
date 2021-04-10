@@ -8,10 +8,8 @@ const  Trending = () => {
   const [trendingQuizzes, setTrendingQuizzes] = useState([]);
 
   const getTrendingQuizzes = () => {
-    console.log('UseEffect Happens')
     getSelectQuizzes('hot')
       .then((quizzes) => {
-        console.log('we got here')
         setTrendingQuizzes(quizzes.data)
       })
       .catch(err => console.error(err))
