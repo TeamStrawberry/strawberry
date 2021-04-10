@@ -30,12 +30,12 @@ const useStyles = makeStyles((theme = theme) => ({
   },
 }));
 
-function ChallengeFriend({ loggedInUser, friends, link = "http://test.com" }) {
+function ChallengeFriend({ loggedInUser, friends, link = "https://www.youtube.com/", score = 0 }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [challengees, setChallengees] = useState([]);
   const [toChallenge, updateToChallenge] = useState([]);
-  const [challengeMessage, updateMessage] = useState('');
+  const [challengeMessage, updateMessage] = useState('I challenge you');
 
   const handleOpen = () => {
     setOpen(true);
@@ -68,7 +68,10 @@ function ChallengeFriend({ loggedInUser, friends, link = "http://test.com" }) {
       let friend = friends[0][userId].username;
       let friendEmail = friends[0][userId].email;
       let user = loggedInUser.username;
-      sendFriendEmail(friend, user, friendEmail, challengeMessage);
+      let safeLink = encodeURIComponent(link);
+      console.log(safeLink);
+
+      sendFriendEmail(friend, user, friendEmail, challengeMessage, score, safeLink);
     }
   }
 
