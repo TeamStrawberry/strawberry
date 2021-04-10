@@ -37,7 +37,7 @@ const QuizList = ({ criteria, loggedInUser }) => {
         container
         alignItems='center'
         spacing={2}
-        width='90%'
+        xs={12}
       >
         { quizzesBySelection.map((quiz, index) => <QuizListCard quiz={ quiz } key={ index } loggedInUser={ loggedInUser } />)
         }
