@@ -38,13 +38,13 @@ function Routes() {
       </ul>
       <Switch>
         <Route exact path ="/">
-          <HomePage />
+          <HomePage loggedInUser={user}/>
         </Route>
         <Route path="/quizzes">
           <QuizSearch setCriteria={setCriteria} />
           <QuizList
             criteria={criteria}
-            loggedInUser={{ id: user.id, username: user.username }}
+            loggedInUser={user}
           />
         </Route>
         <Route path="/create">

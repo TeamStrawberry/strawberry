@@ -30,7 +30,6 @@ const QuizList = ({ criteria, loggedInUser }) => {
     axiosGetQuizzesBySelection();
   }, [criteria]);
 
-
   return (
     <div>
       <Grid
