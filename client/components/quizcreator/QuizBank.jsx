@@ -9,9 +9,19 @@ const useStyles = makeStyles((theme) => ({
     draggable: 'draggable',
     padding: '2px',
     marginBottom: '2px',
-    borderRadius: '10px'
+    borderRadius: '10px',
+    '&:hover': {
+      cursor: 'grab'
+    }
   }
 }))
+
+/*
+set state in quiz creator for current object being dragged
+on drag set state
+pass down to function that will handle drop and render it to the page
+drop and hover functions should be universal so they can be dynamically rendered and 
+*/
 
 const QuizBank = ({ category, handleQuestionBankClick }) => {
   const classes = useStyles();

@@ -4,20 +4,33 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   questionGroup: {
-    padding: '5px'
+    padding: '5px',
+    border: '3px solid',
+    borderColor: theme.palette.secondary.main,
+    marginBottom: '10px'
   },
   singleForm: {
-    padding: '3px'
+    padding: '3px',
   }
 }))
 
 const QuestionGenerator = ({ number }) => {
   const classes = useStyles();
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  }
+
+  const handleDrop = () => {
+    
+  }
+
   return (
     <div>
       <FormGroup
-      id={`QuestionAndAnswer${number}`}
-      className={classes.questionGroup}
+        id={`QuestionAndAnswer${number}`}
+        className={classes.questionGroup}
+        onDragOver={(e) => {handleDragOver(e)}}
       >
       <TextField
         id={`question-${number}`}

@@ -29,13 +29,9 @@ const EditQuestionButton = ({ question, userId, handleRenderingQuestions }) => {
     const [incorrectAnswer3, setIncorrectAnswer3] = useState(null);
     const [editQuestionsPage, setEditQuestionsPage] = useState(false);
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
+    const handleOpen = () => setOpen(true);
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const handleClose = () => setOpen(false);
 
     const handleQChange = (newQuestion) => {
       setNewQuestion(newQuestion);

@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.text,
     backgroundColor: theme.palette.background.paper,
-    border: '3px solid',
+    border: '5px solid',
     borderColor: theme.palette.text,
     padding: '5px',
     marginBottom: '16px'
@@ -34,7 +34,7 @@ const QuizCreator = () => {
   let tempUserId = 1; //this will be removed when the user_id is passed down
   var dailyQuizCount = 0;
 
-  console.log('userid in quizcreator', userId)
+  //console.log('userid in quizcreator', userId)
   //will trigger when track counter changes
   useEffect(() => {
     getUserQuizHistory(tempUserId)
@@ -138,6 +138,8 @@ const QuizCreator = () => {
           createQuestion(quizQuestion)
             .then (res => {
               console.log('Quiz question saved!')
+              location.reload();
+              alert('Quiz Submitted!');
             })
             .catch(err => console.error('Error. Cannot create questions', err))
           })
@@ -154,14 +156,14 @@ const QuizCreator = () => {
       <div className = 'quiz-creator'>
         <h2>Quiz Creator</h2>
         <Grid
-        container
-        spacing={4}
-        justify='center'
-        alignItems='flex-start'
+          container
+          spacing={4}
+          justify='center'
+          alignItems='flex-start'
         >
           <Grid
-          item
-          xs={4}
+            item
+            xs={4}
           >
             <Paper className={classes.paper} >
               <h3>Select Quiz Options</h3>
@@ -173,27 +175,32 @@ const QuizCreator = () => {
                 difficulty={difficulty}
                 name={name}
               />
-              <QuizSubmit handleSubmit={handleSubmit}/>
+              <QuizSubmit
+                handleSubmit={handleSubmit}
+                name={name}
+                category={category}
+                difficulty={difficulty}
+              />
             </Paper>
             <Paper
-            className={classes.paper}
-            style={{ maxHeight: "37.225vh", overflowX: "auto", overflowY: "scroll" }}
+              className={classes.paper}
+              style={{ maxHeight: "37.225vh", overflowX: "auto", overflowY: "scroll" }}
             >
               <h4>Questions Bank</h4>
               <QuizBank
-              category = {category}
-              handleQuestionBankClick = {handleQuestionBankClick}
+                category = {category}
+                handleQuestionBankClick = {handleQuestionBankClick}
               />
             </Paper>
             <h4 className = 'quiz-count'>Total Quizzes Created Today: {quizTrackerCount}</h4>
           </Grid>
           <Grid
-          item
-          xs={8}
+            item
+            xs={8}
           >
             <Paper
-            className={classes.paper}
-            style={{ maxHeight: "70vh", overflowX: "auto", overflowY: "scroll" }}
+              className={classes.paper}
+              style={{ maxHeight: "70vh", overflowX: "auto", overflowY: "scroll" }}
             >
               <QuizQuestionsAndAnswers />
             </Paper>
