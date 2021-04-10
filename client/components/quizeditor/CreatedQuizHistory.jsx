@@ -13,9 +13,9 @@ const CreatedQuizHistory = ({ loggedInUser, friends }) => {
   const [questionsLoaded, setQuestionsLoaded] = useState(false);
   const [className, setClassName] = useState('created-quiz-list');
   const [editorClassName, setEditorClassName] = useState('questions-container hide');
+  const [quizId, setQuizId] = useState(-1);
   // FIX THIS WHEN ID GETS PASSED DOWN
   // let tempId = 1;
-
   const getQuizHistory = () => {
     getUserQuizHistory(loggedInUser.id)
     .then((res) => {
@@ -81,7 +81,13 @@ const CreatedQuizHistory = ({ loggedInUser, friends }) => {
         />
       </ul>
       {questionsLoaded
-        ? <QuizEditor questions={questionsToEdit} quizName={quizName} handleRenderingQuestions={handleRenderingQuestions} returnQuizList = {returnQuizList} editorClassName = {editorClassName}/>
+        ? <QuizEditor 
+            questions={questionsToEdit} 
+            quizName={quizName} 
+            handleRenderingQuestions={handleRenderingQuestions} 
+            returnQuizList={returnQuizList} 
+            editorClassName={editorClassName} 
+            userId={loggedInUser.id}/>
         : null
       }
     </div>
