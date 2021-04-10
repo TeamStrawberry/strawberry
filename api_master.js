@@ -63,9 +63,8 @@ function getQuizFriendRankings(quizId, userId) {
   return handleGetRequests(`/quiz/rankings/friends/${quizId}/${userId}`);
 }
 
-function getOverallRankings(userId, userPool, rankingType) {
-  let data = { userId: userId, userPool: userPool, rankingType: rankingType };
-  return handleGetRequests(`/users/ranking`, data);
+function getOverallRankings(userId) {
+  return handleGetRequests(`/users/ranking/${userId}`);
 }
 
 // Handles all POST requests, takes a route, params, and data object

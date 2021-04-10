@@ -4,6 +4,8 @@ const { pool } = require("../db/pool.js");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const nodemailer = require("nodemailer");
+const { rankingQueryMaker } = require("../helperFunctions.js");
+
 require("dotenv").config();
 
 const port = 3000;
@@ -477,38 +479,41 @@ app.get("/users", async (req, res) => {
 });
 
 //get users overall ranking
-app.get("/users/ranking", async (req, res) => {
-  let eligibleUsers;
-
-  if (req.body.userPool === "global") {
-    eligibleUsers = `users u`;
-  } else if (req.body.userPool === "friends") {
-    eligibleUsers = `(SELECT u.*
-    FROM users u
-    LEFT JOIN (SELECT u.id
-    FROM user_friend_relationships f
-    JOIN users u
-    ON f.id_user_friend = u.id
-    WHERE f.id_user = ${req.body.userId}) f
-    ON u.id = f.id
-    WHERE f.id is not null OR u.id = ${req.body.userId}) u`;
-  }
-
-  let query = `select total, rank, count(id)
-  from
-    (select u.id, u.username, count(q.id) as total,
-    ${req.body.rankingType} () over (order by count(q.id) desc) rank
-    from ${eligibleUsers}
-    left join user_completed_quizzes q
-    on q.id_users = u.id
-    -- could add quiz id criteria here
-    group by 1,2) rankings
-  where id = ${req.body.userId}
-  group by 1,2`;
+app.get("/users/ranking/:userId", async (req, res) => {
+  let promises = [];
+  let results = {};
+  let userId = req.params.userId;
 
   try {
-    const getUsers = await pool.query(query);
-    res.status(200).send(getUsers);
+    promises.push(
+      pool
+        .query(rankingQueryMaker(userId, "friends", "percent_rank"))
+        .then((res) => {
+          results.friendPercentile = res.rows[0].rank;
+        })
+    );
+
+    promises.push(
+      pool.query(rankingQueryMaker(userId, "friends", "rank")).then((res) => {
+        results.friendRank = res.rows[0].rank;
+      })
+    );
+
+    promises.push(
+      pool
+        .query(rankingQueryMaker(userId, "global", "percent_rank"))
+        .then((res) => {
+          results.globalPercentile = res.rows[0].rank;
+        })
+    );
+
+    promises.push(
+      pool.query(rankingQueryMaker(userId, "global", "rank")).then((res) => {
+        results.globalRank = res.rows[0].rank;
+      })
+    );
+
+    Promise.all(promises).then(() => res.status(200).send(results));
   } catch (err) {
     res.status(500).send(err);
   }
