@@ -40,7 +40,7 @@ function UserProfile({ loggedInUser = { id: 1, username: "admin" } }) {
       </Grid>
       <Grid item container direction="row" spacing={2} justify="center">
         <Grid item xs={2} container direction="column" spacing={2}>
-          <UserAvatar />
+          <UserAvatar loggedInUser={loggedInUser} />
           <FriendGrid
             loggedInUser={loggedInUser}
             friends={friends}
