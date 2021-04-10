@@ -37,7 +37,7 @@ function Routes() {
           />
         </Route>
         <Route path="/create">
-          <QuizCreator userId={user.id} />
+          <QuizCreator user={user} />
         </Route>
         <Route path="/profile">
           <UserProfile loggedInUser={user} />
@@ -45,22 +45,8 @@ function Routes() {
         <Route path="/quiz/:quizId">
           <TakeQuiz user={user.id} />
         </Route>
-<<<<<<< HEAD
-          <Route path="/create">
-            <QuizCreator user={user}/>
-          </Route>
-          <Route path="/profile">
-            <UserProfile loggedInUser={{ id: user.id, username: user.username }} />
-          </Route>
-          <Route path="/quiz/:quizId">
-            <TakeQuiz user={user.id} />
-          </Route>
-        </Switch>
-      </Router>
-=======
       </Switch>
     </Router>
->>>>>>> stage
   );
 }
 

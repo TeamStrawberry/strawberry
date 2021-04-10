@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import QuizDisplay from './QuizDisplay.jsx';
+import QuizDisplayer from './QuizDisplayer.jsx';
 
 const QuizEditor = ({ questions, userId, quizName, handleRenderingQuestions, returnQuizList, editorClassName }) => {
 
@@ -20,7 +20,7 @@ const QuizEditor = ({ questions, userId, quizName, handleRenderingQuestions, ret
       <h2 className = 'quiz-question'>
         {quizName}
       </h2>
-      <QuizDisplay quizQuestions={questions} userId={userId} handleRenderingQuestions={handleRenderingQuestions}/>
+      <QuizDisplayer quizQuestions={questions} userId={userId} handleRenderingQuestions={handleRenderingQuestions}/>
     </div>
   )
 }

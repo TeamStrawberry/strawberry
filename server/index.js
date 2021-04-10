@@ -141,7 +141,7 @@ app.post("/createquestion", async (req, res) => {
       id_quiz,
       id_users,
     } = req.body;
-    
+
     const createQuestion = await pool.query(
       `INSERT INTO questions
         (category, type, difficulty, question, correct_answer, incorrect_answers, id_quiz, id_users)
@@ -166,6 +166,7 @@ app.post("/createquestion", async (req, res) => {
 
 app.put("/revisequestion/:id", async (req, res) => {
   try {
+    console.log(req.body);
     const { id } = req.params;
     const {
       category,
@@ -174,6 +175,8 @@ app.put("/revisequestion/:id", async (req, res) => {
       question,
       correct_answer,
       incorrect_answers,
+      //id_users
+      //id_quiz
     } = req.body;
 
     const reviseQuestion = await pool.query(

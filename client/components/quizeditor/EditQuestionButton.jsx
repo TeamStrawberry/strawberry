@@ -58,13 +58,16 @@ const EditQuestionButton = ({ question, userId, handleRenderingQuestions }) => {
         return
       }
       let questionId = question.id;
+
       let editedQuestion = {
         category: question.category,
         type: question.type,
         difficulty: question.difficulty,
         question: newQuestion || question.question,
         correct_answer: correctAnswer || question.correct_answer,
-        incorrect_answers: [incorrectAnswer1 || question.incorrect_answers[0], incorrectAnswer2 || question.incorrect_answers[1], incorrectAnswer3 || question.incorrect_answers[2]]
+        incorrect_answers: [incorrectAnswer1 || question.incorrect_answers[0], incorrectAnswer2 || question.incorrect_answers[1], incorrectAnswer3 || question.incorrect_answers[2]],
+        id_users: userId,
+        id_quiz: question.id_quiz
       }
 
       reviseQuizQuestion(questionId, editedQuestion)

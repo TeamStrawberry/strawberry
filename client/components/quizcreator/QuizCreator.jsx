@@ -32,7 +32,7 @@ const QuizCreator = ({ user }) => {
   const [quizTrackerCount, setQuizTrackerCount] = useState(0);
   const [questionGrabbed, setQuestionGrabbed] = useState({});
 
-  let id_users = user.id; //this will be removed when the user_id is passed down
+  let id_users = user.id;
   var dailyQuizCount = 0;
 
   //will trigger when track counter changes
