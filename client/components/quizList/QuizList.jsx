@@ -35,9 +35,10 @@ const QuizList = ({ criteria, loggedInUser }) => {
       <Grid
         direction='column'
         container
-        alignItems='center'
+        item
         spacing={2}
         xs={12}
+        style={{ display: "flex", alignItems: "center" }}
       >
         { quizzesBySelection.map((quiz, index) => <QuizListCard quiz={ quiz } key={ index } loggedInUser={ loggedInUser } />)
         }

@@ -50,18 +50,17 @@ const  QuizListCard = ({ quiz, loggedInUser, setLoginOpen }) => {
     >
       <Grid container direction='row'>
         <Grid container direction='column' item xs={6} style={{ display: 'flex' }}>
-          <Grid item alignItems='left' >
+          <Grid item >
             <CardHeader
               onClick={handleClick}
               title={ quiz.name }
-              fullWidth={false}
               style={{
                 position: 'relative',
                 textAlign: 'left',
               }}
             />
           </Grid>
-          <Grid item alignItems='left' >
+          <Grid item >
             <CardContent onClick={handleClick} >
               <Typography
                 color='textSecondary'
@@ -74,8 +73,8 @@ const  QuizListCard = ({ quiz, loggedInUser, setLoginOpen }) => {
             </CardContent>
           </Grid>
         </Grid>
-        <Grid container direction='column' item xs={6} align='right' style={{ display: 'flex', justifyContent: 'flex-end' }} >
-          <Grid item alignItems='right' >
+        <Grid container direction='column' item xs={6} style={{ display: 'flex', justifyContent: 'flex-end' }} >
+          <Grid item style={{ display: 'flex', justifyContent: 'flex-end' }} >
             <CardContent>
               <Typography
                 color='textSecondary'
@@ -87,7 +86,7 @@ const  QuizListCard = ({ quiz, loggedInUser, setLoginOpen }) => {
               </Typography>
             </CardContent>
           </Grid>
-          <Grid item alignItems='right' >
+          <Grid item style={{ display: 'flex', justifyContent: 'flex-end' }} >
             <CardContent>
             {loggedInUser.username ?
               <ChallengeFriend
