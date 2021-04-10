@@ -3,22 +3,13 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 import SearchIcon from "@material-ui/icons/Search";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
-function UserSearch() {
-  var handleFocus = (event) => {
-    event.preventDefault();
-    const { target } = event;
-    target.setSelectionRange(0, target.value.length);
-  };
-
-  handleFocus = handleFocus.bind(this);
-
+function UserSearch({ handleSearch }) {
   return (
     <OutlinedInput
       id="friend-search-bar"
       placeholder="search for a friend..."
       size="small"
-      // onChange={(e) => handleSearch(e.target.value)}
-      onFocus={handleFocus}
+      onChange={(e) => handleSearch(e.target.value)}
       fullWidth
       style={{
         fontSize: 14,
