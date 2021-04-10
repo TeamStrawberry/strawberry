@@ -23,9 +23,7 @@ const QuestionGenerator = ({ number }) => {
   const [incorrect2, setIncorrect2] = useState(null);
   const [incorrect3, setIncorrect3] = useState(null);
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
-  }
+  const handleDragOver = (e) => e.preventDefault();
 
   const handleDrop = (e, question) => {
     let questionDragged = JSON.parse(e.dataTransfer.getData('question'));
@@ -48,41 +46,41 @@ const QuestionGenerator = ({ number }) => {
       <FormGroup
         id={`QuestionAndAnswer${number}`}
         className={classes.questionGroup}
-        onDragOver={(e) => {handleDragOver(e)}}
-        onDrop={(e) => {handleDrop(e, 'question')}}
+        onDragOver={(e) => handleDragOver(e)}
+        onDrop={(e) => handleDrop(e, 'question')}
       >
       <Input
         id={`question-${number}`}
         placeholder={`Question ${number}`}
-        onChange={(e) => {handleQChange(e)}}
+        onChange={(e) => handleQChange(e)}
         className={classes.singleForm}
         value={question}
       />
       <Input
         id={`correct-answer-${number}`}
         placeholder="Correct Answer"
-        onChange={(e) => {handleCAChange(e)}}
+        onChange={(e) => handleCAChange(e)}
         className={classes.singleForm}
         value={correctAnswer}
       />
       <Input
         id={`incorrect-answer-a-${number}`}
         placeholder="Incorrect Answer"
-        onChange={(e) => {handleI1Change(e)}}
+        onChange={(e) => handleI1Change(e)}
         className={classes.singleForm}
         value={incorrect1}
       />
       <Input
         id={`incorrect-answer-b-${number}`}
         placeholder="Incorrect Answer"
-        onChange={(e) => {handleI2Change(e)}}
+        onChange={(e) => handleI2Change(e)}
         className={classes.singleForm}
         value={incorrect2}
       />
       <Input
         id={`incorrect-answer-c-${number}`}
         placeholder="Incorrect Answer"
-        onChange={(e) => {handleI3Change(e)}}
+        onChange={(e) => handleI3Change(e)}
         className={classes.singleForm}
         value={incorrect3}
       />
