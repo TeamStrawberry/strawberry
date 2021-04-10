@@ -7,8 +7,8 @@ function UserRankings({ loggedInUser }) {
 
   var refreshRankings = () => {
     if (loggedInUser.id) {
-      getOverallRankings(loggedInUser.id).then((res) => {
-        setRankings(res.data);
+      getOverallRankings(loggedInUser.id).then((rankings) => {
+        setRankings(rankings.data);
       });
     }
   };
