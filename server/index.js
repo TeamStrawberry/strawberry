@@ -340,16 +340,18 @@ app.get("/quizzes/:criteria", async (req, res) => {
     const difficulties = ["easy", "medium", "hard"];
     if (req.params.criteria === "new") {
       const getNewQuizzes = await pool.query(
-        "SELECT * FROM quizzes ORDER BY date_created DESC"
+        "SELECT * FROM quizzes ORDER BY date_created DESC LIMIT 10"
       );
       res.send(getNewQuizzes);
     } else if (req.params.criteria === "hot") {
       const getHotQuizzes = await pool.query(
-        `SELECT q.id, q.name, COUNT(c.id) AS taken_count
+        `SELECT q.id, q.name, q.difficulty, q.category, COUNT(c.id) AS taken_count
         FROM user_completed_quizzes c
         JOIN quizzes q ON c.id_quiz = q.id
-        GROUP BY q.id ORDER BY taken_count desc`
+        GROUP BY q.id ORDER BY taken_count desc
+        LIMIT 10`
       );
+      res.send(getHotQuizzes.rows);
     } else if (difficulties.indexOf(req.params.criteria) > 0) {
       const getEasyQuizzes = await pool.query(
         `SELECT * FROM quizzes WHERE difficulty = '${req.params.criteria}'`
@@ -442,7 +444,6 @@ app.get("/friends/:userId", async (req, res) => {
 
 //get all users who are strangers to a user
 app.get("/strangers/:userId", async (req, res) => {
-  console.log("getStrangers");
   try {
     const getUsers = await pool.query(
       `SELECT u.*
@@ -509,6 +510,5 @@ app.get("/email/:friend/:user/:friendEmail/:message", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`You are listening on port ${port}`);
-  console.log(process.env.DB_ENDPOINT);
+  console.log(`You are listening on port${port}`);
 });
