@@ -6,14 +6,27 @@ import { useHistory, useParams } from "react-router-dom";
 import ChallengeFriend from '../friends/ChallengeFriend';
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    fontSize: "20px",
+    color: "#303c6c",
+    fontWeight: "bold",
+  },
+  item: {
+    width: "90%"
+  },
+  page: {
+    '& Button': {
+      border: "1px solid black",
+      backgroundColor: "#d2fdff"
+    }
+  },
   quiz: {
     width: '100%',
-    // backgroundColor: theme.palette.background.paper,
     alignContent: 'flex-start',
   },
   modal: {
     position: "absolute",
-    width: "50%",
+    width: "1000px",
     backgroundColor: theme.palette.background.paper,
     border: "5px solid",
     borderColor: theme.palette.secondary.main,
@@ -23,36 +36,73 @@ const useStyles = makeStyles(theme => ({
     top: `50%`,
     left: `50%`,
     transform: `translate(-50%, -50%)`,
+    '& Button': {
+      border: "1px solid black",
+      backgroundColor: "#d2fdff",
+    },
   },
   header: {
     position: "fixed",
-    top: 80,
+    top: 90,
     left: 10,
     marginTop: 0,
     marginBottom: 0,
-    paddingBottom: 0
+    paddingBottom: 0,
+    marginLeft: 20,
+    marginRight: 20,
+    paddingLeft: 0,
+    backgroundColor: theme.palette.background.paper,
+    borderLeft: "3px solid",
+    borderTop: "3px solid",
+    borderRight: "3px solid",
+    borderColor: theme.palette.text,
+    width: "97%"
   },
   body: {
     position: "fixed",
-    top: 200,
-    bottom: 10,
+    top: 210,
+    left: 10,
+    bottom: 5,
     maxHeight: '100%',
     overflow: 'auto',
+    marginLeft: 20,
+    marginRight: 20,
+    backgroundColor: theme.palette.background.paper,
+    borderLeft: "3px solid",
+    borderBottom: "3px solid",
+    borderRight: "3px solid",
+    borderColor: theme.palette.text,
+    marginBottom: 20,
+    paddingBottom: 20,
+    width: "97%",
+    '&::-webkit-scrollbar': {
+      display: "none"
+    },
   },
   question: {
     marginTop: 0,
-    marginBottom: 0,
-    paddingTop: 10,
-    backgroundColor: theme.palette.background.paper,
+    marginBottom: 5,
+    paddingTop: "20px !important",
+    paddingBottom: "20px !important",
+    backgroundColor: "#fdf5f5",
+    border: '1px solid #303c6c',
+    borderRadius: "5px",
   },
   answers: {
     marginTop: 0,
-    marginBottom: 5,
-    backgroundColor: theme.palette.background.paper,
-  }
+    marginBottom: 20,
+  },
+  answer: {
+    border: '1px solid #303c6c',
+    borderRadius: "5px",
+    margin: '3px',
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: "#fdf5f5",
+  },
 }));
 
-const TakeQuiz = ({ userId = 12, loggedInUser }) => {
+const TakeQuiz = ({ userId = 13, loggedInUser }) => {
   const [quizQuestions, setQuizQuestions] = useState([]);
   const [quizAnswers, setQuizAnswers] = useState({});
   const [userAnswers, setUserAnswers] = useState({});
@@ -328,41 +378,76 @@ const TakeQuiz = ({ userId = 12, loggedInUser }) => {
 
   const body = (
     validated
-      ? <Grid className={ classes.modal }>
-        <Grid item>
-          <h1>Your score is...</h1>
-          <h1>{ (Number(score.correct)/Number(score.total) * 100).toFixed(0) }%</h1>
-          <h2>You answered { score.correct } out of { score.total } correct!</h2>
-        </Grid>
-        <Grid item>
-          {rank.length
-            ? <Grid>
-              <h1>You rank { rank } of your friends!</h1>
-            </Grid>
-            : <Grid>
-              <h1>None of your friends have taken this quiz.</h1>
-            </Grid>
-          }
-          <Grid>
-            <h1>You've scored in the { percentile.toFixed(0) } percentile globally!</h1>
+      ? <Grid container spacing={2} justify="center" direction="column" alignItems="center" width="auto"  className={ classes.modal }>
+        <Grid item container spacing={2} direction="column" justify="center" alignItems="center" width="auto"  >
+          <Grid item>
+            <h1 style={{ fontSize: '70px', margin: 0 }}>Your score is...</h1>
+          </Grid>
+          <Grid item>
+            <h1 style={{ fontSize: '70px', margin: 0 }}>{ (Number(score.correct)/Number(score.total) * 100).toFixed(0) }%</h1>
+          </Grid>
+          <Grid item>
+            <h4 style={{ fontSize: '30px', margin: "0 0 10" }}>You answered { score.correct } out of { score.total } correct!</h4>
           </Grid>
         </Grid>
-        <Grid item>
-          <ChallengeFriend loggedInUser={ loggedInUser } friends={ friends } link={ `localhost:3000/quiz/${quizId}` } />
-          <Button
-            variant="contained"
-            variant="outlined"
-            color="primary"
-            onClick={ handleClose }
-          >
-            Close
-          </Button>
+        <Grid item container spacing={2} xs={12} direction="row" justify="space-evenly" alignItems="center" width="auto" >
+          {rank.length
+            ? <Grid item container spacing={2} xs={6} direction="column" justify="center" alignItems="center" width="100%" className={ classes.item }>
+              <Grid item={true} width="auto" className={ classes.item } >
+                <h1 style={{ fontSize: '30px', margin: 0 }}>You rank</h1>
+              </Grid>
+              <Grid item={true} width="auto" className={ classes.item } >
+                <h1 style={{ fontSize: '70px', margin: 0 }}>{ rank }</h1>
+              </Grid>
+              <Grid item={true} width="auto" className={ classes.item } >
+                <h1 style={{ fontSize: '30px', margin: 0 }}>of your friends!</h1>
+              </Grid>
+            </Grid>
+            : <Grid item container spacing={2} xs={6} direction="column" justify="center" alignItems="center"  width="100%" className={ classes.item }>
+              <Grid item={true} width="auto" className={ classes.item } >
+                <h1 style={{ fontSize: '30px', margin: 0, textAlign: "center" }}>None of your friends</h1>
+              </Grid>
+              <Grid item={true} width="auto" className={ classes.item } >
+                <h1 style={{ fontSize: '30px', margin: 0, textAlign: "center" }}>have taken this quiz.</h1>
+              </Grid>
+            </Grid>
+          }
+          <Grid item container spacing={2} xs={6} direction="column" justify="center" alignItems="center" width="100%" >
+            <Grid item={true} width="auto" className={ classes.item }>
+              <h1 style={{ fontSize: '30px', margin: 0, textAlign: "center" }}>You've scored in the</h1>
+            </Grid>
+            <Grid item={true} width="auto" className={ classes.item }>
+              <h1 style={{ fontSize: '70px', margin: 0, textAlign: "center" }}>{ percentile.toFixed(0) }</h1>
+            </Grid>
+            <Grid item={true} width="auto" className={ classes.item }>
+              <h1 style={{ fontSize: '30px', margin: "0 0 10", textAlign: "center" }}>percentile globally!</h1>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item container spacing={2} direction="row" justify="center" alignItems="center" >
+          <Grid item>
+            <ChallengeFriend loggedInUser={ loggedInUser } friends={ friends } link={ `localhost:3000/quiz/${quizId}` } />
+          </Grid>
+          <Grid item xs={1} />
+          <Grid item>
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={ handleClose }
+            >
+              Close
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
-      : <Grid className={ classes.modal }>
-        <Grid item>
+      : <Grid container spacing={2} justify="center" direction="column" alignItems="center"  className={ classes.modal }>
+        <Grid item >
           <h1>Looks like you've missed some questions.</h1>
-          <h1>[insert warning icon]</h1>
+        </Grid>
+        <Grid item >
+          <img src="https://cdn0.iconfinder.com/data/icons/pinpoint-notifocation/48/warning-outline-512.png" width="300"></img>
+        </Grid>
+        <Grid item >
           <h1>Please answer all questions then submit your quiz!</h1>
         </Grid>
         <Grid item>
@@ -379,18 +464,18 @@ const TakeQuiz = ({ userId = 12, loggedInUser }) => {
   );
 
   return (
-    <Grid container direction="column" spacing={2}>
-      <Grid item container direction="row" spacing={3} alignItems="center" className={ classes.header }>
-        <Grid item xs={1} alignItems="center" spacing={2}>
+    <Grid container spacing={2} direction="column" className={ classes.page }>
+      <Grid item container spacing={2} direction="row" alignItems="center" className={ classes.header }>
+        <Grid item xs={1} >
           <Button onClick={ handleBack }>Go Back</Button>
         </Grid>
-        <Grid item xs={10} container direction="column" display="flex" alignItems="center" spacing={2} >
+        <Grid item container xs={10} spacing={2} direction="column" display="flex" alignItems="center" justify="center">
           {quizQuestions.length
-            ? <Grid item direction="column" display="flex" spacing={3}>
+            ? <Grid item container direction="column" display="flex" spacing={3}>
                 <Grid item>
                   <h1 style={{ marginTop: 0, marginBottom: 0 }}>{ quizQuestions[0].name }</h1>
                 </Grid>
-                <Grid item container direction="row" justify='space-evenly'>
+                <Grid item container spacing={2} direction="row" justify='space-evenly' >
                   <Grid item display="flex">
                     <h4 style={{ marginTop: 0, marginBottom: 0 }}>Category: { quizQuestions[0].category }</h4>
                   </Grid>
@@ -403,41 +488,40 @@ const TakeQuiz = ({ userId = 12, loggedInUser }) => {
           }
         </Grid>
       </Grid>
-      <Grid item container direction="row" spacing={3} justify="center" className={ classes.body }>
+      <Grid item container spacing={2} xs={12} direction="row" justify="center" className={ classes.body }>
         <Grid
           item
           xs={10}
           container
+          spacing={2}
           direction="column"
           display="flex"
-          spacing={2}
         >
           {quizQuestions.length
             ? quizQuestions.map((question, index) => (
               <FormControl key={ index } className={ classes.quiz }>
-                <Grid item container direction="column">
+                <Grid item container spacing={2} direction="column" >
                   <Grid item className={ classes.question }>
-                    <FormLabel>{ question.question }</FormLabel>
+                    <FormLabel className={ classes.root }>{ index + 1 }. { question.question }</FormLabel>
                   </Grid>
                   <RadioGroup
                     aria-label={ question.question }
                     name={ question.question }
                     onChange={ handleChange }
                   >
-                    <Grid item container direction="row" justify='space-evenly' className={ classes.answers }>
-                      <Grid item xs={6} direction="column">
+                    <Grid item container spacing={2} direction="row" justify="center" className={ classes.answers }>
+                      <Grid item container spacing={2} xs={6} direction="column" justify="center" >
                         {question.randomizedAnswers
                           ? question.type === 'multiple'
                             ? question.randomizedAnswers.slice(0, 2).map((answer, index) => (
-                              <Grid item>
+                              <Grid item key={ index } className={ classes.answer }>
                                 <FormControlLabel
-                                key={ index }
                                 value={ answer }
                                 control={ <Radio /> }
                                 label={ answer } />
                               </Grid>
                             ))
-                            : <Grid item>
+                            : <Grid item className={ classes.answer }>
                               <FormControlLabel
                                 value={ question.randomizedAnswers[0] }
                                 control={ <Radio /> }
@@ -446,19 +530,18 @@ const TakeQuiz = ({ userId = 12, loggedInUser }) => {
                           : null
                         }
                       </Grid>
-                      <Grid item xs={6} direction="column">
+                      <Grid item container spacing={2} xs={6} direction="column" justify="center" >
                         {question.randomizedAnswers
                             ? question.type === 'multiple'
                               ? question.randomizedAnswers.slice(2, 4).map((answer, index) => (
-                                <Grid item>
+                                <Grid item key={ index } className={ classes.answer }>
                                   <FormControlLabel
-                                  key={ index }
                                   value={ answer }
                                   control={ <Radio /> }
                                   label={ answer } />
                                 </Grid>
                               ))
-                              : <Grid item>
+                              : <Grid item className={ classes.answer }>
                                 <FormControlLabel
                                   value={ question.randomizedAnswers[1] }
                                   control={ <Radio /> }
@@ -474,13 +557,14 @@ const TakeQuiz = ({ userId = 12, loggedInUser }) => {
             ))
             : null
           }
-          {submitted
-            ? <Button onClick={ handleOpen }>View Score</Button>
-            : <Button type='submit' onClick={ handleSubmit }>Submit</Button>
-          }
+          <Grid item>
+            {submitted
+              ? <Button onClick={ handleOpen }>View Score</Button>
+              : <Button type='submit' onClick={ handleSubmit }>Submit</Button>
+            }
+          </Grid>
         </Grid>
       </Grid>
-
       <Modal open={ show } onClose={ handleClose }>
         { body }
       </Modal>
