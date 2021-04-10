@@ -21,7 +21,6 @@ const  Trending = () => {
 
   return (
     <div>
-      {console.log(trendingQuizzes)}
     <Grid
       direction='column'
       container

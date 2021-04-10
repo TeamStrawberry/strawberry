@@ -32,6 +32,9 @@ function Routes() {
         </li>
       </ul>
       <Switch>
+        <Route exact path ="/">
+          <HomePage />
+        </Route>
         <Route path="/quizzes">
           <QuizSearch setCriteria={setCriteria} />
           <QuizList criteria={criteria} loggedInUser={{ id: user.id, username: user.username }} />
