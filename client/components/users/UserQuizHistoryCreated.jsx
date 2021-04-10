@@ -2,7 +2,7 @@ import { Grid, Card, CardContent, CardHeader, Button, Modal } from "@material-ui
 import React, { useState } from "react";
 import UserQuizModal from './UserQuizModal.jsx';
 
-function UserQuizHistoryCreated() {
+function UserQuizHistoryCreated({loggedInUser, friends}) {
 
   const [open, setOpen] = useState(false);
   const [userCreatedQuizzes, setUserCreatedQuizzes] = useState([]);
@@ -14,6 +14,7 @@ function UserQuizHistoryCreated() {
   const handleClose = () => {
     setOpen(false);
   };
+
 
   return (
     <Grid item xs>
@@ -32,7 +33,10 @@ function UserQuizHistoryCreated() {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        <UserQuizModal />
+        <UserQuizModal
+          loggedInUser = {loggedInUser}
+          friends = {friends}
+        />
       </Modal>
     </Grid>
   );

@@ -76,7 +76,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const UserQuizModal = ({userId}) => {
+const UserQuizModal = ({loggedInUser, friends}) => {
 
   const classes = useStyles();
 
@@ -89,6 +89,8 @@ const UserQuizModal = ({userId}) => {
 
   let tempUserId = 1;
 
+  console.log('loggedin user', loggedInUser)
+
   return(
     <div className = {classes.paper} style = {modalStyle}>
       <div className = {classes.root}>
@@ -99,10 +101,14 @@ const UserQuizModal = ({userId}) => {
           </Tabs>
         </AppBar>
         <TabPanel value = {value} index = {0}>
-          <CreatedQuizHistory />
+          <CreatedQuizHistory
+            loggedInUser = {loggedInUser}
+            friends = {friends}
+          />
         </TabPanel>
         <TabPanel value = {value} index = {1}>
           <h1 className = 'quizzes-created-heading'>I am Alex</h1>
+          {/* Cindy add your component here */}
         </TabPanel>
       </div>
     </div>

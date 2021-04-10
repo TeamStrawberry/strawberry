@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@material-ui/core';
+import { makeStyles } from "@material-ui/core/styles";
 import DeleteButton from './DeleteButton.jsx';
-import { makeStyles } from '@material-ui/core/styles';
+import ChallengeFriend from '../friends/ChallengeFriend.jsx';
+import {getFriends} from '../../../api_master';
 
 const useStyles = makeStyles(theme => ({
   table: {
@@ -9,9 +11,31 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const QuizHistoryDisplay = ({ quizzes, getQuiz}) => {
+const QuizHistoryDisplay = ({ quizzes, getQuiz, loggedInUser, friends }) => {
 
   const classes = useStyles();
+
+  const [myFriends, setMyFriends] = useState([]);
+
+  const refreshFriends = () => {
+    getFriends(loggedInUser.id)
+      .then(res => {
+        setMyFriends(res.data.rows)
+      })
+  }
+
+  // console.log('friends', friends)
+  useEffect(() => {
+    refreshFriends();
+    return () => {
+      setMyFriends([])
+    }
+  }, [])
+
+
+  const challengeFriend = () => {
+    return <ChallengeFriend />
+  };
 
   return (
     <TableContainer>
@@ -44,7 +68,7 @@ const QuizHistoryDisplay = ({ quizzes, getQuiz}) => {
                   }}
                 >
                   <Button variant = 'contained' color = 'primary' onClick={()=>{getQuiz(quiz.id, quiz.name)}}>Edit</Button>
-                  <Button variant = 'contained' color = 'primary'>Share</Button>
+                  <ChallengeFriend loggedInUser = {loggedInUser} friends = {myFriends}/>
                   <DeleteButton quizId={quiz.id} />
                 </div>
               </TableCell>
