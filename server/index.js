@@ -490,32 +490,36 @@ app.get("/users/ranking/:userId", async (req, res) => {
     promises.push(
       pool
         .query(rankingQueryMaker(userId, "friends", "percent_rank"))
-        .then((res) => {
-          results.friendPercentile = res.rows[0].rank;
+        .then((rankings) => {
+          results.friendPercentile = rankings.rows[0].rank;
         })
     );
 
     promises.push(
-      pool.query(rankingQueryMaker(userId, "friends", "rank")).then((res) => {
-        results.friendRank = res.rows[0].rank;
-      })
+      pool
+        .query(rankingQueryMaker(userId, "friends", "rank"))
+        .then((rankings) => {
+          results.friendRank = rankings.rows[0].rank;
+        })
     );
 
     promises.push(
       pool
         .query(rankingQueryMaker(userId, "global", "percent_rank"))
-        .then((res) => {
-          results.globalPercentile = res.rows[0].rank;
+        .then((rankings) => {
+          results.globalPercentile = rankings.rows[0].rank;
         })
     );
 
     promises.push(
-      pool.query(rankingQueryMaker(userId, "global", "rank")).then((res) => {
-        results.globalRank = res.rows[0].rank;
-      })
+      pool
+        .query(rankingQueryMaker(userId, "global", "rank"))
+        .then((rankings) => {
+          results.globalRank = rankings.rows[0].rank;
+        })
     );
 
-    Promise.all(promises).then(() => res.status(200).send(results));
+    Promise.all(promises).then(() => res.send(results));
   } catch (err) {
     res.status(500).send(err);
   }
