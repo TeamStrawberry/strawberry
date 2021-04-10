@@ -525,6 +525,54 @@ app.get("/users/ranking/:userId", async (req, res) => {
   }
 });
 
+//get users stats and avg stats
+app.get("/users/stats/:userId", async (req, res) => {
+  let promises = [];
+  let results = {};
+  let userId = req.params.userId;
+
+  try {
+    promises.push(
+      pool
+        .query(
+          `select count(distinct id_quiz) as completed_quizzes,
+                sum(correct_answer_count) as correct_answers,
+                1.*sum(correct_answer_count)/(sum(correct_answer_count) + sum(incorrect_answer_count)) as avg_score
+                from user_completed_quizzes
+                where id_users = ${userId};`
+        )
+        .then((stats) => {
+          results.completedQuizzes = stats.rows[0].completed_quizzes;
+          results.correctAnswers = stats.rows[0].correct_answers;
+          results.userAvgScore = stats.rows[0].avg_score;
+        })
+    );
+
+    promises.push(
+      pool
+        .query(
+          `select avg(completed_quizzes) as avg_quizzes_complete,
+                avg(correct_answers) as avg_correct_answers,
+                avg(avg_score) as avg_avg_score
+                from (select id_users,
+                      count(distinct id_quiz) as completed_quizzes,
+                      sum(correct_answer_count) as correct_answers,
+                      1.*sum(correct_answer_count)/(sum(correct_answer_count) + sum(incorrect_answer_count)) as avg_score
+                      from user_completed_quizzes group by 1) user_stats;`
+        )
+        .then((stats) => {
+          results.globalAvgQuizzesComp = stats.rows[0].avg_quizzes_complete;
+          results.globalAvgCorrectAnswers = stats.rows[0].avg_correct_answers;
+          results.globalAvgScore = stats.rows[0].avg_avg_score;
+        })
+    );
+
+    Promise.all(promises).then(() => res.send(results));
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 // CHALLENGE FRIEND
 app.get("/email/:friend/:user/:friendEmail/:message", (req, res) => {
   let friend = req.params.friend;
