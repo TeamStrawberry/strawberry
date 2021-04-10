@@ -38,7 +38,10 @@ function Routes() {
       </ul>
       <Switch>
         <Route exact path ="/">
-          <HomePage loggedInUser={user}/>
+          <HomePage
+            loggedInUser={user}
+            setLoginOpen={setLoginOpen}
+          />
         </Route>
         <Route path="/quizzes">
           <QuizSearch setCriteria={setCriteria} />
