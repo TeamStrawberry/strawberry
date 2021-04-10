@@ -69,7 +69,6 @@ function ChallengeFriend({ loggedInUser, friends, link = "https://www.youtube.co
       let friendEmail = friends[0][userId].email;
       let user = loggedInUser.username;
       let safeLink = encodeURIComponent(link);
-      console.log(safeLink);
 
       sendFriendEmail(friend, user, friendEmail, challengeMessage, score, safeLink);
     }

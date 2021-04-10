@@ -582,9 +582,6 @@ app.get("/email/:friend/:user/:friendEmail/:message/:score/:link", (req, res) =>
   let score = req.params.score;
   let link = decodeURIComponent(req.params.link);
 
-  console.log(score);
-  console.log(link);
-
    transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -597,7 +594,10 @@ app.get("/email/:friend/:user/:friendEmail/:message/:score/:link", (req, res) =>
     from: process.env.MAIL_USER,
     to: `${friendEmail}`,
     subject: `YOU RECEIVED A QUIZ CHALLENGE FROM ${user}!!!`,
-    text: `${message} ${link} ${score}`,
+    text: `${message} ${score}`,
+    html: `<h1>${message}</h1>
+           <h2>SCORE: ${score}</h2>
+           <a href="${link}"><button>Go to quiz</button></a>`
   };
 
   transporter.sendMail(mailOptions, (err, data) => {
