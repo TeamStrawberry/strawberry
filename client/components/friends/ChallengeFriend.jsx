@@ -10,6 +10,8 @@ import {
   Avatar,
 } from "@material-ui/core";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
+import ClearIcon from '@material-ui/icons/Clear';
+import IconButton from '@material-ui/core/IconButton'
 import UserList from "../users/UserList";
 import UserSearch from "../users/UserSearch";
 import { sendFriendEmail } from "../../../api_master";
@@ -28,14 +30,25 @@ const useStyles = makeStyles((theme = theme) => ({
     left: `50%`,
     transform: `translate(-50%, -50%)`,
   },
+  iconClose: {
+    "&:hover $icon": {
+      color: 'red',
+    },
+    position: "absolute",
+    top: '1%',
+    left: '1%'
+  },
+  icon: {
+    color: 'black',
+  },
 }));
 
-function ChallengeFriend({ loggedInUser, friends, link = "http://test.com" }) {
+function ChallengeFriend({ loggedInUser, friends, link = "https://www.youtube.com/", score = 0 }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [challengees, setChallengees] = useState([]);
   const [toChallenge, updateToChallenge] = useState([]);
-  const [challengeMessage, updateMessage] = useState('');
+  const [challengeMessage, updateMessage] = useState('I challenge you');
 
   const handleOpen = () => {
     setOpen(true);
@@ -68,7 +81,9 @@ function ChallengeFriend({ loggedInUser, friends, link = "http://test.com" }) {
       let friend = friends[0][userId].username;
       let friendEmail = friends[0][userId].email;
       let user = loggedInUser.username;
-      sendFriendEmail(friend, user, friendEmail, challengeMessage);
+      let safeLink = encodeURIComponent(link);
+
+      sendFriendEmail(friend, user, friendEmail, challengeMessage, score, safeLink);
     }
   }
 
@@ -79,9 +94,20 @@ function ChallengeFriend({ loggedInUser, friends, link = "http://test.com" }) {
   const body = (
     <Grid container className={classes.modal} direction="column" spacing={3}>
       <Grid item>
-        <h3 id="challenge-modal-title" style={{ margin: 0 }}>
+        <IconButton
+            classes={{
+              root: classes.iconClose
+          }}
+          onClick={e => handleClose()}
+        >
+          <ClearIcon className={classes.icon}/>
+        </IconButton>
+
+      </Grid>
+      <Grid item>
+        <h2 id="challenge-modal-title" style={{ margin: 0 }}>
           Challenge Your Friends
-        </h3>
+        </h2>
       </Grid>
       <Grid item>
         <UserSearch />

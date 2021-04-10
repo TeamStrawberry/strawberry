@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Grid, Modal } from '@material-ui/core';
+import { Box, Button, Grid, Modal, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from "@material-ui/icons/Search";
 
@@ -45,13 +45,13 @@ const QuizSearch = ({ setCriteria }) => {
       <Grid item>
         <QuizNameSearch setCriteria={setCriteria} setOpen={setOpen}/>
       </Grid>
-      <Grid item>
+      <Grid item style={{ display: 'flex', justifyContent: 'center' }} >
         -OR-
       </Grid>
       <Grid item>
         <QuizCategorySearch setCriteria={setCriteria} setOpen={setOpen}/>
       </Grid>
-      <Grid item>
+      <Grid item style={{ display: 'flex', justifyContent: 'center' }}>
         -OR-
       </Grid>
       <Grid item>
@@ -67,11 +67,26 @@ const QuizSearch = ({ setCriteria }) => {
   )
 
   return(
-    <Box>
-      <SearchIcon
-        onClick={handleOpen}
-        style={{ cursor: 'pointer' }}
-      />
+    <Box style={{ marginTop: '30px' }}>
+      <Grid container
+        direction='row'
+        style={{
+          marginBottom: '15px'
+        }}
+      >
+        <Grid item xs={10} style={{ textAlign: 'left', marginLeft: '5%' }}>
+          <Typography
+            variant='h2'
+          >
+            Quizzes
+          </Typography>
+        </Grid>
+        <Grid item xs={1} style={{ marginTop: '20px', marginLeft: '5px' }} >
+          <SearchIcon
+            onClick={handleOpen}
+          />
+        </Grid>
+      </Grid>
       <Modal open={open} onClose={handleClose}>
         { modalBody }
       </Modal>

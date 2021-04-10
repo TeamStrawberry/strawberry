@@ -22,33 +22,22 @@ function Routes() {
         loginOpen={loginOpen}
         setLoginOpen={setLoginOpen}
       />
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/quizzes">Quizzes/Categories</Link>
-        </li>
-        <li>
-          <Link to="/create">Create A Quiz</Link>
-        </li>
-        <li>
-          <Link to="/profile">Profile</Link>
-        </li>
-      </ul>
       <Switch>
         <Route exact path ="/">
-          <HomePage />
+          <HomePage
+            loggedInUser={user}
+            setLoginOpen={setLoginOpen}
+          />
         </Route>
         <Route path="/quizzes">
           <QuizSearch setCriteria={setCriteria} />
           <QuizList
             criteria={criteria}
-            loggedInUser={{ id: user.id, username: user.username }}
+            loggedInUser={user}
           />
         </Route>
         <Route path="/create">
-          <QuizCreator userId={user.id} />
+          <QuizCreator user={user} />
         </Route>
         <Route path="/profile">
           <UserProfile loggedInUser={user} />

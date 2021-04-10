@@ -6,18 +6,18 @@ import QuizEditor from './QuizEditor.jsx';
 const { getUserQuizHistory, getCreatedQuizQuestions } = require('../../../api_master.js');
 import '../../../dist/stylesheet.css'
 
-const CreatedQuizHistory = ({ userId }) => {
+const CreatedQuizHistory = ({ loggedInUser, friends }) => {
   const [quizHistory, setQuizHistory] = useState([]);
   const [quizName, setQuizName] = useState('')
   const [questionsToEdit, setQuestionsToEdit] = useState([]);
   const [questionsLoaded, setQuestionsLoaded] = useState(false);
   const [className, setClassName] = useState('created-quiz-list');
   const [editorClassName, setEditorClassName] = useState('questions-container hide');
+  const [quizId, setQuizId] = useState(-1);
   // FIX THIS WHEN ID GETS PASSED DOWN
-  let tempId = 1;
-
+  // let tempId = 1;
   const getQuizHistory = () => {
-    getUserQuizHistory(tempId)
+    getUserQuizHistory(loggedInUser.id)
     .then((res) => {
       let quizzes = res.data.rows;
       setQuizHistory(quizzes);
@@ -73,10 +73,21 @@ const CreatedQuizHistory = ({ userId }) => {
           listStyle: 'none'
         }}
       >
-        <QuizHistoryDisplay quizzes={quizHistory} getQuiz={handleEditQuizClick}/>
+        <QuizHistoryDisplay
+          quizzes={quizHistory}
+          getQuiz={handleEditQuizClick}
+          loggedInUser = {loggedInUser}
+          friends = {friends}
+        />
       </ul>
       {questionsLoaded
-        ? <QuizEditor questions={questionsToEdit} quizName={quizName} handleRenderingQuestions={handleRenderingQuestions} returnQuizList = {returnQuizList} editorClassName = {editorClassName}/>
+        ? <QuizEditor 
+            questions={questionsToEdit} 
+            quizName={quizName} 
+            handleRenderingQuestions={handleRenderingQuestions} 
+            returnQuizList={returnQuizList} 
+            editorClassName={editorClassName} 
+            userId={loggedInUser.id}/>
         : null
       }
     </div>

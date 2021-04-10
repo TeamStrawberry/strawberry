@@ -4,7 +4,7 @@ import { Grid, Card, CardContent, CardHeader } from "@material-ui/core";
 import { getSelectQuizzes } from "../../../api_master";
 import QuizListCard from '../quizList/QuizListCard';
 
-const  New = () => {
+const  New = ({ loggedInUser, setLoginOpen }) => {
 
   const [newQuizzes, setNewQuizzes] = useState([]);
 
@@ -26,7 +26,7 @@ const  New = () => {
       alignItems='center'
       spacing={2}
     >
-      { newQuizzes.map((quiz, index) =>  <QuizListCard quiz={ quiz } key={ index }/>) }
+      { newQuizzes.map((quiz, index) =>  <QuizListCard quiz={ quiz } key={ index } loggedInUser={ loggedInUser } setLoginOpen={ setLoginOpen }/>) }
     </Grid>
   </div>
   );

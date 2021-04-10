@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 //pass in userid as prop in here
-const QuizCreator = () => {
+const QuizCreator = ({ user }) => {
   const classes = useStyles();
 
   const [name, setName] = useState('');
@@ -30,13 +30,14 @@ const QuizCreator = () => {
   const [difficulty, setDifficulty] = useState('');
   const [quizOptionsLoaded, setQuizOptionsLoaded] = useState(false);
   const [quizTrackerCount, setQuizTrackerCount] = useState(0);
+  const [questionGrabbed, setQuestionGrabbed] = useState({});
 
-  let tempUserId = 1; //this will be removed when the user_id is passed down
+  let id_users = user.id;
   var dailyQuizCount = 0;
 
   //will trigger when track counter changes
   useEffect(() => {
-    getUserQuizHistory(tempUserId)
+    getUserQuizHistory(id_users)
       .then(res => {
         let today = new Date().toISOString().slice(0, 10);
         for (let i  = 0; i < res.data.rows.length; i++) {
@@ -48,29 +49,11 @@ const QuizCreator = () => {
       .catch(err => console.err('Error retrieving quiz count', err))
   }, [quizTrackerCount])
 
-  const handleNameChange = (name) => {
-    setName(name);
+  const handleNameChange = (name) => setName(name);
+  const handleCategoryChange = (categoryName) => setCategory(categoryName);
+  const handleDifficultyChange = (difficulty) => setDifficulty(difficulty);
+  const handleQuestionGrab = (question) => setQuestionGrabbed(question);
 
-  }
-
-  const handleCategoryChange = (categoryName) => {
-    setCategory(categoryName);
-
-  }
-
-  const handleDifficultyChange = (difficulty) => {
-    setDifficulty(difficulty);
-
-  }
-
-  const handleQuestionBankClick = (question) => {
-    // take question and prefill form
-    console.log(question);
-  }
-
-  // rerender page on submit or go to another page
-  // form validators only have either 2 or 4 answers no 3
-  // Quiz submit becomes clickable 'enabled' once all 3 options are entered
   const handleSubmit = () => {
     let allQuizQuestions = [];
 
@@ -86,6 +69,7 @@ const QuizCreator = () => {
       singleQnA.category = category;
       singleQnA.difficulty = difficulty;
       singleQnA.question = question;
+      singleQnA.id_users = id_users;
       singleQnA.correct_answer = correctAnswer;
       singleQnA.incorrect_answers = [incorrectAnswerA, incorrectAnswerB, incorrectAnswerC];
       let filteredAnswers = singleQnA.incorrect_answers.filter((answer) => {
@@ -99,7 +83,6 @@ const QuizCreator = () => {
         singleQnA.type = 'multiple';
       }
       singleQnA.incorrect_answers = filteredAnswers;
-      // user id <-- AWAITING
       if (singleQnA.question.length) {
         allQuizQuestions.push(singleQnA);
       }
@@ -124,7 +107,7 @@ const QuizCreator = () => {
       return
     }
 
-    createQuiz({name, category, difficulty, id_users: 1})
+    createQuiz({ name, category, difficulty, id_users })
       .then(res => {
         let quizId = res.data.rows[0].id;
         setQuizTrackerCount(quizTrackerCount + 1)
@@ -133,13 +116,14 @@ const QuizCreator = () => {
       .then(quizId => {
         allQuizQuestions.forEach(quizQuestion => {
           quizQuestion.id_quiz = quizId;
-          quizQuestion.id_users = 1;
           createQuestion(quizQuestion)
             .then (res => {
               console.log('Quiz question saved!')
             })
             .catch(err => console.error('Error. Cannot create questions', err))
           })
+        location.reload();
+        alert('Quiz Submitted!');
       })
       .catch(err => console.error('Error. Cannot create quiz', err))
   }
@@ -152,15 +136,16 @@ const QuizCreator = () => {
     : quizCreator =
       <div className = 'quiz-creator'>
         <h2>Quiz Creator</h2>
+        <h4 className = 'quiz-count'>Total Quizzes Created Today: {quizTrackerCount}</h4>
         <Grid
-        container
-        spacing={4}
-        justify='center'
-        alignItems='flex-start'
+          container
+          spacing={4}
+          justify='center'
+          alignItems='flex-start'
         >
           <Grid
-          item
-          xs={4}
+            item
+            xs={4}
           >
             <Paper className={classes.paper} >
               <h3>Select Quiz Options</h3>
@@ -172,27 +157,31 @@ const QuizCreator = () => {
                 difficulty={difficulty}
                 name={name}
               />
-              <QuizSubmit handleSubmit={handleSubmit}/>
+              <QuizSubmit
+                handleSubmit={handleSubmit}
+                name={name}
+                category={category}
+                difficulty={difficulty}
+              />
             </Paper>
             <Paper
-            className={classes.paper}
-            style={{ maxHeight: "37.225vh", overflowX: "auto", overflowY: "scroll" }}
+              className={classes.paper}
+              style={{ maxHeight: "34.90vh", overflowX: "auto", overflowY: "scroll" }}
             >
               <h4>Questions Bank</h4>
               <QuizBank
-              category = {category}
-              handleQuestionBankClick = {handleQuestionBankClick}
+                category = {category}
+                handleQuestionGrab={handleQuestionGrab}
               />
             </Paper>
-            <h4 className = 'quiz-count'>Total Quizzes Created Today: {quizTrackerCount}</h4>
           </Grid>
           <Grid
-          item
-          xs={8}
+            item
+            xs={8}
           >
             <Paper
-            className={classes.paper}
-            style={{ maxHeight: "70vh", overflowX: "auto", overflowY: "scroll" }}
+              className={classes.paper}
+              style={{ maxHeight: "70vh", overflowX: "auto", overflowY: "scroll" }}
             >
               <QuizQuestionsAndAnswers />
             </Paper>

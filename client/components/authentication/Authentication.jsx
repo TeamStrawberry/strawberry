@@ -6,7 +6,7 @@ import axios from 'axios';
 const useStyles = makeStyles((theme = theme) => ({
   modal: {
     position: "absolute",
-    width: "20%",
+    width: "auto",
     backgroundColor: theme.palette.background.paper,
     border: "5px solid",
     borderColor: theme.palette.secondary.main,
@@ -32,8 +32,8 @@ function Authentication (props) {
   };
 
   const handleClose = () => {
-    props.setLoginOpen(false);
     setSignUp(false);
+    props.setLoginOpen(false);
   };
 
   const handleLogin = () => {
@@ -45,7 +45,7 @@ function Authentication (props) {
     })
     .then((res) => {
       props.setUser(res.data.user);
-      handleClose();
+      props.setLoginOpen(false);
     })
     .catch((err) => {
       alert('Incorect username or password, please try again');
@@ -59,8 +59,9 @@ function Authentication (props) {
       email: email
     })
     .then((res) => {
+      setSignUp(false);
       props.setUser(res.data.user);
-      handleClose();
+      props.setLoginOpen(false);
     })
     .catch((err) => {
       alert('Username or email already exists, please try again!');
@@ -89,7 +90,7 @@ function Authentication (props) {
 
 
   const loginForm = (
-    <Grid container className={classes.modal} direction="column" spacing={3}>
+    <Grid container className={classes.modal} direction="column" spacing={3} alignItems='center'>
       <Grid item>
         <Typography>Login Here!</Typography>
       </Grid>
@@ -99,14 +100,24 @@ function Authentication (props) {
           margin="dense"
           label="Username"
           type="text"
-          onChange={getUsername}/>
+          onChange={getUsername}
+          onKeyUp={(e) => {
+            if (e.keyCode === 13) {
+              handleLogin()
+            };
+          }}/>
       </Grid>
       <Grid item>
         <TextField
           margin="dense"
           label="Password"
           type="password"
-          onChange={getPassword}/>
+          onChange={getPassword}
+          onKeyUp={(e) => {
+            if (e.keyCode === 13) {
+              handleLogin()
+            };
+          }}/>
       </Grid>
       <Grid item>
         <Button
@@ -122,9 +133,12 @@ function Authentication (props) {
         <Typography>
           Don't have an account?
         </Typography>
+      </Grid>
+      <Grid item>
         <Button
           variant="text"
           color="default"
+          size="small"
           onClick={goToSignup}
         >
           Sign-up here!
@@ -134,7 +148,7 @@ function Authentication (props) {
   );
 
   const signUpForm = (
-    <Grid container className={classes.modal} direction="column" spacing={3}>
+    <Grid container className={classes.modal} direction="column" spacing={3} alignItems='center'>
       <Grid item>
         <Typography>Sign-up Here!</Typography>
       </Grid>
@@ -144,21 +158,36 @@ function Authentication (props) {
           margin="dense"
           label="Email"
           type="email"
-          onChange={getEmail}/>
+          onChange={getEmail}
+          onKeyUp={(e) => {
+            if (e.keyCode === 13) {
+              handleSignUp()
+            };
+          }}/>
       </Grid>
       <Grid item>
         <TextField
           margin="dense"
           label="Username"
           type="text"
-          onChange={getUsername}/>
+          onChange={getUsername}
+          onKeyUp={(e) => {
+            if (e.keyCode === 13) {
+              handleSignUp()
+            };
+          }}/>
       </Grid>
       <Grid item>
         <TextField
           margin="dense"
           label="Password"
           type="password"
-          onChange={getPassword}/>
+          onChange={getPassword}
+          onKeyUp={(e) => {
+            if (e.keyCode === 13) {
+              handleSignUp()
+            };
+          }}/>
       </Grid>
       <Grid item>
         <Button
@@ -166,6 +195,7 @@ function Authentication (props) {
           variant="outlined"
           color="primary"
           onClick={handleSignUp}
+          onKeyUp={handleSignUp}
         >
           Let's Mingle!
         </Button>
@@ -174,9 +204,12 @@ function Authentication (props) {
         <Typography>
           Already have an account?
         </Typography>
+      </Grid>
+      <Grid item>
         <Button
           variant="text"
           color="default"
+          size="small"
           onClick={goToLogin}
         >
           Login here!
@@ -188,7 +221,7 @@ function Authentication (props) {
   if (renderSignUp) {
     return (
       <Box>
-        <Button variant="text" onClick={handleOpen} size="small">
+        <Button variant="h6" onClick={handleOpen} size="small" style={{ textDecoration: 'none', color: 'unset' }}>
           Login/Sign-Up
         </Button>
         <Modal

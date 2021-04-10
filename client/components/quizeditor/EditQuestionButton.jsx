@@ -29,13 +29,9 @@ const EditQuestionButton = ({ question, userId, handleRenderingQuestions }) => {
     const [incorrectAnswer3, setIncorrectAnswer3] = useState(null);
     const [editQuestionsPage, setEditQuestionsPage] = useState(false);
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
+    const handleOpen = () => setOpen(true);
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const handleClose = () => setOpen(false);
 
     const handleQChange = (newQuestion) => {
       setNewQuestion(newQuestion);
@@ -62,13 +58,20 @@ const EditQuestionButton = ({ question, userId, handleRenderingQuestions }) => {
         return
       }
       let questionId = question.id;
+
       let editedQuestion = {
         category: question.category,
         type: question.type,
         difficulty: question.difficulty,
         question: newQuestion || question.question,
         correct_answer: correctAnswer || question.correct_answer,
-        incorrect_answers: [incorrectAnswer1 || question.incorrect_answers[0], incorrectAnswer2 || question.incorrect_answers[1], incorrectAnswer3 || question.incorrect_answers[2]]
+        incorrect_answers: [
+            incorrectAnswer1 || question.incorrect_answers[0], 
+            incorrectAnswer2 || question.incorrect_answers[1], 
+            incorrectAnswer3 || question.incorrect_answers[2]
+        ],
+        id_users: userId,
+        id_quiz: question.id_quiz
       }
 
       reviseQuizQuestion(questionId, editedQuestion)

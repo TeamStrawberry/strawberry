@@ -4,14 +4,15 @@ import {
   Card,
   CardHeader,
   CardContent,
-  Typography
+  Grid,
+  Typography,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { getFriends } from '../../../api_master';
 
 import ChallengeFriend from '../friends/ChallengeFriend';
 
-const  QuizListCard = ({ quiz, loggedInUser }) => {
+const  QuizListCard = ({ quiz, loggedInUser, setLoginOpen }) => {
 
   const [friends, setFriends] = useState([]);
 
@@ -24,37 +25,68 @@ const  QuizListCard = ({ quiz, loggedInUser }) => {
   let history = useHistory();
 
   const handleClick = () => {
-    history.push(`/quiz/${quiz.id}`);
+    if (loggedInUser.id) {
+      history.push(`/quiz/${quiz.id}`);
+    } else {
+      setLoginOpen(true);
+    }
   };
 
   useEffect(() => {
-    axiosRefreshFriends();
-    // return () => {
-    //   setFriends([]);
-    // };
+    if (loggedInUser.id) {
+      axiosRefreshFriends();
+    }
   }, []);
 
   return (
-    <Card style={{ width: '95%' }}>
-      <CardHeader
-        onClick={handleClick}
-        title={ quiz.name }
-      />
-        <CardContent onClick={handleClick} >
-          <Typography color='textSecondary'>
-            { quiz.category }
-          </Typography>
-          <Typography color='textSecondary'>
-            { quiz.difficulty }
-          </Typography>
-        </CardContent>
-        <CardContent>
-        <ChallengeFriend
-          loggedInUser={loggedInUser}
-          friends={friends}
-          link={`localhost:3000/quiz/${quiz.id}`}
-        />
-      </CardContent>
+    <Card
+      style={{
+        margin: '2.5px',
+        border: '2px solid',
+        backgroundColor: '#D2FDFF',
+        borderColor: '#303C6C',
+        width: '95%',
+      }}
+    >
+      <Grid container direction='row'>
+        <Grid container direction='column' item xs={6} style={{ display: 'flex' }}>
+          <Grid item style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <CardHeader
+              onClick={handleClick}
+              title={ quiz.name }
+            />
+          </Grid>
+          <Grid item style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <CardContent onClick={handleClick} >
+              <Typography color='textSecondary' >
+                { quiz.category }
+              </Typography>
+            </CardContent>
+          </Grid>
+        </Grid>
+        <Grid container direction='column' item xs={6} style={{ display: 'flex', justifyContent: 'flex-end' }} >
+          <Grid item style={{ display: 'flex', justifyContent: 'flex-end' }} >
+            <CardContent>
+              <Typography color='textSecondary' >
+                { quiz.difficulty }
+              </Typography>
+            </CardContent>
+          </Grid>
+          <Grid item style={{ display: 'flex', justifyContent: 'flex-end' }} >
+            <CardContent>
+            {loggedInUser.username ?
+              <ChallengeFriend
+                loggedInUser={loggedInUser}
+                friends={friends}
+                link={`localhost:3000/quiz/${quiz.id}`}
+              />
+            :
+              null
+            }
+            </CardContent>
+          </Grid>
+        </Grid>
+      </Grid>
     </Card>
   )
 }
