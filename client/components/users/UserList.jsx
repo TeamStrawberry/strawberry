@@ -2,25 +2,31 @@ import React, { useState, useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import UserListItem from "./UserListItem.jsx";
 
-function UserList({ loggedInUser, variant, list, refreshList, addChallengers }) {
+function UserList({
+  loggedInUser,
+  variant,
+  list,
+  refreshList,
+  addChallengers,
+}) {
   const [challengers, updateChallengers] = useState({});
 
-  const addChallenger = user => {
+  const addChallenger = (user) => {
     const copyOfChallengers = { ...challengers };
     const updatedValue = {};
     updatedValue[user.id] = user;
 
     if (copyOfChallengers[user.id]) {
       delete copyOfChallengers[user.id];
-      return updateChallengers({ ...copyOfChallengers })
+      return updateChallengers({ ...copyOfChallengers });
     }
 
-    updateChallengers({...copyOfChallengers, ...updatedValue});
-  }
+    updateChallengers({ ...copyOfChallengers, ...updatedValue });
+  };
 
   useEffect(() => {
     if (addChallengers) addChallengers(challengers);
-  }, [challengers])
+  }, [challengers]);
 
   list = list.map((user) => {
     return (
@@ -43,7 +49,7 @@ function UserList({ loggedInUser, variant, list, refreshList, addChallengers }) 
       style={{ maxHeight: "25vh", overflowX: "auto", overflowY: "scroll" }}
     >
       <Grid container direction="column" style={{ margin: 0, width: "100%" }}>
-        {list}
+        {list.length ? list : "No results..."}
       </Grid>
     </Grid>
   );

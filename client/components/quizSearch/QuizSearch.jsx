@@ -67,7 +67,7 @@ const QuizSearch = ({ setCriteria }) => {
   )
 
   return(
-    <Box>
+    <Box style={{ marginTop: '30px' }}>
       <Grid container
         direction='row'
         style={{
