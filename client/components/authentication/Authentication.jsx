@@ -6,7 +6,7 @@ import axios from 'axios';
 const useStyles = makeStyles((theme = theme) => ({
   modal: {
     position: "absolute",
-    width: "20%",
+    width: "auto",
     backgroundColor: theme.palette.background.paper,
     border: "5px solid",
     borderColor: theme.palette.secondary.main,
@@ -90,7 +90,7 @@ function Authentication (props) {
 
 
   const loginForm = (
-    <Grid container className={classes.modal} direction="column" spacing={3}>
+    <Grid container className={classes.modal} direction="column" spacing={3} alignItems='center'>
       <Grid item>
         <Typography>Login Here!</Typography>
       </Grid>
@@ -133,9 +133,12 @@ function Authentication (props) {
         <Typography>
           Don't have an account?
         </Typography>
+      </Grid>
+      <Grid item>
         <Button
           variant="text"
           color="default"
+          size="small"
           onClick={goToSignup}
         >
           Sign-up here!
@@ -145,7 +148,7 @@ function Authentication (props) {
   );
 
   const signUpForm = (
-    <Grid container className={classes.modal} direction="column" spacing={3}>
+    <Grid container className={classes.modal} direction="column" spacing={3} alignItems='center'>
       <Grid item>
         <Typography>Sign-up Here!</Typography>
       </Grid>
@@ -201,9 +204,12 @@ function Authentication (props) {
         <Typography>
           Already have an account?
         </Typography>
+      </Grid>
+      <Grid item>
         <Button
           variant="text"
           color="default"
+          size="small"
           onClick={goToLogin}
         >
           Login here!
