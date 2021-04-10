@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Grid, Button, Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from "@material-ui/core";
+import { Modal, Grid, Button, Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { getSingleQuiz, submitQuizAnswers, getQuizGlobalRankings, getQuizFriendRankings, getFriends } from "../../../api_master";
 import { useHistory, useParams } from "react-router-dom";
@@ -8,7 +8,7 @@ import ChallengeFriend from '../friends/ChallengeFriend';
 const useStyles = makeStyles(theme => ({
   quiz: {
     width: '100%',
-    backgroundColor: theme.palette.background.paper,
+    // backgroundColor: theme.palette.background.paper,
     alignContent: 'flex-start',
   },
   modal: {
@@ -23,6 +23,32 @@ const useStyles = makeStyles(theme => ({
     top: `50%`,
     left: `50%`,
     transform: `translate(-50%, -50%)`,
+  },
+  header: {
+    position: "fixed",
+    top: 80,
+    left: 10,
+    marginTop: 0,
+    marginBottom: 0,
+    paddingBottom: 0
+  },
+  body: {
+    position: "fixed",
+    top: 200,
+    bottom: 10,
+    maxHeight: '100%',
+    overflow: 'auto',
+  },
+  question: {
+    marginTop: 0,
+    marginBottom: 0,
+    paddingTop: 10,
+    backgroundColor: theme.palette.background.paper,
+  },
+  answers: {
+    marginTop: 0,
+    marginBottom: 5,
+    backgroundColor: theme.palette.background.paper,
   }
 }));
 
@@ -147,7 +173,9 @@ const TakeQuiz = ({ userId = 12, loggedInUser }) => {
   }
 
   const handleBack = () => {
-    if (!validated) {
+    if (!validated && !Object.keys(userAnswers).length) {
+      history.goBack();
+    } else if (!validated) {
       setShow(true);
     } else {
       history.goBack();
@@ -352,7 +380,7 @@ const TakeQuiz = ({ userId = 12, loggedInUser }) => {
 
   return (
     <Grid container direction="column" spacing={2}>
-      <Grid item container direction="row" spacing={3} alignItems="center">
+      <Grid item container direction="row" spacing={3} alignItems="center" className={ classes.header }>
         <Grid item xs={1} alignItems="center" spacing={2}>
           <Button onClick={ handleBack }>Go Back</Button>
         </Grid>
@@ -360,14 +388,14 @@ const TakeQuiz = ({ userId = 12, loggedInUser }) => {
           {quizQuestions.length
             ? <Grid item direction="column" display="flex" spacing={3}>
                 <Grid item>
-                  <h1>{ quizQuestions[0].name }</h1>
+                  <h1 style={{ marginTop: 0, marginBottom: 0 }}>{ quizQuestions[0].name }</h1>
                 </Grid>
                 <Grid item container direction="row" justify='space-evenly'>
                   <Grid item display="flex">
-                    <h4>Category: { quizQuestions[0].category }</h4>
+                    <h4 style={{ marginTop: 0, marginBottom: 0 }}>Category: { quizQuestions[0].category }</h4>
                   </Grid>
                   <Grid item display="flex" >
-                    <h4>Difficulty: { quizQuestions[0].difficulty }</h4>
+                    <h4 style={{ marginTop: 0, marginBottom: 0 }}>Difficulty: { quizQuestions[0].difficulty }</h4>
                   </Grid>
                 </Grid>
             </Grid>
@@ -375,7 +403,7 @@ const TakeQuiz = ({ userId = 12, loggedInUser }) => {
           }
         </Grid>
       </Grid>
-      <Grid item container direction="row" spacing={3} justify="center">
+      <Grid item container direction="row" spacing={3} justify="center" className={ classes.body }>
         <Grid
           item
           xs={10}
@@ -388,10 +416,10 @@ const TakeQuiz = ({ userId = 12, loggedInUser }) => {
             ? quizQuestions.map((question, index) => (
               <FormControl key={ index } className={ classes.quiz }>
                 <Grid item container direction="column">
-                  <Grid item>
+                  <Grid item className={ classes.question }>
                     <FormLabel>{ question.question }</FormLabel>
                   </Grid>
-                  <Grid item container direction="row" justify='space-evenly'>
+                  <Grid item container direction="row" justify='space-evenly' className={ classes.answers }>
                     <Grid item xs={8} style={{ paddingLeft: "20%" }}>
                       <RadioGroup
                         aria-label={ question.question }
