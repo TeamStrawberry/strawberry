@@ -29,15 +29,13 @@ function UserProfile({ loggedInUser = { id: 1, username: "admin" } }) {
   }, []);
 
   return (
-    <Grid container direction="column" alignItems="center" spacing={2}>
-      <Grid item container direction="row" spacing={3} justify="center">
-        <Grid item>
-          <Typography>Mike's Components for Testing</Typography>
-        </Grid>
-        <Grid item>
-          <ChallengeFriend loggedInUser={loggedInUser} friends={friends} />
-        </Grid>
-      </Grid>
+    <Grid
+      container
+      direction="column"
+      alignItems="center"
+      spacing={2}
+      style={{ marginTop: 10 }}
+    >
       <Grid item container direction="row" spacing={2} justify="center">
         <Grid item xs={2} container direction="column" spacing={2}>
           <UserAvatar loggedInUser={loggedInUser} />
@@ -68,11 +66,8 @@ function UserProfile({ loggedInUser = { id: 1, username: "admin" } }) {
         >
 
         </Grid> */}
-         <UserQuizHistoryTaken />
-          <UserQuizHistoryCreated
-            loggedInUser = {loggedInUser}
-            friends={friends}
-          />
+        <UserQuizHistoryTaken />
+        <UserQuizHistoryCreated loggedInUser={loggedInUser} friends={friends} />
       </Grid>
     </Grid>
   );
