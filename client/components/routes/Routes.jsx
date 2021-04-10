@@ -1,9 +1,10 @@
 import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
 import Navbar from "../homepage/Navbar.jsx";
-import React, { useState, useEffect } from "react";
-import QuizCreator from "../quizcreator/QuizCreator.jsx";
-import QuizList from "../quizList/quizList";
-import QuizSearch from "../quizSearch/QuizSearch";
+import HomePage from "../homepage/HomePage.jsx"
+import QuizCreator from '../quizcreator/QuizCreator.jsx';
+import QuizList from '../quizList/QuizList';
+import QuizSearch from '../quizSearch/QuizSearch';
 import UserProfile from "../users/UserProfile";
 import TakeQuiz from "../takeQuiz/TakeQuiz";
 import Authentication from "../authentication/Authentication.jsx";
