@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const { pool } = require("../db/pool.js");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const nodemailer = require("nodemailer");
 require("dotenv").config();
@@ -18,7 +18,7 @@ app.use(
 );
 
 /* authentication */
-app.get('/login', async (req, res) => {
+app.get("/login", async (req, res) => {
   try {
     let idRes = await pool.query(
       `select * from users where username='${req.query.username}'`
@@ -29,22 +29,22 @@ app.get('/login', async (req, res) => {
         res.sendStatus(500);
       }
       if (result) {
-        res.status(200).send({user: user});
+        res.status(200).send({ user: user });
       } else {
         res.sendStatus(500);
       }
-    })
+    });
   } catch {
     res.sendStatus(500);
   }
 });
 
-app.post('/signup', async (req, res) => {
+app.post("/signup", async (req, res) => {
   try {
     let result = await pool.query(
       `select count (*) from users where username='${req.body.username}' or email='${req.body.email}'`
     );
-    if (result.rows[0].count === '0') {
+    if (result.rows[0].count === "0") {
       bcrypt.hash(req.body.password, saltRounds, async (err, hash) => {
         if (err) {
           res.sendStatus(500);
@@ -56,13 +56,12 @@ app.post('/signup', async (req, res) => {
           `select * from users where username='${req.body.username}'`
         );
         let user = idRes.rows[0];
-        res.send({user: user});
-      })
+        res.send({ user: user });
+      });
     } else {
       res.sendStatus(400);
     }
-  }
-  catch {
+  } catch {
     res.sendStatus(500);
   }
 });
@@ -478,6 +477,43 @@ app.get("/users", async (req, res) => {
   }
 });
 
+//get users overall ranking
+app.get("/users/ranking", async (req, res) => {
+  let eligibleUsers;
+
+  if (req.body.userPool === "global") {
+    eligibleUsers = `users u`;
+  } else if (req.body.userPool === "friends") {
+    eligibleUsers = `(SELECT u.*
+    FROM users u
+    LEFT JOIN (SELECT u.id
+    FROM user_friend_relationships f
+    JOIN users u
+    ON f.id_user_friend = u.id
+    WHERE f.id_user = ${req.body.userId}) f
+    ON u.id = f.id
+    WHERE f.id is not null OR u.id = ${req.body.userId}) u`;
+  }
+
+  let query = `select total, rank, count(id)
+  from
+    (select u.id, u.username, count(q.id) as total,
+    ${req.body.rankingType} () over (order by count(q.id) desc) rank
+    from ${eligibleUsers}
+    left join user_completed_quizzes q
+    on q.id_users = u.id
+    -- could add quiz id criteria here
+    group by 1,2) rankings
+  where id = ${req.body.userId}
+  group by 1,2`;
+
+  try {
+    const getUsers = await pool.query(query);
+    res.status(200).send(getUsers);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
 
 // CHALLENGE FRIEND
 app.get("/email/:friend/:user/:friendEmail/:message", (req, res) => {
