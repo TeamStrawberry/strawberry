@@ -19,15 +19,12 @@ const useStyles = makeStyles((theme) => ({
 const QuizSubmit = ({ handleSubmit, name, category, difficulty }) => {
   const classes = useStyles();
 
-  //const [buttonDisabled, setButtonDisabled] = useState(true);
-
   return (
     <div>
       <Button
         size="small"
         onClick={(e) => handleSubmit()}
         className={classes.quizSubmit}
-        // disabled={buttonDisabled}
       >
         Submit Quiz
       </Button>
