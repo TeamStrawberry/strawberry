@@ -28,14 +28,20 @@ const  QuizListCard = ({ quiz, loggedInUser }) => {
   };
 
   useEffect(() => {
-    axiosRefreshFriends();
-    // return () => {
-    //   setFriends([]);
-    // };
+    if (loggedInUser) {
+      axiosRefreshFriends();
+    }
   }, []);
 
   return (
-    <Card style={{ width: '95%' }}>
+    <Card
+      style={{
+        margin: '2.5px',
+        border: '2px solid',
+        backgroundColor: '#D2FDFF',
+        borderColor: '#303C6C',
+        width: '95%',
+      }}>
       <CardHeader
         onClick={handleClick}
         title={ quiz.name }

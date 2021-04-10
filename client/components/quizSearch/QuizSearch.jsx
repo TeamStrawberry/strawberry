@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Grid, Modal } from '@material-ui/core';
+import { Box, Button, Grid, Modal, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from "@material-ui/icons/Search";
 
@@ -68,10 +68,28 @@ const QuizSearch = ({ setCriteria }) => {
 
   return(
     <Box>
-      <SearchIcon
-        onClick={handleOpen}
-        style={{ cursor: 'pointer' }}
-      />
+      <Box
+        style={{
+          marginBottom: '15px'
+        }}
+      >
+        <Typography
+          variant='h2'
+          style={{
+            position: 'relative',
+            right: '35%',
+          }}>
+          Quizzes
+        </Typography>
+        <SearchIcon
+          onClick={handleOpen}
+          style={{
+            cursor: 'pointer',
+            position: 'absolute',
+            right: '10%',
+            top: '22%'
+          }} />
+      </Box>
       <Modal open={open} onClose={handleClose}>
         { modalBody }
       </Modal>
