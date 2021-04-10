@@ -36,17 +36,17 @@ function Routes() {
           <QuizSearch setCriteria={setCriteria} />
           <QuizList criteria={criteria} loggedInUser={{ id: user.id, username: user.username }} />
         </Route>
-          <Route path="/create">
-            <QuizCreator userId = {user.id}/>
-          </Route>
-          <Route path="/profile">
-            <UserProfile loggedInUser={{ id: user.id, username: user.username }} />
-          </Route>
-          <Route path="/quiz/:quizId">
-            <TakeQuiz user={user.id} />
-          </Route>
-        </Switch>
-      </Router>
+        <Route path="/create">
+          <QuizCreator userId = {user.id}/>
+        </Route>
+        <Route path="/profile">
+          <UserProfile loggedInUser={{ id: user.id, username: user.username }} />
+        </Route>
+        <Route path="/quiz/:quizId">
+          <TakeQuiz user={user.id} />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 

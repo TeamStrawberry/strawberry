@@ -445,7 +445,6 @@ app.get("/friends/:userId", async (req, res) => {
 
 //get all users who are strangers to a user
 app.get("/strangers/:userId", async (req, res) => {
-  console.log("getStrangers");
   try {
     const getUsers = await pool.query(
       `SELECT u.*
