@@ -63,6 +63,10 @@ function getQuizFriendRankings(quizId, userId) {
   return handleGetRequests(`/quiz/rankings/friends/${quizId}/${userId}`);
 }
 
+function getOverallRankings(userId) {
+  return handleGetRequests(`/users/ranking/${userId}`);
+}
+
 // Handles all POST requests, takes a route, params, and data object
 function handlePostRequests(route, data = {}, params = {}) {
   let options = {
@@ -137,6 +141,7 @@ export {
   getQuizHistory,
   getQuizGlobalRankings,
   getQuizFriendRankings,
+  getOverallRankings,
   getRandomQuizzes,
   getSelectQuizzes,
   getSingleQuiz,
