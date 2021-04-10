@@ -45,6 +45,10 @@ const  QuizListCard = ({ quiz, loggedInUser }) => {
       <CardHeader
         onClick={handleClick}
         title={ quiz.name }
+        style={{
+          position: 'relative',
+          right: '40%',
+        }}
       />
         <CardContent onClick={handleClick} >
           <Typography color='textSecondary'>

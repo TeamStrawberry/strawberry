@@ -85,9 +85,8 @@ const QuizSearch = ({ setCriteria }) => {
           onClick={handleOpen}
           style={{
             cursor: 'pointer',
-            position: 'absolute',
-            right: '10%',
-            top: '22%'
+            position: 'relative',
+            left: '35%',
           }} />
       </Box>
       <Modal open={open} onClose={handleClose}>
