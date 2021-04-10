@@ -174,6 +174,7 @@ app.put("/revisequestion/:id", async (req, res) => {
       question,
       correct_answer,
       incorrect_answers,
+      //Reminder: quizId and userId in req body if needed
     } = req.body;
 
     const reviseQuestion = await pool.query(

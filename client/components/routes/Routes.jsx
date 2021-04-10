@@ -37,7 +37,7 @@ function Routes() {
           />
         </Route>
         <Route path="/create">
-          <QuizCreator userId={user.id} />
+          <QuizCreator user={user} />
         </Route>
         <Route path="/profile">
           <UserProfile loggedInUser={user} />

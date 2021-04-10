@@ -50,7 +50,7 @@ const QuizHistoryDisplay = ({ quizzes, getQuiz, loggedInUser, friends }) => {
         </TableHead>
         <TableBody>
           {quizzes.map(quiz => (
-            <TableRow>
+            <TableRow key={quiz.id}>
               <TableCell align="center" style ={{fontSize: 16}}>{quiz.name}</TableCell>
               <TableCell align="center" style ={{fontSize: 16}}>{quiz.category}</TableCell>
               <TableCell align="center" style ={{fontSize: 16, width:'100%'}}>{quiz.date_created.slice(0,10)}</TableCell>

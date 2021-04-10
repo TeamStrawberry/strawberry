@@ -1,19 +1,28 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 const { getQuestionsByCategory } = require('../../../api_master.js');
+import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap';
 
 const useStyles = makeStyles((theme) => ({
   question: {
-    border: '1px solid',
+    border: '1px dashed',
     borderColor: theme.palette.text,
     draggable: 'draggable',
     padding: '2px',
     marginBottom: '2px',
-    borderRadius: '10px'
+    borderRadius: '10px',
+    '&:hover': {
+      cursor: 'grab'
+    }
+  },
+  icon: {
+    fontSize: 'small',
+    color: theme.palette.text,
+    transform: 'rotate(45deg)'
   }
 }))
 
-const QuizBank = ({ category, handleQuestionBankClick }) => {
+const QuizBank = ({ category, handleQuestionGrab }) => {
   const classes = useStyles();
 
   const [questionBank, setQuestionBank] = useState([])
@@ -28,8 +37,8 @@ const QuizBank = ({ category, handleQuestionBankClick }) => {
   })
 
   const onDragStart = (e, question) => {
-    console.log('dragstart: ', question);
-    e.dataTransfer.setData('id', question);
+    e.dataTransfer.setData('question', JSON.stringify(question));
+    handleQuestionGrab(question);
   }
 
   return (
@@ -40,12 +49,14 @@ const QuizBank = ({ category, handleQuestionBankClick }) => {
           return (
             <div
               key={question.id}
-              onDragStart={(e) => {onDragStart(e, question)}}
+              onDragStart={(e) => onDragStart(e, question)}
               draggable
               className={classes.question}
-              onClick={() => {handleQuestionBankClick(question)}}
+              onClick={() => handleQuestionBankClick(question)}
             >
               {question.question}
+              <br />
+              <ZoomOutMapIcon className={classes.icon}/>
             </div>
           )
         })
