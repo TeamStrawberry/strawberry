@@ -28,10 +28,12 @@ const  QuizListCard = ({ quiz, loggedInUser }) => {
   };
 
   useEffect(() => {
-    axiosRefreshFriends();
-    // return () => {
-    //   setFriends([]);
-    // };
+    if (loggedInUser.userName) {
+      axiosRefreshFriends();
+      // return () => {
+      //   setFriends([]);
+      // };
+    }
   }, []);
 
   return (
@@ -49,11 +51,15 @@ const  QuizListCard = ({ quiz, loggedInUser }) => {
           </Typography>
         </CardContent>
         <CardContent>
-        <ChallengeFriend
-          loggedInUser={loggedInUser}
-          friends={friends}
-          link={`localhost:3000/quiz/${quiz.id}`}
-        />
+        {loggedInUser.username ?
+          <ChallengeFriend
+            loggedInUser={loggedInUser}
+            friends={friends}
+            link={`localhost:3000/quiz/${quiz.id}`}
+          />
+        :
+          <div></div>
+        }
       </CardContent>
     </Card>
   )
