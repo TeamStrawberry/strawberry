@@ -49,22 +49,10 @@ const QuizCreator = ({ user }) => {
       .catch(err => console.err('Error retrieving quiz count', err))
   }, [quizTrackerCount])
 
-  const handleNameChange = (name) => {
-    setName(name);
-  }
-
-  const handleCategoryChange = (categoryName) => {
-    setCategory(categoryName);
-  }
-
-  const handleDifficultyChange = (difficulty) => {
-    setDifficulty(difficulty);
-  }
-
-  const handleQuestionGrab = (question) => {
-    console.log(question);
-    setQuestionGrabbed(question);
-  }
+  const handleNameChange = (name) => setName(name);
+  const handleCategoryChange = (categoryName) => setCategory(categoryName);
+  const handleDifficultyChange = (difficulty) => setDifficulty(difficulty);
+  const handleQuestionGrab = (question) => setQuestionGrabbed(question);
 
   const handleSubmit = () => {
     let allQuizQuestions = [];
@@ -128,7 +116,6 @@ const QuizCreator = ({ user }) => {
       .then(quizId => {
         allQuizQuestions.forEach(quizQuestion => {
           quizQuestion.id_quiz = quizId;
-          //quizQuestion.id_users = 1;
           createQuestion(quizQuestion)
             .then (res => {
               console.log('Quiz question saved!')
