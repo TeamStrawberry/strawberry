@@ -3,8 +3,8 @@ import axios from 'axios';
 import { Grid, Card, CardContent, CardHeader } from "@material-ui/core";
 import { getSelectQuizzes } from "../../../api_master";
 import QuizListCard from '../quizList/QuizListCard';
-const  Trending = () => {
 
+const  Trending = ({loggedInUser}) => {
   const [trendingQuizzes, setTrendingQuizzes] = useState([]);
 
   const getTrendingQuizzes = () => {
@@ -21,14 +21,13 @@ const  Trending = () => {
 
   return (
     <div>
-      {console.log(trendingQuizzes)}
     <Grid
       direction='column'
       container
       alignItems='center'
       spacing={2}
     >
-      { trendingQuizzes.map((quiz, index) =>  <QuizListCard quiz={ quiz } key={ index }/>) }
+      { trendingQuizzes.map((quiz, index) =>  <QuizListCard quiz={ quiz } key={ index } loggedInUser={ loggedInUser }/>) }
     </Grid>
   </div>
   );
