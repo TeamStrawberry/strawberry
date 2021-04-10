@@ -98,9 +98,9 @@ function ChallengeFriend({ loggedInUser, friends, link = "https://www.youtube.co
             classes={{
               root: classes.iconClose
           }}
-          onClick={e => handleClose()} className={classes.icon}
+          onClick={e => handleClose()}
         >
-          <ClearIcon />
+          <ClearIcon className={classes.icon}/>
         </IconButton>
 
       </Grid>
