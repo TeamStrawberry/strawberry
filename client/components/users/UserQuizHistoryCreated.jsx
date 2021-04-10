@@ -17,8 +17,16 @@ function UserQuizHistoryCreated() {
 
   return (
     <Grid item xs>
-      <Button variant = 'contained' color = 'secondary' onClick = {handleOpen}>View My Quizzes</Button>
-       <Modal
+      <Button
+        variant = 'contained'
+        onClick = {handleOpen}
+        style = {{
+          backgroundColor: '#D2FDFF'
+        }}
+      >
+        View My Quizzes
+      </Button>
+      <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"

@@ -68,7 +68,7 @@ function UserProfile({ loggedInUser = { id: 1, username: "admin" } }) {
         >
 
         </Grid> */}
-         {/* <UserQuizHistoryTaken /> */}
+         <UserQuizHistoryTaken />
           <UserQuizHistoryCreated />
       </Grid>
     </Grid>
