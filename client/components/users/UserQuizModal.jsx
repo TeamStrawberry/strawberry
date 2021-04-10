@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import CreatedQuizHistory from '../quizeditor/CreatedQuizHistory.jsx';
+import { theme } from '../../theme.js';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -50,7 +51,9 @@ function getModalStyle() {
       left: `${left}%`,
       transform: `translate(-${top}%, -${left}%)`,
       maxHeight: '50%',
-      overflowY: 'auto'
+      overflowY: 'auto',
+      border: '3px solid',
+      borderColor: theme.palette.secondary.main
   };
 }
 
@@ -61,7 +64,7 @@ const useStyles = makeStyles(theme => ({
   //     justifyContent: 'center',
   // },
   root: {
-    width: 500,
+    width: 'auto',
     backgroundColor: theme.palette.background.paper,
   },
   paper: {
@@ -73,7 +76,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const UserQuizModal = ({userId}) => {
+const UserQuizModal = ({loggedInUser, friends}) => {
 
   const classes = useStyles();
 
@@ -86,6 +89,8 @@ const UserQuizModal = ({userId}) => {
 
   let tempUserId = 1;
 
+  console.log('loggedin user', loggedInUser)
+
   return(
     <div className = {classes.paper} style = {modalStyle}>
       <div className = {classes.root}>
@@ -96,10 +101,14 @@ const UserQuizModal = ({userId}) => {
           </Tabs>
         </AppBar>
         <TabPanel value = {value} index = {0}>
-          <CreatedQuizHistory />
+          <CreatedQuizHistory
+            loggedInUser = {loggedInUser}
+            friends = {friends}
+          />
         </TabPanel>
         <TabPanel value = {value} index = {1}>
           <h1 className = 'quizzes-created-heading'>I am Alex</h1>
+          {/* Cindy add your component here */}
         </TabPanel>
       </div>
     </div>

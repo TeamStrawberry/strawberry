@@ -40,7 +40,7 @@ function UserProfile({ loggedInUser = { id: 1, username: "admin" } }) {
       </Grid>
       <Grid item container direction="row" spacing={2} justify="center">
         <Grid item xs={2} container direction="column" spacing={2}>
-          <UserAvatar />
+          <UserAvatar loggedInUser={loggedInUser} />
           <FriendGrid
             loggedInUser={loggedInUser}
             friends={friends}
@@ -55,10 +55,10 @@ function UserProfile({ loggedInUser = { id: 1, username: "admin" } }) {
           display="flex"
           spacing={2}
         >
-          <UserStats />
-          <UserRankings />
+          <UserStats loggedInUser={loggedInUser} />
+          <UserRankings loggedInUser={loggedInUser} />
         </Grid>
-        <Grid
+        {/* <Grid
           item
           xs={5}
           container
@@ -66,9 +66,13 @@ function UserProfile({ loggedInUser = { id: 1, username: "admin" } }) {
           display="flex"
           spacing={2}
         >
-          <UserQuizHistoryTaken />
-          <UserQuizHistoryCreated />
-        </Grid>
+
+        </Grid> */}
+         <UserQuizHistoryTaken />
+          <UserQuizHistoryCreated
+            loggedInUser = {loggedInUser}
+            friends={friends}
+          />
       </Grid>
     </Grid>
   );
