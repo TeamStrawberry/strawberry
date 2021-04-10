@@ -45,13 +45,13 @@ const QuizSearch = ({ setCriteria }) => {
       <Grid item>
         <QuizNameSearch setCriteria={setCriteria} setOpen={setOpen}/>
       </Grid>
-      <Grid item>
+      <Grid item style={{ display: 'flex', justifyContent: 'center' }} >
         -OR-
       </Grid>
       <Grid item>
         <QuizCategorySearch setCriteria={setCriteria} setOpen={setOpen}/>
       </Grid>
-      <Grid item>
+      <Grid item style={{ display: 'flex', justifyContent: 'center' }}>
         -OR-
       </Grid>
       <Grid item>
