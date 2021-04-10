@@ -6,6 +6,8 @@ import {
   CardMedia,
   Grid,
   Typography,
+  Button,
+  Modal
 } from "@material-ui/core";
 
 const useStyles = makeStyles({
@@ -39,6 +41,7 @@ function UserAvatar() {
             <Typography variant="h5" component="h2">
               User Name
             </Typography>
+            <Button onClick={() => { alert('clicked') }} variant="contained">Upload Profile Picture</Button>
           </CardContent>
         </Grid>
       </Card>
