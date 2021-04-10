@@ -50,24 +50,15 @@ const  QuizListCard = ({ quiz, loggedInUser, setLoginOpen }) => {
     >
       <Grid container direction='row'>
         <Grid container direction='column' item xs={6} style={{ display: 'flex' }}>
-          <Grid item >
+          <Grid item style={{ display: 'flex', justifyContent: 'flex-start' }}>
             <CardHeader
               onClick={handleClick}
               title={ quiz.name }
-              style={{
-                position: 'relative',
-                textAlign: 'left',
-              }}
             />
           </Grid>
-          <Grid item >
+          <Grid item style={{ display: 'flex', justifyContent: 'flex-start' }}>
             <CardContent onClick={handleClick} >
-              <Typography
-                color='textSecondary'
-                style={{
-                  textAlign: 'left',
-                }}
-              >
+              <Typography color='textSecondary' >
                 { quiz.category }
               </Typography>
             </CardContent>
@@ -76,12 +67,7 @@ const  QuizListCard = ({ quiz, loggedInUser, setLoginOpen }) => {
         <Grid container direction='column' item xs={6} style={{ display: 'flex', justifyContent: 'flex-end' }} >
           <Grid item style={{ display: 'flex', justifyContent: 'flex-end' }} >
             <CardContent>
-              <Typography
-                color='textSecondary'
-                style={{
-                  textAlign: 'right',
-                }}
-              >
+              <Typography color='textSecondary' >
                 { quiz.difficulty }
               </Typography>
             </CardContent>
@@ -93,9 +79,6 @@ const  QuizListCard = ({ quiz, loggedInUser, setLoginOpen }) => {
                 loggedInUser={loggedInUser}
                 friends={friends}
                 link={`localhost:3000/quiz/${quiz.id}`}
-                style={{
-                  textAlign: 'right',
-                }}
               />
             :
               null
