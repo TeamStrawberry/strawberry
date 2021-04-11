@@ -495,9 +495,9 @@ const TakeQuiz = ({ loggedInUser }) => {
                 variant="contained"
                 variant="outlined"
                 color="primary"
-                onClick={ handleClose }
+                onClick={ () => { history.goBack(); } }
               >
-                Return to Quiz
+                Return to Previous Page
               </Button>
             </Grid>
             <Grid item>
@@ -505,9 +505,9 @@ const TakeQuiz = ({ loggedInUser }) => {
                 variant="contained"
                 variant="outlined"
                 color="primary"
-                onClick={ () => { history.goBack(); } }
+                onClick={ handleClose }
               >
-                Return to Previous Page
+                Return to Quiz
               </Button>
             </Grid>
           </Grid>
