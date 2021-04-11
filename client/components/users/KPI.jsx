@@ -5,19 +5,24 @@ import {
   CardContent,
   CardHeader,
   Typography,
+  Box,
 } from "@material-ui/core";
 
 function KPI({ title, primaryDesc, primaryMetric, primaryColor }) {
   return (
-    <Card style={{ minWidth: "200px" }}>
+    <Card style={{ minWidth: "200px", backgroundColor: "#D2FDFF" }}>
       <CardHeader
         title={title}
         titleTypographyProps={{ variant: "body2" }}
-        style={{ padding: 10 }}
+        style={{ paddingBottom: 0 }}
       ></CardHeader>
       <CardContent>
-        <Typography variant="h2">{primaryMetric}</Typography>
-        <Typography variant="body2">{primaryDesc}</Typography>
+        <Typography variant="h2">
+          <Box fontWeight="bold">{primaryMetric}</Box>
+        </Typography>
+        <Typography variant="body2">
+          <Box fontStyle="italic">{primaryDesc}</Box>
+        </Typography>
       </CardContent>
     </Card>
   );

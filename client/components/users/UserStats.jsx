@@ -27,7 +27,7 @@ function UserStats({ loggedInUser, friends }) {
       <Card style={{ height: "100%" }}>
         <CardHeader
           title="Stats"
-          titleTypographyProps={{ variant: "body2" }}
+          titleTypographyProps={{ variant: "h5" }}
           style={{ padding: 10 }}
         />
         <CardContent>

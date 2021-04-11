@@ -44,10 +44,10 @@ function UserProfile({ loggedInUser = { id: 1, username: "admin" } }) {
           />
         </Grid>
         <Grid item xs={10} container direction="column" spacing={2}>
-          <Grid item direction="column" display="flex" spacing={2}>
+          <Grid item>
             <UserStats loggedInUser={loggedInUser} />
           </Grid>
-          <Grid item direction="column" display="flex" spacing={2}>
+          <Grid item>
             <UserRankings loggedInUser={loggedInUser} friends={friends} />
           </Grid>
         </Grid>

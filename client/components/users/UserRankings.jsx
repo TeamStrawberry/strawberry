@@ -28,7 +28,7 @@ function UserRankings({ loggedInUser, friends }) {
       <Card style={{ height: "100%" }}>
         <CardHeader
           title="Rankings"
-          titleTypographyProps={{ variant: "body2" }}
+          titleTypographyProps={{ variant: "h5" }}
           style={{ padding: 10 }}
         />
         <CardContent>
@@ -37,7 +37,7 @@ function UserRankings({ loggedInUser, friends }) {
               <KPI
                 title="Among Friends"
                 primaryMetric={ordinalSuffix(rankings.friendRank)}
-                primaryDesc={`out of ${friends.length}`}
+                primaryDesc={`out of ${friends.length + 1}`}
                 secondaryMetric={rankings.friendPercentile}
               />
             </Grid>
