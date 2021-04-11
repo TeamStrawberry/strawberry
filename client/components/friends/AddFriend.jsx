@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme = theme) => ({
     position: "absolute",
     width: "50%",
     minHeight: "50vh",
-    maxHeight: "50vh",
     backgroundColor: theme.palette.background.paper,
     border: "5px solid",
     borderColor: theme.palette.secondary.main,
@@ -62,15 +61,15 @@ function AddFriend({ loggedInUser, refresh }) {
 
   const body = (
     <Grid container className={classes.modal} direction="column" spacing={3}>
-      <Grid item>
+      <Grid item xs={12}>
         <h3 id="add-friend-modal-title" style={{ margin: 0 }}>
           Add Friends
         </h3>
       </Grid>
-      <Grid item>
+      <Grid item xs={12}>
         <UserSearch handleSearch={handleSearch} />
       </Grid>
-      <Grid item>
+      <Grid item xs={12}>
         <UserList
           loggedInUser={loggedInUser}
           variant="add_friend"

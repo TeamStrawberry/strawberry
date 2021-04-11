@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme = theme) => ({
     position: "absolute",
     width: "50%",
     minHeight: "50vh",
-    maxHeight: "50vh",
     backgroundColor: theme.palette.background.paper,
     border: "5px solid",
     borderColor: theme.palette.secondary.main,
