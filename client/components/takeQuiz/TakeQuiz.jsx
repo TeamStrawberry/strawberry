@@ -408,11 +408,14 @@ const TakeQuiz = ({ loggedInUser }) => {
 
   useEffect(() => {
     retrieveQuiz();
+  }, [])
+
+  useEffect(() => {
     refreshFriends();
     return () => {
       setFriends([]);
     };
-  }, [])
+  }, [loggedInUser.id])
 
   const body = (
     validated
@@ -464,7 +467,12 @@ const TakeQuiz = ({ loggedInUser }) => {
         </Grid>
         <Grid item container spacing={2} direction="row" justify="center" alignItems="center" >
           <Grid item>
-            <ChallengeFriend loggedInUser={ loggedInUser } friends={ friends } link={ `localhost:3000/quiz/${quizId}` } />
+            <ChallengeFriend
+              loggedInUser={ loggedInUser }
+              friends={ friends }
+              link={ `localhost:3000/quiz/${quizId}` }
+              score={ (Number(score.correct)/Number(score.total) * 100).toFixed(0) }
+            />
           </Grid>
           <Grid item xs={1} />
           <Grid item>

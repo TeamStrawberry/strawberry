@@ -598,7 +598,7 @@ app.get("/email/:friend/:user/:friendEmail/:message/:score/:link", (req, res) =>
     to: `${friendEmail}`,
     subject: `${friend}!!! YOU RECEIVED A QUIZ CHALLENGE FROM ${user}!!!`,
     html: `<h2>${message}</h2>
-           <h2>${user} SCORED: ${score}</h2>
+           <h2>${user} SCORED: ${score}%</h2>
            <a href="${link}"><button>GO TO QUIZ</button></a>`
   };
 

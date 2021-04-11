@@ -108,6 +108,7 @@ const UserQuizModal = ({loggedInUser, friends}) => {
         <TabPanel value = {value} index = {1}>
           <UserQuizHistoryTaken
             loggedInUser={ loggedInUser }
+            friends={friends}
           />
         </TabPanel>
       </div>

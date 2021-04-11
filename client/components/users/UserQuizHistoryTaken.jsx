@@ -96,6 +96,13 @@ function UserQuizHistoryTaken({ loggedInUser }) {
     history.push(`/quiz/${quizId}`);
   }
 
+  const calculateScore = (quiz) => {
+    const correct = Number(quiz.correct_answer_count);
+    const total = Number(quiz.correct_answer_count + quiz.incorrect_answer_count);
+    const score = ((correct / total) * 100).toFixed(0);
+    return score;
+  };
+
   useEffect(() => {
     retrieveQuizHistory();
     refreshFriends();
@@ -109,21 +116,66 @@ function UserQuizHistoryTaken({ loggedInUser }) {
       <Table className={ classes.table } stickyHeader={ true } aria-label='quizzes'>
         <TableHead>
           <TableRow>
-            <TableCell align="center" style={{ fontSize: 22 }}>Name</TableCell>
-            <TableCell align="center" style={{ fontSize: 22 }}>Category</TableCell>
-            <TableCell align="center" style={{ fontSize: 22 }}>Score</TableCell>
-            <TableCell align="center" style={{ fontSize: 22 }}>Date Taken</TableCell>
-            <TableCell align="center" style={{ fontSize: 22 }}>Actions</TableCell>
+            <TableCell
+              align="center"
+              style={{ fontSize: 22 }}
+            >
+              Name
+            </TableCell>
+            <TableCell
+              align="center"
+              style={{ fontSize: 22 }}
+            >
+              Category
+            </TableCell>
+            <TableCell
+              align="center"
+              style={{ fontSize: 22 }}
+            >
+              Score
+            </TableCell>
+            <TableCell
+              align="center"
+              style={{ fontSize: 22 }}
+            >
+              Date Taken
+            </TableCell>
+            <TableCell
+              align="center"
+              style={{ fontSize: 22 }}
+            >
+              Actions
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {quizList.length
             ? quizList.map(quiz => (
               <TableRow key={ quiz.id }>
-                <TableCell align="center" style={{ fontSize: 16 }}>{ quiz.name }</TableCell>
-                <TableCell align="center" style={{ fontSize: 16 }}>{ quiz.category }</TableCell>
-                <TableCell align="center" style={{ fontSize: 16 }}>{ quiz.correct_answer_count }/{ quiz.correct_answer_count + quiz.incorrect_answer_count } ({ (Number(quiz.correct_answer_count)/Number(quiz.correct_answer_count + quiz.incorrect_answer_count) * 100).toFixed(0) }%)</TableCell>
-                <TableCell align="center" style={{ fontSize: 16, width:'100%' }}>{ quiz.date_created.slice(0,10) }</TableCell>
+                <TableCell
+                  align="center"
+                  style={{ fontSize: 16 }}
+                >
+                  { quiz.name }
+                </TableCell>
+                <TableCell
+                  align="center"
+                  style={{ fontSize: 16 }}
+                >
+                  { quiz.category }
+                </TableCell>
+                <TableCell
+                  align="center"
+                  style={{ fontSize: 16 }}
+                >
+                  { quiz.correct_answer_count }/{ quiz.correct_answer_count + quiz.incorrect_answer_count } ({ calculateScore(quiz) }%)
+                </TableCell>
+                <TableCell
+                  align="center"
+                  style={{ fontSize: 16, width:'100%' }}
+                >
+                  { quiz.date_created.slice(0,10) }
+                </TableCell>
                 <TableCell
                   align="center"
                   style={{
@@ -138,7 +190,12 @@ function UserQuizHistoryTaken({ loggedInUser }) {
                     }}
                   >
                     <button name={ quiz.id_quiz } onClick={ handleRedirect } className={ classes.button } >Retake</button>
-                    <ChallengeFriend loggedInUser={ loggedInUser } friends={ friends } link={ `localhost:3000/quiz/${quiz.id_quiz}` }/>
+                    <ChallengeFriend
+                      loggedInUser={ loggedInUser }
+                      friends={ friends }
+                      link={ `localhost:3000/quiz/${quiz.id_quiz}`}
+                      score={ calculateScore(quiz) }
+                    />
                   </div>
                 </TableCell>
               </TableRow>
