@@ -46,7 +46,12 @@ function UserList({
   return (
     <Grid
       container
-      style={{ maxHeight: "25vh", overflowX: "auto", overflowY: "scroll" }}
+      style={{
+        maxHeight: "25vh",
+        minHeight: "25vh",
+        overflowX: "auto",
+        overflowY: "scroll",
+      }}
     >
       <Grid container direction="column" style={{ margin: 0, width: "100%" }}>
         {list.length ? list : "No results..."}

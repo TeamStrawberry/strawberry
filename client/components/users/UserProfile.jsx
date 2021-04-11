@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import FriendGrid from "../friends/FriendGrid";
-import ChallengeFriend from "../friends/ChallengeFriend";
 import UserAvatar from "./UserAvatar";
 import UserStats from "./UserStats";
 import UserRankings from "./UserRankings";
-import UserQuizHistoryTaken from "./UserQuizHistoryTaken";
 import UserQuizHistoryCreated from "./UserQuizHistoryCreated";
 import { getFriends } from "../../../api_master";
-import { Box, Grid, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 
 function UserProfile({ loggedInUser = { id: 1, username: "admin" } }) {
   const [friends, setFriends] = useState([]);
@@ -45,25 +43,13 @@ function UserProfile({ loggedInUser = { id: 1, username: "admin" } }) {
             refreshFriends={refreshFriends}
           />
         </Grid>
-        <Grid
-          item
-          xs={5}
-          container
-          direction="column"
-          display="flex"
-          spacing={2}
-        >
-          <UserStats loggedInUser={loggedInUser} />
-        </Grid>
-        <Grid
-          item
-          xs={5}
-          container
-          direction="column"
-          display="flex"
-          spacing={2}
-        >
-          <UserRankings loggedInUser={loggedInUser} />
+        <Grid item xs={10} container direction="column" spacing={2}>
+          <Grid item>
+            <UserStats loggedInUser={loggedInUser} />
+          </Grid>
+          <Grid item>
+            <UserRankings loggedInUser={loggedInUser} friends={friends} />
+          </Grid>
         </Grid>
 
         <UserQuizHistoryCreated loggedInUser={loggedInUser} friends={friends} />
