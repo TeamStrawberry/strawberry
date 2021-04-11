@@ -60,12 +60,6 @@ function UserStats({ loggedInUser, friends }) {
               />
             </Grid>
           </Grid>
-          {/* <p>{`Completed Quizzes ${stats.completedQuizzes}`}</p>
-          <p>{`Correct Answers ${stats.correctAnswers}`}</p>
-          <p>{`Avg Score ${stats.userAvgScore}`}</p>
-          <p>{`Avg Completed Quizzes ${stats.globalAvgQuizzesComp}`}</p>
-          <p>{`Avg Correct Answers ${stats.globalAvgCorrectAnswers}`}</p>
-          <p>{`Avg Avg Score ${stats.globalAvgScore}`}</p> */}
         </CardContent>
       </Card>
     </Grid>

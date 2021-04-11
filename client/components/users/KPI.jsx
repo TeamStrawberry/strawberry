@@ -10,7 +10,12 @@ import {
 
 function KPI({ title, primaryDesc, primaryMetric, primaryColor }) {
   return (
-    <Card style={{ minWidth: "200px", backgroundColor: "#D2FDFF" }}>
+    <Card
+      style={{
+        minWidth: "200px",
+        backgroundColor: "#d2fdff",
+      }}
+    >
       <CardHeader
         title={title}
         titleTypographyProps={{ variant: "body2" }}
