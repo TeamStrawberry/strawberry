@@ -8,7 +8,7 @@ const { rankingQueryMaker } = require("../helperFunctions.js");
 
 require("dotenv").config();
 
-const port = 3000;
+const port = 80;
 const app = express();
 
 app.use(express.json());

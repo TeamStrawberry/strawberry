@@ -1,6 +1,6 @@
 const axios = require("axios").default;
 
-const url = "http://localhost:3000";
+const url = "http://18.210.13.63:80";
 
 // Handles all GET requests, takes a route and a params
 function handleGetRequests(route, params) {
@@ -21,7 +21,14 @@ function getCreatedQuizQuestions(quizId) {
   return handleGetRequests(`/getcreatedquizquestions/${quizId}`);
 }
 
-function sendFriendEmail(user, friend, friendEmail, message = 'I challenge you', score, link) {
+function sendFriendEmail(
+  user,
+  friend,
+  friendEmail,
+  message = "I challenge you",
+  score,
+  link
+) {
   return handleGetRequests(
     `/email/${user}/${friend}/${friendEmail}/${message}/${score}/${link}`
   );
