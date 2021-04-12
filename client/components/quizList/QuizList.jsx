@@ -6,7 +6,7 @@ import QuizSearch from '../quizSearch/QuizSearch';
 import QuizListCard from './QuizListCard';
 import { getRandomQuizzes, getSelectQuizzes } from "../../../api_master";
 
-const QuizList = ({ criteria }) => {
+const QuizList = ({ criteria, loggedInUser }) => {
 
   const [quizzesBySelection, updateSelection] = useState([]);
   const [initialLoad, refreshPage] = useState(true);
@@ -15,8 +15,8 @@ const QuizList = ({ criteria }) => {
     if (initialLoad) {
       getRandomQuizzes()
         .then(quizzes => {
-          refreshPage(false)
-          updateSelection(quizzes.data.rows)
+          refreshPage(false);
+          updateSelection(quizzes.data.rows);
         })
         .catch(err => console.error(err))
     } else if (criteria) {
@@ -30,16 +30,18 @@ const QuizList = ({ criteria }) => {
     axiosGetQuizzesBySelection();
   }, [criteria]);
 
-
   return (
     <div>
       <Grid
         direction='column'
         container
-        alignItems='center'
+        item
         spacing={2}
+        xs={12}
+        style={{ display: "flex", alignItems: "center" }}
       >
-        { quizzesBySelection.map((quiz, index) =>  <QuizListCard quiz={ quiz } key={ index }/>) }
+        { quizzesBySelection.map((quiz, index) => <QuizListCard quiz={ quiz } key={ index } loggedInUser={ loggedInUser } />)
+        }
       </Grid>
     </div>
   )

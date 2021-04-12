@@ -21,9 +21,9 @@ function getCreatedQuizQuestions(quizId) {
   return handleGetRequests(`/getcreatedquizquestions/${quizId}`);
 }
 
-function sendFriendEmail(user, friend, friendEmail, message) {
+function sendFriendEmail(user, friend, friendEmail, message = 'I challenge you', score, link) {
   return handleGetRequests(
-    `/email/${user}/${friend}/${friendEmail}/${message}`
+    `/email/${user}/${friend}/${friendEmail}/${message}/${score}/${link}`
   );
 }
 
@@ -61,6 +61,14 @@ function getQuizGlobalRankings(quizId) {
 
 function getQuizFriendRankings(quizId, userId) {
   return handleGetRequests(`/quiz/rankings/friends/${quizId}/${userId}`);
+}
+
+function getOverallRankings(userId) {
+  return handleGetRequests(`/users/ranking/${userId}`);
+}
+
+function getOverallStats(userId) {
+  return handleGetRequests(`/users/stats/${userId}`);
 }
 
 // Handles all POST requests, takes a route, params, and data object
@@ -137,6 +145,8 @@ export {
   getQuizHistory,
   getQuizGlobalRankings,
   getQuizFriendRankings,
+  getOverallRankings,
+  getOverallStats,
   getRandomQuizzes,
   getSelectQuizzes,
   getSingleQuiz,

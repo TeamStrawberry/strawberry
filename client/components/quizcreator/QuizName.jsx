@@ -5,7 +5,12 @@ const QuizName = ({ name, handleNameChange }) => {
   return (
     <div>
       <form>
-        <TextField id="quiz-name" value={name} onChange={(e) => handleNameChange(e.target.value)} label="Quiz Name" />
+        <TextField
+          id="quiz-name"
+          value={name}
+          onChange={(e) => handleNameChange(e.target.value)}
+          label="Quiz Name"
+        />
       </form>
     </div>
   )

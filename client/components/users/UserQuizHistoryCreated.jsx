@@ -1,8 +1,8 @@
 import { Grid, Card, CardContent, CardHeader, Button, Modal } from "@material-ui/core";
 import React, { useState } from "react";
-import UserQuizModal from '../quizcreator/UserQuizModal.jsx';
+import UserQuizModal from './UserQuizModal.jsx';
 
-function UserQuizHistoryCreated() {
+function UserQuizHistoryCreated({loggedInUser, friends}) {
 
   const [open, setOpen] = useState(false);
   const [userCreatedQuizzes, setUserCreatedQuizzes] = useState([]);
@@ -15,24 +15,28 @@ function UserQuizHistoryCreated() {
     setOpen(false);
   };
 
+
   return (
     <Grid item xs>
-      <Card style={{ height: "100%" }}>
-        <CardHeader
-          title="Quizzes Created"
-          titleTypographyProps={{ variant: "body2" }}
-          style={{ padding: 10 }}
-        />
-        <CardContent></CardContent>
-      </Card>
-      <Button onClick = {handleOpen}>Click here to open modal</Button>
-       <Modal
+      <Button
+        variant = 'contained'
+        onClick = {handleOpen}
+        style = {{
+          backgroundColor: '#D2FDFF'
+        }}
+      >
+        View My Quizzes
+      </Button>
+      <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        <UserQuizModal />
+        <UserQuizModal
+          loggedInUser = {loggedInUser}
+          friends = {friends}
+        />
       </Modal>
     </Grid>
   );

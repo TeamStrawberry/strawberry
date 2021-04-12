@@ -4,17 +4,20 @@ import axios from 'axios';
 import QuizHistoryDisplay from './QuizHistoryDisplay.jsx';
 import QuizEditor from './QuizEditor.jsx';
 const { getUserQuizHistory, getCreatedQuizQuestions } = require('../../../api_master.js');
+import '../../../dist/stylesheet.css'
 
-const CreatedQuizHistory = ({ userId }) => {
+const CreatedQuizHistory = ({ loggedInUser, friends }) => {
   const [quizHistory, setQuizHistory] = useState([]);
   const [quizName, setQuizName] = useState('')
   const [questionsToEdit, setQuestionsToEdit] = useState([]);
   const [questionsLoaded, setQuestionsLoaded] = useState(false);
+  const [className, setClassName] = useState('created-quiz-list');
+  const [editorClassName, setEditorClassName] = useState('questions-container hide');
+  const [quizId, setQuizId] = useState(-1);
   // FIX THIS WHEN ID GETS PASSED DOWN
-  let tempId = 1;
-
+  // let tempId = 1;
   const getQuizHistory = () => {
-    getUserQuizHistory(tempId)
+    getUserQuizHistory(loggedInUser.id)
     .then((res) => {
       let quizzes = res.data.rows;
       setQuizHistory(quizzes);
@@ -32,6 +35,8 @@ const CreatedQuizHistory = ({ userId }) => {
       setQuizName(quizName);
       setQuestionsToEdit(quizQuestions);
       setQuestionsLoaded(true);
+      setClassName('created-quiz-list hide')
+      setEditorClassName('questions-container')
     })
     .catch((err) => {
       console.error('Error', err)
@@ -39,30 +44,50 @@ const CreatedQuizHistory = ({ userId }) => {
   }
 
   const handleRenderingQuestions = (updateResponse) => {
-      let updatedQuestion = {
-        id: parseInt(updateResponse[1]),
-        question: updateResponse[2],
-        correct_answer: updateResponse[3],
-        incorrect_answers: updateResponse[4],
+    let updatedQuestion = {
+      id: parseInt(updateResponse[1]),
+      question: updateResponse[2],
+      correct_answer: updateResponse[3],
+      incorrect_answers: updateResponse[4],
+    }
+    let questionsCopy = questionsToEdit.slice();
+    for (let i = 0; i < questionsCopy.length; i++) {
+      if (questionsCopy[i].id === updatedQuestion.id) {
+        questionsCopy[i] = updatedQuestion;
+        break;
       }
-      let questionsCopy = questionsToEdit.slice();
-      for (let i = 0; i < questionsCopy.length; i++) {
-        if (questionsCopy[i].id === updatedQuestion.id) {
-          questionsCopy[i] = updatedQuestion;
-          break;
-        }
-      }
-      setQuestionsToEdit(questionsCopy);
+    }
+    setQuestionsToEdit(questionsCopy);
   };
 
+  const returnQuizList = (classText) => {
+    setClassName(classText)
+    setEditorClassName('questions-container hide')
+  }
+
   return (
-    <div>
-      Created Quiz History Display
-      <ul>
-        <QuizHistoryDisplay quizzes={quizHistory} getQuiz={handleEditQuizClick}/>
+    <div className = 'created-quiz-history-container'>
+      <ul
+        className = {className}
+        style = {{
+          listStyle: 'none'
+        }}
+      >
+        <QuizHistoryDisplay
+          quizzes={quizHistory}
+          getQuiz={handleEditQuizClick}
+          loggedInUser = {loggedInUser}
+          friends = {friends}
+        />
       </ul>
       {questionsLoaded
-        ? <QuizEditor questions={questionsToEdit} quizName={quizName} handleRenderingQuestions={handleRenderingQuestions}/>
+        ? <QuizEditor 
+            questions={questionsToEdit} 
+            quizName={quizName} 
+            handleRenderingQuestions={handleRenderingQuestions} 
+            returnQuizList={returnQuizList} 
+            editorClassName={editorClassName} 
+            userId={loggedInUser.id}/>
         : null
       }
     </div>

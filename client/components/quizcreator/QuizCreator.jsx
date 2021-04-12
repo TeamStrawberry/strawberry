@@ -3,27 +3,41 @@ import QuizOptions from './QuizOptions.jsx';
 import QuizQuestionsAndAnswers from './QuizQuestionsAndAnswers.jsx';
 import QuizSubmit from './QuizSubmit.jsx';
 import QuizBank from './QuizBank.jsx';
-// import CreatedQuizHistory from '../quizeditor/CreatedQuizHistory.jsx';
-const { createQuiz, createQuestion, getUserQuizHistory } = require('../../../api_master.js');
 import axios from 'axios';
+import { Grid, Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import theme from '../../theme.js';
+const { createQuiz, createQuestion, getUserQuizHistory } = require('../../../api_master.js');
 
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    textAlign: 'center',
+    color: theme.palette.text,
+    backgroundColor: theme.palette.background.paper,
+    border: '3px solid',
+    borderColor: theme.palette.text,
+    padding: '5px',
+    marginBottom: '16px'
+  }
+}))
 
-// TIER 3 - ALLOW USERS TO SUBMIT PHOTOS AND VIDEOS
-// TIER 2 - ENTERED DATA SHOULD PERSIST IF USER LEAVES CREATE QUIZ PAGE
 //pass in userid as prop in here
-const QuizCreator = () => {
+const QuizCreator = ({ user }) => {
+  const classes = useStyles();
+
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
   const [difficulty, setDifficulty] = useState('');
   const [quizOptionsLoaded, setQuizOptionsLoaded] = useState(false);
   const [quizTrackerCount, setQuizTrackerCount] = useState(0);
+  const [questionGrabbed, setQuestionGrabbed] = useState({});
 
-  let tempUserId = 1; //this will be removed when the user_id is passed down
+  let id_users = user.id;
   var dailyQuizCount = 0;
 
   //will trigger when track counter changes
   useEffect(() => {
-    getUserQuizHistory(tempUserId)
+    getUserQuizHistory(id_users)
       .then(res => {
         let today = new Date().toISOString().slice(0, 10);
         for (let i  = 0; i < res.data.rows.length; i++) {
@@ -35,27 +49,11 @@ const QuizCreator = () => {
       .catch(err => console.err('Error retrieving quiz count', err))
   }, [quizTrackerCount])
 
-  const handleNameChange = (name) => {
-    setName(name);
-  }
+  const handleNameChange = (name) => setName(name);
+  const handleCategoryChange = (categoryName) => setCategory(categoryName);
+  const handleDifficultyChange = (difficulty) => setDifficulty(difficulty);
+  const handleQuestionGrab = (question) => setQuestionGrabbed(question);
 
-  const handleCategoryChange = (categoryName) => {
-    setCategory(categoryName);
-  }
-
-  const handleDifficultyChange = (difficulty) => {
-    setDifficulty(difficulty);
-    setQuizOptionsLoaded(true);
-  }
-
-  const handleQuestionBankClick = (question) => {
-    // take question and prefill form
-    console.log(question);
-  }
-
-  // rerender page on submit or go to another page
-  // form validators only have either 2 or 4 answers no 3
-  // Quiz submit becomes clickable 'enabled' once all 3 options are entered
   const handleSubmit = () => {
     let allQuizQuestions = [];
 
@@ -71,6 +69,7 @@ const QuizCreator = () => {
       singleQnA.category = category;
       singleQnA.difficulty = difficulty;
       singleQnA.question = question;
+      singleQnA.id_users = id_users;
       singleQnA.correct_answer = correctAnswer;
       singleQnA.incorrect_answers = [incorrectAnswerA, incorrectAnswerB, incorrectAnswerC];
       let filteredAnswers = singleQnA.incorrect_answers.filter((answer) => {
@@ -84,7 +83,6 @@ const QuizCreator = () => {
         singleQnA.type = 'multiple';
       }
       singleQnA.incorrect_answers = filteredAnswers;
-      // user id <-- AWAITING
       if (singleQnA.question.length) {
         allQuizQuestions.push(singleQnA);
       }
@@ -92,7 +90,7 @@ const QuizCreator = () => {
     let errors = false
 
     allQuizQuestions.forEach((question) => {
-      if (!question.correct_answer) {
+      if (!question.correct_answer.length) {
         errors = true
       }
       if (question.incorrect_answers.length === 2) {
@@ -109,7 +107,7 @@ const QuizCreator = () => {
       return
     }
 
-    createQuiz({name, category, difficulty, id_users: 1})
+    createQuiz({ name, category, difficulty, id_users })
       .then(res => {
         let quizId = res.data.rows[0].id;
         setQuizTrackerCount(quizTrackerCount + 1)
@@ -118,13 +116,14 @@ const QuizCreator = () => {
       .then(quizId => {
         allQuizQuestions.forEach(quizQuestion => {
           quizQuestion.id_quiz = quizId;
-          quizQuestion.id_users = 1;
           createQuestion(quizQuestion)
             .then (res => {
               console.log('Quiz question saved!')
             })
             .catch(err => console.error('Error. Cannot create questions', err))
           })
+        location.reload();
+        alert('Quiz Submitted!');
       })
       .catch(err => console.error('Error. Cannot create quiz', err))
   }
@@ -136,38 +135,64 @@ const QuizCreator = () => {
     ? errorMessage = <h2 style = {{color: 'red'}}>DAILY LIMIT REACHED. CANNOT CREATE ANYMORE QUIZZES </h2>
     : quizCreator =
       <div className = 'quiz-creator'>
-        <QuizOptions
-          handleCategoryChange={handleCategoryChange}
-          handleDifficultyChange={handleDifficultyChange}
-          handleNameChange={handleNameChange}
-          category={category}
-          difficulty={difficulty}
-          name={name}
-        />
-        {quizOptionsLoaded ?
-          <div>
-            <QuizSubmit handleSubmit={handleSubmit}/>
-              <p>
-                Insert Directions Here
-              </p>
-            <QuizBank
-              category = {category}
-              handleQuestionBankClick = {handleQuestionBankClick}
-            />
-            <QuizQuestionsAndAnswers />
-          </div> :
-          <div>
-            Please Select Quiz Options
-          </div>
-        }
+        <h2>Quiz Creator</h2>
+        <h4 className = 'quiz-count'>Total Quizzes Created Today: {quizTrackerCount}</h4>
+        <Grid
+          container
+          spacing={4}
+          justify='center'
+          alignItems='flex-start'
+        >
+          <Grid
+            item
+            xs={4}
+          >
+            <Paper className={classes.paper} >
+              <h3>Select Quiz Options</h3>
+              <QuizOptions
+                handleCategoryChange={handleCategoryChange}
+                handleDifficultyChange={handleDifficultyChange}
+                handleNameChange={handleNameChange}
+                category={category}
+                difficulty={difficulty}
+                name={name}
+              />
+              <QuizSubmit
+                handleSubmit={handleSubmit}
+                name={name}
+                category={category}
+                difficulty={difficulty}
+              />
+            </Paper>
+            <Paper
+              className={classes.paper}
+              style={{ maxHeight: "34.90vh", overflowX: "auto", overflowY: "scroll" }}
+            >
+              <h4>Questions Bank</h4>
+              <QuizBank
+                category = {category}
+                handleQuestionGrab={handleQuestionGrab}
+              />
+            </Paper>
+          </Grid>
+          <Grid
+            item
+            xs={8}
+          >
+            <Paper
+              className={classes.paper}
+              style={{ maxHeight: "70vh", overflowX: "auto", overflowY: "scroll" }}
+            >
+              <QuizQuestionsAndAnswers />
+            </Paper>
+          </Grid>
+        </Grid>
       </div>
 
   return (
     <div className = 'quiz-creator-container'>
-      <h2 className = 'quiz-count'>Total Quizzes Created Today: {quizTrackerCount}</h2>
       {errorMessage}
       {quizCreator}
-        {/* <CreatedQuizHistory /> */}
     </div>
   )
 }

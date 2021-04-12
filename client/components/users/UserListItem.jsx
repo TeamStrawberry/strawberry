@@ -5,6 +5,13 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import AddIcon from "@material-ui/icons/Add";
 import { createFriendship, removeFriendship } from "../../../api_master";
 import CheckIcon from "@material-ui/icons/Check";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme = theme) => ({
+  checkMark: {
+    color: 'green'
+  }
+}));
 
 function UserListItem({
   loggedInUser,
@@ -14,6 +21,9 @@ function UserListItem({
   addChallenger,
   challengers,
 }) {
+
+  const classes = useStyles();
+
   const icon = () => {
     if (variant === "add_friend") {
       return (
@@ -30,7 +40,7 @@ function UserListItem({
     if (variant === "challenge") {
       return (
         <IconButton onClick={(e) => addChallenger(user)}>
-          {challengers[user.id] ? <CheckIcon /> : <AddIcon />}
+          {challengers[user.id] ? <CheckIcon className={classes.checkMark}/> : <AddIcon />}
         </IconButton>
       );
     }

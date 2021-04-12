@@ -33,7 +33,7 @@ function FriendGrid({ loggedInUser, friends, refreshFriends }) {
     } else if (!loading) {
       refreshGrid();
     }
-  }, [friends, loading]);
+  }, [loggedInUser, friends, loading]);
 
   return (
     <Grid item container direction="column">

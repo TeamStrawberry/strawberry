@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme = theme) => ({
   modal: {
     position: "absolute",
     width: "50%",
+    minHeight: "50vh",
     backgroundColor: theme.palette.background.paper,
     border: "5px solid",
     borderColor: theme.palette.secondary.main,
@@ -25,6 +26,20 @@ function SeeAllFriends({ loggedInUser, friends, refresh }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  var handleSearch = (searchTerm) => {
+    if (searchTerm.length > 2) {
+      setSearchTerm(searchTerm);
+    } else {
+      setSearchTerm("");
+    }
+    return;
+  };
+
+  var filteredFriends = friends
+    .filter((u) => u.username.toLowerCase().includes(searchTerm.toLowerCase()))
+    .slice(0);
 
   const body = (
     <Grid container className={classes.modal} direction="column" spacing={3}>
@@ -34,13 +49,13 @@ function SeeAllFriends({ loggedInUser, friends, refresh }) {
         </h3>
       </Grid>
       <Grid item>
-        <UserSearch />
+        <UserSearch handleSearch={handleSearch} />
       </Grid>
       <Grid item>
         <UserList
           loggedInUser={loggedInUser}
           variant="show_friends"
-          list={friends}
+          list={filteredFriends}
           refreshList={refresh}
         />
       </Grid>

@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme = theme) => ({
   modal: {
     position: "absolute",
     width: "50%",
+    minHeight: "50vh",
     backgroundColor: theme.palette.background.paper,
     border: "5px solid",
     borderColor: theme.palette.secondary.main,
@@ -27,6 +28,16 @@ function AddFriend({ loggedInUser, refresh }) {
   const [strangers, setStrangers] = useState([]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  var handleSearch = (searchTerm) => {
+    if (searchTerm.length > 2) {
+      setSearchTerm(searchTerm);
+    } else {
+      setSearchTerm("");
+    }
+    return;
+  };
 
   var refreshStrangers = () => {
     getStrangers(loggedInUser.id)
@@ -37,6 +48,10 @@ function AddFriend({ loggedInUser, refresh }) {
   };
   refreshStrangers = refreshStrangers.bind(this);
 
+  var filteredStrangers = strangers
+    .filter((u) => u.username.toLowerCase().includes(searchTerm.toLowerCase()))
+    .slice(0);
+
   useEffect(() => {
     refreshStrangers();
     return () => {
@@ -46,19 +61,19 @@ function AddFriend({ loggedInUser, refresh }) {
 
   const body = (
     <Grid container className={classes.modal} direction="column" spacing={3}>
-      <Grid item>
+      <Grid item xs={12}>
         <h3 id="add-friend-modal-title" style={{ margin: 0 }}>
           Add Friends
         </h3>
       </Grid>
-      <Grid item>
-        <UserSearch />
+      <Grid item xs={12}>
+        <UserSearch handleSearch={handleSearch} />
       </Grid>
-      <Grid item>
+      <Grid item xs={12}>
         <UserList
           loggedInUser={loggedInUser}
           variant="add_friend"
-          list={strangers}
+          list={filteredStrangers}
           refreshList={refreshStrangers}
         />
       </Grid>

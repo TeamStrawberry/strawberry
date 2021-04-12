@@ -4,6 +4,8 @@ const { pool } = require("../db/pool.js");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const nodemailer = require("nodemailer");
+const { rankingQueryMaker } = require("../helperFunctions.js");
+
 require("dotenv").config();
 
 const port = 3000;
@@ -172,6 +174,7 @@ app.put("/revisequestion/:id", async (req, res) => {
       question,
       correct_answer,
       incorrect_answers,
+      //Reminder: quizId and userId in req body if needed
     } = req.body;
 
     const reviseQuestion = await pool.query(
@@ -213,8 +216,10 @@ app.get("/quiz/:id", async (req, res) => {
   try {
     const quizId = req.params.id;
     const retrieveQuiz = await pool.query(
-      `SELECT * FROM questions
-      WHERE id_quiz = ${quizId}`
+      `SELECT *
+      FROM questions
+      INNER JOIN quizzes
+      ON (quizzes.id = questions.id_quiz AND questions.id_quiz = ${quizId})`
     );
     res.send(retrieveQuiz);
   } catch (err) {
@@ -340,16 +345,18 @@ app.get("/quizzes/:criteria", async (req, res) => {
     const difficulties = ["easy", "medium", "hard"];
     if (req.params.criteria === "new") {
       const getNewQuizzes = await pool.query(
-        "SELECT * FROM quizzes ORDER BY date_created DESC"
+        "SELECT * FROM quizzes ORDER BY date_created DESC LIMIT 10"
       );
       res.send(getNewQuizzes);
     } else if (req.params.criteria === "hot") {
       const getHotQuizzes = await pool.query(
-        `SELECT q.id, q.name, COUNT(c.id) AS taken_count
+        `SELECT q.id, q.name, q.difficulty, q.category, COUNT(c.id) AS taken_count
         FROM user_completed_quizzes c
         JOIN quizzes q ON c.id_quiz = q.id
-        GROUP BY q.id ORDER BY taken_count desc`
+        GROUP BY q.id ORDER BY taken_count desc
+        LIMIT 10`
       );
+      res.send(getHotQuizzes.rows);
     } else if (difficulties.indexOf(req.params.criteria) > 0) {
       const getEasyQuizzes = await pool.query(
         `SELECT * FROM quizzes WHERE difficulty = '${req.params.criteria}'`
@@ -442,7 +449,6 @@ app.get("/friends/:userId", async (req, res) => {
 
 //get all users who are strangers to a user
 app.get("/strangers/:userId", async (req, res) => {
-  console.log("getStrangers");
   try {
     const getUsers = await pool.query(
       `SELECT u.*
@@ -477,38 +483,137 @@ app.get("/users", async (req, res) => {
   }
 });
 
-// CHALLENGE FRIEND
-app.get("/email/:friend/:user/:friendEmail/:message", (req, res) => {
-  let friend = req.params.friend;
-  let user = req.params.user;
-  let friendEmail = req.params.friendEmail;
-  let message = req.params.message;
+//get users overall ranking
+app.get("/users/ranking/:userId", async (req, res) => {
+  let promises = [];
+  let results = {};
+  let userId = req.params.userId;
 
-  let transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.MAIL_USER,
-      pass: process.env.MAIL_PASSWORD,
-    },
-  });
+  try {
+    promises.push(
+      pool
+        .query(rankingQueryMaker(userId, "friends", "percent_rank"))
+        .then((rankings) => {
+          results.friendPercentile = rankings.rows[0].rank;
+        })
+    );
 
-  let mailOptions = {
-    from: process.env.MAIL_USER,
-    to: `${friendEmail}`,
-    subject: `YOU RECEIVED A QUIZ CHALLENGE FROM ${user}!!!`,
-    text: `${message}`,
-  };
+    promises.push(
+      pool
+        .query(rankingQueryMaker(userId, "friends", "rank"))
+        .then((rankings) => {
+          results.friendRank = rankings.rows[0].rank;
+        })
+    );
 
-  transporter.sendMail(mailOptions, (err, data) => {
-    if (err) {
-      console.log("ERROR MAILING: ", err);
-    } else {
-      console.log("EMAIL SENT");
-    }
-  });
+    promises.push(
+      pool
+        .query(rankingQueryMaker(userId, "global", "percent_rank"))
+        .then((rankings) => {
+          results.globalPercentile = rankings.rows[0].rank;
+        })
+    );
+
+    promises.push(
+      pool
+        .query(rankingQueryMaker(userId, "global", "rank"))
+        .then((rankings) => {
+          results.globalRank = rankings.rows[0].rank;
+        })
+    );
+
+    Promise.all(promises).then(() => res.send(results));
+  } catch (err) {
+    res.status(500).send(err);
+  }
 });
 
+//get users stats and avg stats
+app.get("/users/stats/:userId", async (req, res) => {
+  let promises = [];
+  let results = {};
+  let userId = req.params.userId;
+
+  try {
+    promises.push(
+      pool
+        .query(
+          `select count(distinct id_quiz) as completed_quizzes,
+                sum(correct_answer_count) as correct_answers,
+                1.*sum(correct_answer_count)/(sum(correct_answer_count) + sum(incorrect_answer_count)) as avg_score
+                from user_completed_quizzes
+                where id_users = ${userId};`
+        )
+        .then((stats) => {
+          results.completedQuizzes = stats.rows[0].completed_quizzes;
+          results.correctAnswers = stats.rows[0].correct_answers;
+          results.userAvgScore = stats.rows[0].avg_score;
+        })
+    );
+
+    promises.push(
+      pool
+        .query(
+          `select avg(completed_quizzes) as avg_quizzes_complete,
+                avg(correct_answers) as avg_correct_answers,
+                avg(avg_score) as avg_avg_score
+                from (select id_users,
+                      count(distinct id_quiz) as completed_quizzes,
+                      sum(correct_answer_count) as correct_answers,
+                      1.*sum(correct_answer_count)/(sum(correct_answer_count) + sum(incorrect_answer_count)) as avg_score
+                      from user_completed_quizzes group by 1) user_stats;`
+        )
+        .then((stats) => {
+          results.globalAvgQuizzesComp = stats.rows[0].avg_quizzes_complete;
+          results.globalAvgCorrectAnswers = stats.rows[0].avg_correct_answers;
+          results.globalAvgScore = stats.rows[0].avg_avg_score;
+        })
+    );
+
+    Promise.all(promises).then(() => res.send(results));
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+// CHALLENGE FRIEND
+app.get(
+  "/email/:friend/:user/:friendEmail/:message/:score/:link",
+  (req, res) => {
+    let friend = req.params.friend;
+    let user = req.params.user;
+    let friendEmail = req.params.friendEmail;
+    let message = req.params.message;
+    let score = req.params.score;
+    let link = decodeURIComponent(req.params.link);
+
+    transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASSWORD,
+      },
+    });
+
+    let mailOptions = {
+      from: process.env.MAIL_USER,
+      to: `${friendEmail}`,
+      subject: `${friend}!!! YOU RECEIVED A QUIZ CHALLENGE FROM ${user}!!!`,
+      html: `<h2>${message}</h2>
+           <h2>${user} SCORED: ${score}%</h2>
+           <a href="${link}"><button>GO TO QUIZ</button></a>`,
+    };
+
+    transporter.sendMail(mailOptions, (err, data) => {
+      if (err) {
+        console.log("ERROR MAILING: ", err);
+      } else {
+        console.log("EMAIL SENT");
+      }
+    });
+  }
+);
+
 app.listen(port, () => {
-  console.log(`You are listening on port ${port}`);
-  console.log(process.env.DB_ENDPOINT);
+  console.log(`You are listening on port${port}`);
 });
