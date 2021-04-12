@@ -1,11 +1,9 @@
 const axios = require("axios").default;
 
-const url = "http://18.210.13.63:5000";
-
 // Handles all GET requests, takes a route and a params
 function handleGetRequests(route, params) {
   let options;
-  options = { method: "get", url: url + route, params: params };
+  options = { method: "get", url: route, params: params };
   return axios(options);
 }
 
@@ -82,7 +80,7 @@ function getOverallStats(userId) {
 function handlePostRequests(route, data = {}, params = {}) {
   let options = {
     method: "post",
-    url: url + route,
+    url: route,
     headers: {
       "Content-Type": "application/json",
     },
@@ -112,7 +110,7 @@ function createQuestion(questionsData) {
 function handlePutRequests(route, data = {}, params = {}) {
   let options = {
     method: "put",
-    url: url + route,
+    url: route,
     headers: {
       "Content-Type": "application/json",
     },
@@ -130,7 +128,7 @@ function reviseQuizQuestion(questionId, newQuestionData) {
 function handleDeleteRequests(route, params) {
   let options = {
     method: "delete",
-    url: url + route,
+    url: route,
     params: params,
   };
   return axios(options);
