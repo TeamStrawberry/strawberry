@@ -1,6 +1,6 @@
 const axios = require("axios").default;
 
-const url = "http://18.210.13.63:80";
+const url = "http://18.210.13.63:5000";
 
 // Handles all GET requests, takes a route and a params
 function handleGetRequests(route, params) {
