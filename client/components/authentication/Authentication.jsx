@@ -221,7 +221,7 @@ function Authentication (props) {
   if (renderSignUp) {
     return (
       <Box>
-        <Button variant="h6" onClick={handleOpen} size="small" style={{ textDecoration: 'none', color: 'unset' }}>
+        <Button variant="h6" onClick={handleOpen} size="small" style={{ textDecoration: 'none'}}>
           Login/Sign-Up
         </Button>
         <Modal
@@ -234,7 +234,7 @@ function Authentication (props) {
   }
   return (
     <Box>
-      <Button variant="h6" onClick={handleOpen} size="small" style={{ textDecoration: 'none', color: 'unset' }}>
+      <Button variant="h6" onClick={handleOpen} size="small" style={{ textDecoration: 'none'}}>
         Login/Sign-Up
       </Button>
       <Modal
