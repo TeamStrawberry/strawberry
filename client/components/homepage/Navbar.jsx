@@ -17,7 +17,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Authentication from '../authentication/Authentication.jsx'
-
+import logo from '"../../../dist/InterMingle.png'
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
@@ -30,14 +30,30 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
-    paddingRight: theme.spacing(20),
+    marginRight: theme.spacing(20),
+    color: theme.palette.text,
   },
   intro: {
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
-    paddingLeft: theme.spacing(20),
+    color: theme.palette.text,
+    paddingLeft: theme.spacing(10),
+    marginTop: theme.spacing(1),
+    '&:hover': {
+      backgroundColor: 'transparent',
+    },
+    color: theme.palette.text,
+  },
+  logo: {
+    display: 'none',
+    [theme.breakpoints.up('sm')]: {
+      display: 'block',
+    },
+    '&:hover': {
+      backgroundColor: 'transparent',
+    },
   },
   inputRoot: {
     color: 'inherit',
@@ -106,31 +122,32 @@ export default function Navbar(props) {
   if (props.user.username) {
     return (
       <div className={classes.grow}>
-      <AppBar position="static">
-        <Toolbar>
-          <Button component={Link} to={'/'} className={classes.title} variant="h6" style={{ textDecoration: 'none', color: 'unset' }} noWrap>
-            InterMingle
+         <Button component={Link} to={'/'} className={classes.logo} variant="h6" style={{ textDecoration: 'none'}}>
+          <img src = {logo} style = {{height:'15%', width:'15%'}} ></img>
           </Button>
+      <AppBar position="static" style = {{marginBottom:'20px', background: 'transparent', boxShadow: 'none'}}>
+        <Toolbar>
 
-          <Button component={Link} to={'/quizzes'} className={classes.title} variant="h6" style={{ textDecoration: 'none', color: 'unset' }} noWrap>
+
+          <Button component={Link} to={'/quizzes'} className={classes.title} variant="h6" style={{ textDecoration: 'none'}}>
             Quizzes/Categories
 
           </Button>
-          <Button component={Link} to={'/create'} className={classes.title} variant="h6" style={{ textDecoration: 'none', color: 'unset' }} noWrap>
+          <Button component={Link} to={'/create'} className={classes.title} variant="h6" style={{ textDecoration: 'none', marginLeft:'300px'}}>
             Create A Quiz
           </Button>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <div>
-              <Typography
+            <div style={{display:'flex', flexDirection:'row'}}>
+
+              <Button
               className={classes.intro}
               variant="h6"
-              style={{ textDecoration: 'none', color: 'unset' }}
-              noWrap
+              style={{ textDecoration: 'none'}}
+              onClick={handleProfileMenuOpen}
               >
               Hello, {props.user.username}!
-              </Typography>
-
+              </Button>
               <IconButton
               edge="end"
               aria-label="account of current user"
@@ -152,17 +169,16 @@ export default function Navbar(props) {
   //otherwise return a navbar where all the links just open up the login modal, except the home button, which can stay the same
   return (
     <div className={classes.grow}>
-    <AppBar position="static">
+      <Button component={Link} to={'/'} className={classes.logo} variant="h6" style={{ textDecoration: 'none'}}>
+          <img src = {logo} style = {{height:'15%', width:'15%'}} ></img>
+          </Button>
+    <AppBar position="static" style = {{marginBottom:'20px', background: 'transparent', boxShadow: 'none'}}>
       <Toolbar>
-        <Button component={Link} to={'/'} className={classes.title} variant="h6" style={{ textDecoration: 'none', color: 'unset' }} noWrap>
-          InterMingle
-        </Button>
-
-        <Button onClick={() => {props.setLoginOpen(true)}} className={classes.title} variant="h6" style={{ textDecoration: 'none', color: 'unset' }} noWrap>
+        <Button onClick={() => {props.setLoginOpen(true)}} className={classes.title} variant="h6" style={{ textDecoration: 'none'}} >
           Quizzes/Categories
         </Button>
 
-        <Button onClick={() => {props.setLoginOpen(true)}} className={classes.title} variant="h6" style={{ textDecoration: 'none', color: 'unset' }} noWrap>
+        <Button onClick={() => {props.setLoginOpen(true)}} className={classes.title} variant="h6" style={{ textDecoration: 'none', marginLeft:'300px'}} >
           Create A Quiz
         </Button>
 
