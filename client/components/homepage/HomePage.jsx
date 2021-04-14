@@ -1,24 +1,11 @@
 import React from 'react';
-import { Grid,Paper } from "@material-ui/core";
-import { makeStyles } from '@material-ui/core/styles';
+import { Grid } from "@material-ui/core";
 import Trending from './Trending.jsx';
 import New from './New.jsx';
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    textAlign: 'center',
-    color: theme.palette.text,
-    backgroundColor: theme.palette.background.paper,
-    border: '10px solid',
-    borderColor: theme.palette.text,
-    padding: '5px',
-    marginBottom: '16px'
-  }
-}))
 
 
 const HomePage = ({loggedInUser, setLoginOpen}) => {
-  const classes = useStyles();
   return (
     <div>
       <Grid
