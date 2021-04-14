@@ -5,7 +5,7 @@ import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap';
 
 const useStyles = makeStyles((theme) => ({
   question: {
-    border: '1px dashed',
+    border: '1px solid',
     borderColor: theme.palette.text,
     draggable: 'draggable',
     padding: '2px',

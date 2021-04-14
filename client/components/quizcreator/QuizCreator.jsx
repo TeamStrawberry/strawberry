@@ -122,7 +122,7 @@ const QuizCreator = ({ user }) => {
             })
             .catch(err => console.error('Error. Cannot create questions', err))
           })
-        location.reload();
+        // location.reload();
         alert('Quiz Submitted!');
       })
       .catch(err => console.error('Error. Cannot create quiz', err))

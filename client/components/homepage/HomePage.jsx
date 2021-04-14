@@ -1,22 +1,44 @@
 import React from 'react';
-import { Grid } from "@material-ui/core";
+import { Grid,Paper } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
 import Trending from './Trending.jsx';
 import New from './New.jsx';
 
-const HomePage = ({loggedInUser, setLoginOpen}) => {
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    textAlign: 'center',
+    color: theme.palette.text,
+    backgroundColor: theme.palette.background.paper,
+    border: '10px solid',
+    borderColor: theme.palette.text,
+    padding: '5px',
+    marginBottom: '16px'
+  }
+}))
 
+
+const HomePage = ({loggedInUser, setLoginOpen}) => {
+  const classes = useStyles();
   return (
     <div>
-      <Grid>
-      <Grid item xs={12}>
-        <div style={{width:'50%'}}>
+      <Grid
+      container
+      direction="row"
+      justify="center"
+      alignItems="flex-start"
+      spacing = {3}
+      >
+      <Grid item xs={6}>
+        <div>
           <h3> TRENDING</h3>
         <Trending
           loggedInUser={loggedInUser}
           setLoginOpen={setLoginOpen}
         />
         </div>
-        <div style={{width:'50%'}}>
+      </Grid>
+      <Grid item xs = {6}>
+      <div>
           <h3>NEW</h3>
         <New
           loggedInUser={loggedInUser}
