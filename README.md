@@ -52,7 +52,7 @@ Those features are:
  - AWS EC2
 
  # Workflow
- For this project we maintained one master (deployed) branch, one staging branch, and added/deleted feature branches as needed. Sprint plans were tracked using [Trello] (https://trello.com/b/bjtybXS7/blue-ocean). When features were ready to be added into stage the following steps were taken:
+ For this project we maintained one master (deployed) branch, one staging branch, and added/deleted feature branches as needed. Sprint plans were tracked using [Trello](https://trello.com/b/bjtybXS7/blue-ocean). When features were ready to be added into stage the following steps were taken:
   1. Pull down the stage branch
   2. Merge local feature branch with local stage branch
   3. Validate that all features are still working correctly
