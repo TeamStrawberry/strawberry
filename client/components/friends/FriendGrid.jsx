@@ -19,7 +19,7 @@ function FriendGrid({ loggedInUser, friends, refreshFriends }) {
       var newFriendGrid = friends.map((friend) => {
         return (
           <Grid item>
-            <FriendGridItem friendName={friend.username} />
+            <FriendGridItem friend={friend} />
           </Grid>
         );
       });

@@ -9,8 +9,8 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme = theme) => ({
   checkMark: {
-    color: 'green'
-  }
+    color: "green",
+  },
 }));
 
 function UserListItem({
@@ -21,7 +21,6 @@ function UserListItem({
   addChallenger,
   challengers,
 }) {
-
   const classes = useStyles();
 
   const icon = () => {
@@ -40,7 +39,11 @@ function UserListItem({
     if (variant === "challenge") {
       return (
         <IconButton onClick={(e) => addChallenger(user)}>
-          {challengers[user.id] ? <CheckIcon className={classes.checkMark}/> : <AddIcon />}
+          {challengers[user.id] ? (
+            <CheckIcon className={classes.checkMark} />
+          ) : (
+            <AddIcon />
+          )}
         </IconButton>
       );
     }
@@ -67,7 +70,7 @@ function UserListItem({
       style={{ marginLeft: 5, marginRight: 5, maxWidth: "97%" }}
     >
       <Grid item container xs={2}>
-        <Avatar alt="user name" />
+        <Avatar src={user.avatar_url} alt="user name" />
       </Grid>
       <Grid
         item
