@@ -5,6 +5,15 @@ Intermingle is the latest, greatest, social quiz taking site serving up fresh ho
 See fresh and hot quizzes on the homepage!
 ![Intermingle homepage](https://github.com/TeamStrawberry/strawberry/blob/stage/images/homepage.png?raw=true)
 
+Take quizzes until your heart's content
+![Take a quiz](https://github.com/TeamStrawberry/strawberry/blob/stage/images/takeQuiz.png?raw=true)
+
+Think you can beat your friends? Challenge them to a quiz-off!
+![challenge friends](https://github.com/TeamStrawberry/strawberry/blob/stage/images/challengeFriend.png?raw=true)
+
+Are you an expert on a topic? Then make your own quiz and see if it's true
+![make a quiz](https://github.com/TeamStrawberry/strawberry/blob/stage/images/makeQuiz.png?raw=true)
+
 
 # Current Release
 We worked directly with our client to prioritize critical features for this initial release.
