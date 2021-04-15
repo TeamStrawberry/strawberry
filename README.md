@@ -61,6 +61,7 @@ Those features are:
   6. At the end of the sprint, stage is merged in master
 
 # Get Started
+  Our app is deployed! You can visit it at http://18.210.13.63:3000
   To run this on your own machine, execute the follwing commands from a terminal in the root folder:
     npm install
     npm run react-dev
