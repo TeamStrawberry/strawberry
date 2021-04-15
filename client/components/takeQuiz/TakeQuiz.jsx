@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     position: "fixed",
-    top: 100,
+    top: 210,
     left: 10,
     marginTop: 0,
     marginBottom: 0,
@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
   },
   body: {
     position: "fixed",
-    top: 210,
+    top: 320,
     left: 10,
     bottom: 5,
     maxHeight: "100%",
