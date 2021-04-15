@@ -220,7 +220,7 @@ app.get("/quiz/:id", async (req, res) => {
       FROM questions
       INNER JOIN quizzes
       ON (quizzes.id = questions.id_quiz AND questions.id_quiz = ${quizId})`
-    )
+    );
     res.send(retrieveQuiz);
   } catch (err) {
     res.status(500).send(err);
@@ -577,39 +577,42 @@ app.get("/users/stats/:userId", async (req, res) => {
 });
 
 // CHALLENGE FRIEND
-app.get("/email/:friend/:user/:friendEmail/:message/:score/:link", (req, res) => {
-  let friend = req.params.friend;
-  let user = req.params.user;
-  let friendEmail = req.params.friendEmail;
-  let message = req.params.message;
-  let score = req.params.score;
-  let link = decodeURIComponent(req.params.link);
+app.get(
+  "/email/:friend/:user/:friendEmail/:message/:score/:link",
+  (req, res) => {
+    let friend = req.params.friend;
+    let user = req.params.user;
+    let friendEmail = req.params.friendEmail;
+    let message = req.params.message;
+    let score = req.params.score;
+    let link = decodeURIComponent(req.params.link);
 
-   transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.MAIL_USER,
-      pass: process.env.MAIL_PASSWORD,
-    },
-  });
+    transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASSWORD,
+      },
+    });
 
-  let mailOptions = {
-    from: process.env.MAIL_USER,
-    to: `${friendEmail}`,
-    subject: `${friend}!!! YOU RECEIVED A QUIZ CHALLENGE FROM ${user}!!!`,
-    html: `<h2>${message}</h2>
+    let mailOptions = {
+      from: process.env.MAIL_USER,
+      to: `${friendEmail}`,
+      subject: `${friend}!!! YOU RECEIVED A QUIZ CHALLENGE FROM ${user}!!!`,
+      html: `<h2>${message}</h2>
            <h2>${user} SCORED: ${score}%</h2>
-           <a href="${link}"><button>GO TO QUIZ</button></a>`
-  };
+           <a href="${link}"><button>GO TO QUIZ</button></a>`,
+    };
 
-  transporter.sendMail(mailOptions, (err, data) => {
-    if (err) {
-      console.log("ERROR MAILING: ", err);
-    } else {
-      console.log("EMAIL SENT");
-    }
-  });
-});
+    transporter.sendMail(mailOptions, (err, data) => {
+      if (err) {
+        console.log("ERROR MAILING: ", err);
+      } else {
+        console.log("EMAIL SENT");
+      }
+    });
+  }
+);
 
 app.listen(port, () => {
   console.log(`You are listening on port${port}`);

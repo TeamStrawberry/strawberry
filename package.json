@@ -6,6 +6,7 @@
   "scripts": {
     "react-dev": "webpack -d --watch",
     "start": "nodemon server/index.js",
+    "build": "webpack",
     "seed": "psql postgres < db/schema.sql",
     "test": "jest"
   },
