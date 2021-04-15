@@ -10,8 +10,8 @@ import {
   Avatar,
 } from "@material-ui/core";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
-import ClearIcon from '@material-ui/icons/Clear';
-import IconButton from '@material-ui/core/IconButton'
+import ClearIcon from "@material-ui/icons/Clear";
+import IconButton from "@material-ui/core/IconButton";
 import UserList from "../users/UserList";
 import UserSearch from "../users/UserSearch";
 import { sendFriendEmail } from "../../../api_master";
@@ -32,23 +32,41 @@ const useStyles = makeStyles((theme = theme) => ({
   },
   iconClose: {
     "&:hover $icon": {
-      color: 'red',
+      color: "red",
     },
     position: "absolute",
-    top: '1%',
-    left: '1%'
+    top: "1%",
+    left: "1%",
   },
   icon: {
-    color: 'black',
+    color: "black",
   },
 }));
 
-function ChallengeFriend({ loggedInUser, friends, link = "https://www.youtube.com/", score = 0 }) {
+function ChallengeFriend({
+  loggedInUser,
+  friends,
+  link = "https://www.youtube.com/",
+  score = 0,
+}) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [challengees, setChallengees] = useState([]);
   const [toChallenge, updateToChallenge] = useState([]);
-  const [challengeMessage, updateMessage] = useState('I challenge you');
+  const [challengeMessage, updateMessage] = useState("I challenge you");
+  const [searchTerm, setSearchTerm] = useState("");
+
+  var handleSearch = (searchTerm) => {
+    if (searchTerm.length > 2) {
+      setSearchTerm(searchTerm);
+    } else {
+      setSearchTerm("");
+    }
+    return;
+  };
+
+  var filteredFriends = friends
+    .filter((u) => u.username.toLowerCase().includes(searchTerm.toLowerCase()))
+    .slice(0);
 
   const handleOpen = () => {
     setOpen(true);
@@ -58,23 +76,9 @@ function ChallengeFriend({ loggedInUser, friends, link = "https://www.youtube.co
     setOpen(false);
   };
 
-  const challengeGroup = (
-    <AvatarGroup max={5} className={classes.small}>
-      {challengees.map((friend) => {
-        return (
-          <Avatar
-            key={friend.id}
-            alt={friend.username}
-            className={classes.small}
-          />
-        );
-      })}
-    </AvatarGroup>
-  );
-
   const addChallengers = (friend) => {
     updateToChallenge([friend]);
-  }
+  };
 
   const challengeFriends = (friends) => {
     for (let userId in friends[0]) {
@@ -83,26 +87,32 @@ function ChallengeFriend({ loggedInUser, friends, link = "https://www.youtube.co
       let user = loggedInUser.username;
       let safeLink = encodeURIComponent(link);
 
-      sendFriendEmail(friend, user, friendEmail, challengeMessage, score, safeLink);
+      sendFriendEmail(
+        friend,
+        user,
+        friendEmail,
+        challengeMessage,
+        score,
+        safeLink
+      );
     }
-  }
+  };
 
   const updateUserMessage = (e) => {
     updateMessage(e);
-  }
+  };
 
   const body = (
     <Grid container className={classes.modal} direction="column" spacing={3}>
       <Grid item>
         <IconButton
-            classes={{
-              root: classes.iconClose
+          classes={{
+            root: classes.iconClose,
           }}
-          onClick={e => handleClose()}
+          onClick={(e) => handleClose()}
         >
-          <ClearIcon className={classes.icon}/>
+          <ClearIcon className={classes.icon} />
         </IconButton>
-
       </Grid>
       <Grid item>
         <h2 id="challenge-modal-title" style={{ margin: 0 }}>
@@ -110,13 +120,13 @@ function ChallengeFriend({ loggedInUser, friends, link = "https://www.youtube.co
         </h2>
       </Grid>
       <Grid item>
-        <UserSearch />
+        <UserSearch handleSearch={handleSearch} />
       </Grid>
       <Grid item>
         <UserList
           loggedInUser={loggedInUser}
           variant="challenge"
-          list={friends}
+          list={filteredFriends}
           addChallengers={addChallengers}
         />
       </Grid>
@@ -129,16 +139,19 @@ function ChallengeFriend({ loggedInUser, friends, link = "https://www.youtube.co
           placeholder="Talk some trash..."
           variant="outlined"
           fullWidth
-          onChange={e => updateUserMessage(e.target.value)}
+          onChange={(e) => updateUserMessage(e.target.value)}
         />
       </Grid>
       <Grid item container direction="column" justify="center" spacing={5}>
         <Grid item container direction="row" justify="center">
-          <Grid item xs={4}>
-            {challengeGroup}
-          </Grid>
-          <Grid container item xs={8} justify="flex-end">
-            <Button variant="contained" color="primary" onClick={e => {challengeFriends(toChallenge), handleClose()}}>
+          <Grid container item xs={12} justify="flex-end">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={(e) => {
+                challengeFriends(toChallenge), handleClose();
+              }}
+            >
               Send Challenge Email
             </Button>
           </Grid>

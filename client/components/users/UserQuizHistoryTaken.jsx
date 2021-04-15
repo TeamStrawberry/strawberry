@@ -1,12 +1,20 @@
-import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core";
+import {
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useState, useEffect } from "react";
 import { getQuizHistory } from "../../../api_master";
 import { useHistory } from "react-router-dom";
-import ChallengeFriend from '../friends/ChallengeFriend.jsx';
-import { getFriends } from '../../../api_master';
+import ChallengeFriend from "../friends/ChallengeFriend.jsx";
+import { getFriends } from "../../../api_master";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   modal: {
     position: "absolute",
     width: "50%",
@@ -42,7 +50,7 @@ const useStyles = makeStyles(theme => ({
     cursor: "pointer",
     border: 0,
     margin: 0,
-  }
+  },
 }));
 
 function UserQuizHistoryTaken({ loggedInUser }) {
@@ -55,9 +63,10 @@ function UserQuizHistoryTaken({ loggedInUser }) {
   let history = useHistory();
 
   const retrieveQuizHistory = () => {
-    let quizIds = {}, uniqueQuizzes = [];
+    let quizIds = {},
+      uniqueQuizzes = [];
     getQuizHistory(loggedInUser.id)
-      .then(response => {
+      .then((response) => {
         let quizzes = response.data.rows;
         for (let i = 0; i < quizzes.length; i++) {
           if (!quizIds[quizzes[i].id_quiz]) {
@@ -67,38 +76,42 @@ function UserQuizHistoryTaken({ loggedInUser }) {
         }
         return uniqueQuizzes;
       })
-      .then(data => {
-        setQuizList(data)
-        setCount(data.length)
+      .then((data) => {
+        setQuizList(data);
+        setCount(data.length);
       })
-      .catch(err => {
-        console.error('Error: cannot retrieve user\'s quiz history from database', err)
-      })
+      .catch((err) => {
+        console.error(
+          "Error: cannot retrieve user's quiz history from database",
+          err
+        );
+      });
   };
 
   const refreshFriends = () => {
-    getFriends(loggedInUser.id)
-      .then(res => {
-        setFriends(res.data.rows)
-      })
-  }
+    getFriends(loggedInUser.id).then((res) => {
+      setFriends(res.data.rows);
+    });
+  };
 
   const handleOpen = () => {
     setShow(true);
-  }
+  };
 
   const handleClose = () => {
     setShow(false);
-  }
+  };
 
   const handleRedirect = (e) => {
     const quizId = e.target.name;
     history.push(`/quiz/${quizId}`);
-  }
+  };
 
   const calculateScore = (quiz) => {
     const correct = Number(quiz.correct_answer_count);
-    const total = Number(quiz.correct_answer_count + quiz.incorrect_answer_count);
+    const total = Number(
+      quiz.correct_answer_count + quiz.incorrect_answer_count
+    );
     const score = ((correct / total) * 100).toFixed(0);
     return score;
   };
@@ -107,101 +120,84 @@ function UserQuizHistoryTaken({ loggedInUser }) {
     retrieveQuizHistory();
     refreshFriends();
     return () => {
-      setFriends([])
-    }
-  }, [])
+      setFriends([]);
+    };
+  }, []);
 
   return (
     <TableContainer>
-      <Table className={ classes.table } stickyHeader={ true } aria-label='quizzes'>
+      <Table className={classes.table} stickyHeader={true} aria-label="quizzes">
         <TableHead>
           <TableRow>
-            <TableCell
-              align="center"
-              style={{ fontSize: 22 }}
-            >
+            <TableCell align="center" style={{ fontSize: 22 }}>
               Name
             </TableCell>
-            <TableCell
-              align="center"
-              style={{ fontSize: 22 }}
-            >
+            <TableCell align="center" style={{ fontSize: 22 }}>
               Category
             </TableCell>
-            <TableCell
-              align="center"
-              style={{ fontSize: 22 }}
-            >
+            <TableCell align="center" style={{ fontSize: 22 }}>
               Score
             </TableCell>
-            <TableCell
-              align="center"
-              style={{ fontSize: 22 }}
-            >
+            <TableCell align="center" style={{ fontSize: 22 }}>
               Date Taken
             </TableCell>
-            <TableCell
-              align="center"
-              style={{ fontSize: 22 }}
-            >
+            <TableCell align="center" style={{ fontSize: 22 }}>
               Actions
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {quizList.length
-            ? quizList.map(quiz => (
-              <TableRow key={ quiz.id }>
-                <TableCell
-                  align="center"
-                  style={{ fontSize: 16 }}
-                >
-                  { quiz.name }
-                </TableCell>
-                <TableCell
-                  align="center"
-                  style={{ fontSize: 16 }}
-                >
-                  { quiz.category }
-                </TableCell>
-                <TableCell
-                  align="center"
-                  style={{ fontSize: 16 }}
-                >
-                  { quiz.correct_answer_count }/{ quiz.correct_answer_count + quiz.incorrect_answer_count } ({ calculateScore(quiz) }%)
-                </TableCell>
-                <TableCell
-                  align="center"
-                  style={{ fontSize: 16, width:'100%' }}
-                >
-                  { quiz.date_created.slice(0,10) }
-                </TableCell>
-                <TableCell
-                  align="center"
-                  style={{
-                    fontSize: 16
-                  }}
-                >
-                  <div
-                    className='buttons'
+            ? quizList.map((quiz) => (
+                <TableRow key={quiz.id}>
+                  <TableCell align="center" style={{ fontSize: 16 }}>
+                    {quiz.name}
+                  </TableCell>
+                  <TableCell align="center" style={{ fontSize: 16 }}>
+                    {quiz.category}
+                  </TableCell>
+                  <TableCell align="center" style={{ fontSize: 16 }}>
+                    {quiz.correct_answer_count}/
+                    {quiz.correct_answer_count + quiz.incorrect_answer_count} (
+                    {calculateScore(quiz)}%)
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    style={{ fontSize: 16, width: "100%" }}
+                  >
+                    {quiz.date_created.slice(0, 10)}
+                  </TableCell>
+                  <TableCell
+                    align="center"
                     style={{
-                      display: 'flex',
-                      flexDirection: 'row'
+                      fontSize: 16,
                     }}
                   >
-                    <button name={ quiz.id_quiz } onClick={ handleRedirect } className={ classes.button } >Retake</button>
-                    <ChallengeFriend
-                      loggedInUser={ loggedInUser }
-                      friends={ friends }
-                      link={ `localhost:3000/quiz/${quiz.id_quiz}`}
-                      score={ calculateScore(quiz) }
-                    />
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))
-            : null
-          }
+                    <div
+                      className="buttons"
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <button
+                        name={quiz.id_quiz}
+                        onClick={handleRedirect}
+                        className={classes.button}
+                      >
+                        Retake
+                      </button>
+                      <ChallengeFriend
+                        loggedInUser={loggedInUser}
+                        friends={friends}
+                        link={`http://18.210.13.63:3000/quiz/${quiz.id_quiz}`}
+                        score={calculateScore(quiz)}
+                      />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))
+            : null}
         </TableBody>
       </Table>
     </TableContainer>
