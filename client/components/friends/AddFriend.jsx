@@ -92,7 +92,9 @@ function AddFriend({ loggedInUser, refresh }) {
 
   return (
     <Box>
-      <Link onClick={handleOpen}>Add a friend</Link>
+      <Link onClick={handleOpen} style={{ cursor: "pointer" }}>
+        Add a friend
+      </Link>
       <Modal open={open} onClose={handleClose}>
         {body}
       </Modal>
