@@ -52,7 +52,7 @@ Those features are:
  - AWS EC2
 
  # Workflow
- For this project we maintained one master (deployed) branch, one staging branch, and added/deleted feature branches as needed. Sprint plans were tracked using [Trello] (https://trello.com/b/bjtybXS7/blue-ocean). When features were ready to be added into stage the following steps were taken:
+ For this project we maintained one master (deployed) branch, one staging branch, and added/deleted feature branches as needed. Sprint plans were tracked using [Trello](https://trello.com/b/bjtybXS7/blue-ocean). When features were ready to be added into stage the following steps were taken:
   1. Pull down the stage branch
   2. Merge local feature branch with local stage branch
   3. Validate that all features are still working correctly
@@ -61,11 +61,12 @@ Those features are:
   6. At the end of the sprint, stage is merged in master
 
 # Get Started
+  Our app is deployed! You can visit it at http://18.210.13.63:3000. 
   To run this on your own machine, execute the follwing commands from a terminal in the root folder:
-    npm install
-    npm run react-dev
-    npm start
-  Navigate to localhost:3000
+   - npm install
+   - npm run react-dev
+   - npm start
+   - navigate to localhost:3000
 
 ## Challenges/Lessons Learned
   This project was the first time for all contributors to be working on a large team to complete one application. For ease of development, we tried to make the sections as siloed as possible by dividing tasks based on user story, instead of splitting up front-end and back-end work. This meant all team members worked as full stack engineers and owned all portions of their assigned functionality. Dummy data was used while waiting for either the database to be seeded and deployed, or state to be passed from components owned by another teammate. This turned out to be a very good decision in the end as it made development faster and produced less bugs than there might otherwise have been if there was more overlap in ownership. It also minimized any down time while waiting on dependencies, allowing us to complete more features.
