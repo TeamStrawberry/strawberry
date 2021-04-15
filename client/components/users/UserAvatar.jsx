@@ -13,10 +13,10 @@ const useStyles = makeStyles({
     maxWidth: 345,
   },
   media: {
-    height: 140,
+    height: "200px",
     width: "100%",
-    borderRadius: "50%",
-    maxWidth: "100px",
+    borderRadius: "5%",
+    maxWidth: "150px",
   },
 });
 
@@ -30,7 +30,7 @@ function UserAvatar({ loggedInUser }) {
           <Grid item>
             <CardMedia
               className={classes.media}
-              image="https://hungrygen.com/wp-content/uploads/2019/11/placeholder-male-square.png"
+              image={loggedInUser.avatar_url}
               title="INSERT TITLE"
               style={{ marginTop: 10 }}
             />
