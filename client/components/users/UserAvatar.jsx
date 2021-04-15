@@ -14,9 +14,8 @@ const useStyles = makeStyles({
   },
   media: {
     height: "200px",
-    width: "100%",
     borderRadius: "5%",
-    maxWidth: "150px",
+    maxWidth: "80%",
   },
 });
 
