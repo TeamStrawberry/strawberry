@@ -56,7 +56,11 @@ const QuizListCard = ({ quiz, loggedInUser, setLoginOpen }) => {
           style={{ display: "flex" }}
         >
           <Grid item style={{ display: "flex", justifyContent: "flex-start" }}>
-            <CardHeader onClick={handleClick} title={quiz.name} />
+            <CardHeader
+              onClick={handleClick}
+              title={quiz.name}
+              style={{ cursor: "pointer" }}
+            />
           </Grid>
           <Grid item style={{ display: "flex", justifyContent: "flex-start" }}>
             <CardContent onClick={handleClick}>
